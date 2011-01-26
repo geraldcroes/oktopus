@@ -45,6 +45,43 @@ class Object {
 	}
 }
 
+
+class ObjectBuilder implements ILazyBuilder {
+	public function configure (Object $object){
+		$object->setCache (true);
+		$object->setDatabaseConnection ();
+	}	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 interface ILazyBuilder {
 	public function configure ($pObject, $pParameters = null);
 }

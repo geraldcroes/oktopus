@@ -41,8 +41,18 @@ class Engine {
 			self::$_mode = $pMode;
 		}
 		
+		if ($pMode === self::MODE_DEBUG){
+			ini_set ('display_errors', 1);
+			error_reporting (E_ALL | E_STRICT);
+		}
+
 		require_once (OKTOPUS_PATH.'engine/autoloader/Autoloader.class.php');
-		Autoloader::register ($pTmpPath)->addPath (OKTOPUS_PATH, true);
+		Autoloader::instance ()->setCachePath ($pTmpPath)->addPath (OKTOPUS_PATH, true)->register ();
+		
+		if ($pMode === self::MODE_DEBUG && class_exists ('Oktopus\\Debug')){
+			Debug::register_error_handler();
+			Debug::register_exception_handler();
+		}
 	}
 
 	/**

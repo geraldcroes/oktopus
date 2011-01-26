@@ -35,29 +35,34 @@ class Autoloader {
 	 * @param string $pTmpPath
 	 * @throws Exception if the autoloader is already registered
 	 */
-	public static function register ($pTmpPath){
+	public function register (){
+		if (self::isRegistered ()){
+			throw Exception ('Oktopus\Autoloader is already registered');
+		}else{
+			spl_autoload_register (array (self::$_instance, 'autoload'));
+		}
+		return $this;
+	}
+	
+	/**
+	 * Gets a single instance of the Autoloader 
+	 * @return Autoloader
+	 */
+	public static function instance (){
 		if(self::$_instance === false){
 			include (OKTOPUS_PATH.'engine/codeparser/ClassParserForPHP5_3.class.php');
 			include (OKTOPUS_PATH.'engine/decorator/LambdaFilterIteratorDecorator.class.php');
 
 			self::$_instance = new Autoloader();
-			self::$_instance->_setCachePath ($pTmpPath);
 			self::$_instance->_classHunter = new ClassParserForPHP5_3();
-			spl_autoload_register (array (self::$_instance, 'autoload'));
-		}else{
-			if (self::isRegistered ()){
-				throw Exception ('Oktopus\Autoloader is already registered');
-			}else{
-				spl_autoload_register (array (self::$_instance, 'autoload'));
-			}
 		}
 		return self::$_instance;
-	}
+	} 
 
 	/**
 	 * Remove Autoloader from the autoload stack
 	 */
-	public static function unregister (){
+	public function unregister (){
 		spl_autoload_unregister (array (self::$_instance, 'autoload'));
 	}
 
@@ -65,11 +70,13 @@ class Autoloader {
 	 * Says if the Autoloader is registered
 	 * @return boolean
 	 */
-	public static function isRegistered (){
-		foreach (spl_autoload_functions () as $autoloadDescription){
-			if (is_array ($autoloadDescription)){
-				if (isset ($autoloadDescription[0]) && $autoloadDescription[0] === self::$_instance){
-					return true;
+	public function isRegistered (){
+		if (($stack = spl_autoload_functions ()) !== false){
+			foreach ($stack as $autoloadDescription){
+				if (is_array ($autoloadDescription)){
+					if (isset ($autoloadDescription[0]) && $autoloadDescription[0] === self::$_instance){
+						return true;
+					}
 				}
 			}
 		}
@@ -88,11 +95,18 @@ class Autoloader {
 	 * @param string $pTmp the path where to store cache files
 	 * @throws AutoloaderException if the given path is not writable
 	 */
-	protected function _setCachePath ($pTmp){
-		if (!is_writable ($pTmp)){
-			throw new AutoloaderException('Cannot write in given CachePath ['.$pTmp.']');
+	public function setCachePath ($pTmp){
+		if (! file_exists ($pTmp)){
+			if (! mkdir ($pTmp, 0755, true)){
+				throw new AutoloaderException('Cannot craete the given CachePath ['.$pTmp.']');
+			}			
+		}else{
+			if (!is_writable ($pTmp)){
+				throw new AutoloaderException('Cannot write in given CachePath ['.$pTmp.']');
+			}
 		}
 		$this->_cachePath = $pTmp;
+		return $this;
 	}
 
 	//--- Autoload
@@ -132,15 +146,15 @@ class Autoloader {
 
 			//On va filtrer les fichiers php depuis les répertoires trouvés.
 			$files = new LambdaFilterIteratorDecorator($directories);
-			$files->setLambda(function (){
-				if (substr ($this->current (), -1 * strlen ('.php')) === '.php'){
-					return is_readable ($this->current ());
+			$files->setLambda(function ($filterIterator) {
+				if (substr ($filterIterator->current (), -1 * strlen ('.php')) === '.php'){
+					return is_readable ($filterIterator->current ());
 				}
 				return false;
-			});
+			}, false);
 
 			foreach ($files as $fileName){
-				$classes = $this->_classHunterStrategy->find ((string) $fileName);
+				$classes = $this->_classHunter->find ((string) $fileName);
 				foreach ($classes as $className=>$fileName){
 					$this->_classes[strtolower ($className)] = $fileName;
 				}
@@ -192,12 +206,21 @@ class Autoloader {
 	 * @param boolean $pRecursive if we'll look recursively into the class tree
 	 *
 	 */
-	public function addPath ($pDirectory, $pRecursive = true, $pCallBackFilter = null){
+	public function addPath ($pDirectory, $pRecursive = true, $pMustExists = true, $pCallBackFilter = null){
 		if (! is_readable ($pDirectory)){
-			throw new AutoloaderException('Cannot read from ['.$pDirectory.']');
+			if ($pMustExists){
+				//The directory must exists. Raise an exception.
+				throw new AutoloaderException('Cannot read from ['.$pDirectory.']');
+			}
 		}
 		$this->_directories[$pDirectory] = $pRecursive ? true : false;
 		return $this;
 	}
+
+	/**
+	 * Current path where to look for classes
+	 * @see Oktopus\Autoloader::addPath 
+	 * @var array
+	 */
 	private $_directories = array ();
 }
