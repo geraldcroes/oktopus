@@ -521,22 +521,22 @@ class Debug {
 	 */
 	public static function error_handler($code, $error, $file = NULL, $line = NULL, $context = null)
 	{
-		if (! error_reporting ()){
+		if (! (error_reporting () & $code)){
 			return true;
 		}
 		
-		$type = $code;
+		$type = 'Error';
 		$message = $error;
-		if (count ($trace = debug_backtrace ()) > 1){
-			$trace = array_slice ($trace, 1);			
+		if (count ($trace = debug_backtrace ()) > 2){
+			$trace = array_slice ($trace, 2);			
+		}else{
+			$trace = array ();		
 		}
 
 		// Start an output buffer
 		ob_start();
-
 		// Include the exception HTML
 		include OKTOPUS_PATH.'debug/error.view.php';
-
 		// Display the contents of the output buffer
 		echo ob_get_clean();
 		
