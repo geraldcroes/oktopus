@@ -1,0 +1,5 @@
+Oktopus is a PHP5.3+ engine that promotes loosely coupled systems.
+
+At its very core, the Oktopus Engine is a flexible Autoloader, others classes can just be ignored.
+
+Of course, there's a LOT more, but you'll have to wait to see it in action :-)
