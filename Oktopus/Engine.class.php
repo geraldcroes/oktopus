@@ -49,7 +49,7 @@ class Engine {
 		require_once (OKTOPUS_PATH.'engine/autoloader/Autoloader.class.php');
 		Autoloader::instance ()->setCachePath ($pTmpPath)->addPath (OKTOPUS_PATH, true)->register ();
 		
-		if ($pMode === self::MODE_DEBUG && class_exists ('Oktopus\\Debug')){
+		if ($pMode === self::MODE_DEBUG && Autoloader::instance ()->autoload ('Oktopus\\Debug')){
 			Debug::register_error_handler();
 			Debug::register_exception_handler();
 		}
