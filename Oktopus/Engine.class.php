@@ -10,9 +10,15 @@ define ('OKTOPUS_PATH', __DIR__.'/');
  */
 class Engine {
 	/**
+	 * The RESET mode of Oktopus (delete every cache files on initialization)
+	 */
+	const MODE_RESET = -1;
+
+	/**
 	 * The DEBUG mode of Oktopus
 	 */
 	const MODE_DEBUG = 0;
+
 	/**
 	 * The production mode of Oktopus
 	 */
@@ -34,11 +40,15 @@ class Engine {
 	 * Includes the base class for Oktopus
 	 */
 	public static function start ($pTmpPath, $pMode = self::MODE_DEBUG){
-		if (!in_array ($pMode, array (self::MODE_DEBUG, self::MODE_PRODUCTION))){
+		if (!in_array ($pMode, array (self::MODE_DEBUG, self::MODE_PRODUCTION, self::MODE_RESET))){
 			require_once (OKTOPUS_PATH.'engine/exception/Exception.class.php');
 			throw new WrongParameterException('Unknown start mode, you can start the engine using Oktopus\Engine::MODE_DEBUG or Oktopus\Engine::MODE_PRODUCTION');
 		}else{
 			self::$_mode = $pMode;
+		}
+		
+		if ($pMode === self::MODE_RESET){
+			rmdir($pTmpPath);
 		}
 		
 		if ($pMode === self::MODE_DEBUG){
