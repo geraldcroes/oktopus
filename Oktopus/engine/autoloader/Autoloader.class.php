@@ -37,7 +37,7 @@ class Autoloader {
 	 */
 	public function register (){
 		if (self::isRegistered ()){
-			throw Exception ('Oktopus\Autoloader is already registered');
+			throw new Exception ('Oktopus\Autoloader is already registered');
 		}else{
 			spl_autoload_register (array (self::$_instance, 'autoload'));
 		}

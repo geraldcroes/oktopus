@@ -12,4 +12,13 @@ class EngineTest extends PHPUnit_Framework_TestCase {
 	public function testStartTwite (){
 		$this->assertTrue (Oktopus\Autoloader::instance ()->autoload ('Oktopus\\Debug'));
 	}
+
+	/**
+	 * @depends testStartEngine
+	 * @expectedException Oktopus\Exception
+	 */
+	public function testDoubleException (){
+		Oktopus\Engine::start ('/tmp/');
+	}
+
 }
