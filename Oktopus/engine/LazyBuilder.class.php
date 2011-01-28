@@ -81,7 +81,7 @@ class ObjectBuilder implements ILazyBuilder {
 
 
 
-
+namespace OktopusTest;
 interface ILazyBuilder {
 	public function configure ($pObject, $pParameters = null);
 }
