@@ -524,8 +524,29 @@ class Debug {
 		if (! (error_reporting () & $code)){
 			return true;
 		}
-		
-		$type = 'Error';
+		switch ($code){
+			case E_ERROR:
+			case E_USER_ERROR:
+				$type = 'Error';
+				break;
+			case E_WARNING:
+			case E_USER_WARNING:
+				$type = 'Warning';
+				break;
+			case E_NOTICE:
+			case E_USER_NOTICE:
+				$type = 'Notice';
+				break;
+			case E_STRICT:
+				$type = 'Strict';
+				break;
+			case E_DEPRECATED:
+			case E_USER_DEPRECATED:
+				$type = 'Deprecated';
+				break;
+			default:
+				$type = 'Unknown Error';
+		}
 		$message = $error;
 		if (count ($trace = debug_backtrace ()) > 2){
 			$trace = array_slice ($trace, 2);			
