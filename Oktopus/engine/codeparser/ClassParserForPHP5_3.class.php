@@ -32,7 +32,7 @@ class ClassParserForPHP5_3 {
 				}
 
 				if ($classHunt && $token[0] === T_STRING){
-					$toReturn[(strlen ($currentNamespace) > 0 ? $currentNamespace.'\\' : '').$token[1]] = $pFileName;
+					$toReturn[] = (strlen ($currentNamespace) > 0 ? $currentNamespace.'\\' : '').$token[1];
 					$classHunt = false;
 				}elseif ($namespaceHunt && $validatedNamespaceHunt && ($token[0] === T_STRING || $token[0] === T_NS_SEPARATOR)){
 					$currentNamespace .= $token[1];
