@@ -78,7 +78,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 22</td>
+          <td class="coverNumLo">0 / 18</td>
         </tr>
 
         <tr>
@@ -143,7 +143,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 22</td>
+          <td class="coverNumLo">0 / 18</td>
         </tr>
 
         <tr>
@@ -165,11 +165,11 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 20</td>
+          <td class="coverNumLo">0 / 16</td>
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#78">public static function autoloader ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#73">public static function autoloader ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -191,7 +191,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#88">public static function getMode ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#83">public static function getMode ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -294,27 +294,22 @@
 <span class="lineNum" id="container67"><a name="67"></a><a href="#67" id="line67">      67</a> </span><span class="lineNoCov">              0 :         require_once (OKTOPUS_PATH.'engine/autoloader/Autoloader.php');                                                                                           </span>
 <span class="lineNum" id="container68"><a name="68"></a><a href="#68" id="line68">      68</a> </span><span class="lineNoCov">              0 :         self::$_autoloader = new Autoloader ('/tmp/', new ClassParserForPHP5_3());                                                                                </span>
 <span class="lineNum" id="container69"><a name="69"></a><a href="#69" id="line69">      69</a> </span><span class="lineNoCov">              0 :         self::$_autoloader-&gt;addPath (OKTOPUS_PATH, true)-&gt;register ();                                                                                            </span>
-<span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span>                :                                                                                                                                                                   
-<span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span><span class="lineNoCov">              0 :         if ($pMode === self::MODE_DEBUG &amp;&amp; self::$_autoloader-&gt;autoload ('Oktopus\\Debug')){                                                                      </span>
-<span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span><span class="lineNoCov">              0 :             Debug::register_error_handler();                                                                                                                      </span>
-<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span><span class="lineNoCov">              0 :             Debug::register_exception_handler();                                                                                                                  </span>
-<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span><span class="lineNoCov">              0 :         }                                                                                                                                                         </span>
-<span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                                             </span>
+<span class="lineNum" id="container70"><a name="70"></a><a href="#70" id="line70">      70</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                                             </span>
+<span class="lineNum" id="container71"><a name="71"></a><a href="#71" id="line71">      71</a> </span>                :                                                                                                                                                                   
+<span class="lineNum" id="container72"><a name="72"></a><a href="#72" id="line72">      72</a> </span>                :     private static $_autoloader = false;                                                                                                                          
+<span class="lineNum" id="container73"><a name="73"></a><a href="#73" id="line73">      73</a> </span>                :     public static function autoloader (){                                                                                                                         
+<span class="lineNum" id="container74"><a name="74"></a><a href="#74" id="line74">      74</a> </span><span class="lineNoCov">              0 :         return self::$_autoloader;                                                                                                                                </span>
+<span class="lineNum" id="container75"><a name="75"></a><a href="#75" id="line75">      75</a> </span><span class="lineDeadCode">                :     }                                                                                                                                                             </span>
 <span class="lineNum" id="container76"><a name="76"></a><a href="#76" id="line76">      76</a> </span>                :                                                                                                                                                                   
-<span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span>                :     private static $_autoloader = false;                                                                                                                          
-<span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span>                :     public static function autoloader (){                                                                                                                         
-<span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span><span class="lineNoCov">              0 :         return self::$_autoloader;                                                                                                                                </span>
-<span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span><span class="lineDeadCode">                :     }                                                                                                                                                             </span>
-<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span>                :                                                                                                                                                                   
-<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span>                :     /**                                                                                                                                                           
-<span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span>                :      * Gets the configured mode for Oktopus                                                                                                                       
-<span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span>                :      * @see Oktopus\Engine::MODE_DEBUG                                                                                                                            
-<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span>                :      * @see Oktopus\Engine::MODE_PRODUCTION                                                                                                                       
-<span class="lineNum" id="container86"><a name="86"></a><a href="#86" id="line86">      86</a> </span>                :      * @see Oktopus\Engine::start ();                                                                                                                             
-<span class="lineNum" id="container87"><a name="87"></a><a href="#87" id="line87">      87</a> </span>                :      */                                                                                                                                                           
-<span class="lineNum" id="container88"><a name="88"></a><a href="#88" id="line88">      88</a> </span>                :     public static function getMode (){                                                                                                                            
-<span class="lineNum" id="container89"><a name="89"></a><a href="#89" id="line89">      89</a> </span><span class="lineNoCov">              0 :         return self::$_mode;                                                                                                                                      </span>
-<span class="lineNum" id="container90"><a name="90"></a><a href="#90" id="line90">      90</a> </span><span class="lineDeadCode">                :     }                                                                                                                                                             </span>
+<span class="lineNum" id="container77"><a name="77"></a><a href="#77" id="line77">      77</a> </span>                :     /**                                                                                                                                                           
+<span class="lineNum" id="container78"><a name="78"></a><a href="#78" id="line78">      78</a> </span>                :      * Gets the configured mode for Oktopus                                                                                                                       
+<span class="lineNum" id="container79"><a name="79"></a><a href="#79" id="line79">      79</a> </span>                :      * @see Oktopus\Engine::MODE_DEBUG                                                                                                                            
+<span class="lineNum" id="container80"><a name="80"></a><a href="#80" id="line80">      80</a> </span>                :      * @see Oktopus\Engine::MODE_PRODUCTION                                                                                                                       
+<span class="lineNum" id="container81"><a name="81"></a><a href="#81" id="line81">      81</a> </span>                :      * @see Oktopus\Engine::start ();                                                                                                                             
+<span class="lineNum" id="container82"><a name="82"></a><a href="#82" id="line82">      82</a> </span>                :      */                                                                                                                                                           
+<span class="lineNum" id="container83"><a name="83"></a><a href="#83" id="line83">      83</a> </span>                :     public static function getMode (){                                                                                                                            
+<span class="lineNum" id="container84"><a name="84"></a><a href="#84" id="line84">      84</a> </span><span class="lineNoCov">              0 :         return self::$_mode;                                                                                                                                      </span>
+<span class="lineNum" id="container85"><a name="85"></a><a href="#85" id="line85">      85</a> </span><span class="lineDeadCode">                :     }                                                                                                                                                             </span>
 
 </pre>
         </td>
@@ -323,7 +318,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 10:10:27 CET 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 10:33:49 CET 2011.</td></tr>
     </table>
 
     <br />

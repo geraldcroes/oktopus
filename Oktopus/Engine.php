@@ -67,11 +67,6 @@ class Engine {
 		require_once (OKTOPUS_PATH.'engine/autoloader/Autoloader.php');
 		self::$_autoloader = new Autoloader ('/tmp/', new ClassParserForPHP5_3());
 		self::$_autoloader->addPath (OKTOPUS_PATH, true)->register ();
-		
-		if ($pMode === self::MODE_DEBUG && self::$_autoloader->autoload ('Oktopus\\Debug')){
-			Debug::register_error_handler();
-			Debug::register_exception_handler();
-		}
 	}
 
 	private static $_autoloader = false;

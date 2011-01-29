@@ -73,12 +73,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="21" height="10" alt="21.84%"><img src="snow.png" width="79" height="10" alt="21.84%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="15" height="10" alt="15.52%"><img src="snow.png" width="85" height="10" alt="15.52%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">21.84%</td>
-          <td class="coverNumLo">38 / 174</td>
+          <td class="coverPerLo">15.52%</td>
+          <td class="coverNumLo">27 / 174</td>
         </tr>
 
         <tr>
@@ -107,12 +107,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="21" height="10" alt="21.84%"><img src="snow.png" width="79" height="10" alt="21.84%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="15" height="10" alt="15.52%"><img src="snow.png" width="85" height="10" alt="15.52%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">21.84%</td>
-          <td class="coverNumLo">38 / 174</td>
+          <td class="coverPerLo">15.52%</td>
+          <td class="coverNumLo">27 / 174</td>
         </tr>
 
         <tr>
@@ -305,12 +305,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="31" height="10" alt="31.58%"><img src="snow.png" width="69" height="10" alt="31.58%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="0" height="10" alt="0.00%"><img src="snow.png" width="100" height="10" alt="0.00%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerLo">31.58%</td>
-          <td class="coverNumLo">6 / 19</td>
+          <td class="coverPerLo">0.00%</td>
+          <td class="coverNumLo">0 / 19</td>
         </tr>
 
         <tr>
@@ -327,12 +327,12 @@
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="62" height="10" alt="62.50%"><img src="snow.png" width="38" height="10" alt="62.50%"></td>
+                <td class="coverBarOutline"><img src="scarlet_red.png" width="0" height="10" alt="0.00%"><img src="snow.png" width="100" height="10" alt="0.00%"></td>
               </tr>
             </table>
           </td>
-          <td class="coverPerMed">62.50%</td>
-          <td class="coverNumMed">5 / 8</td>
+          <td class="coverPerLo">0.00%</td>
+          <td class="coverNumLo">0 / 8</td>
         </tr>
 
         <tr>
@@ -677,12 +677,12 @@
 <span class="lineNum" id="container305"><a name="305"></a><a href="#305" id="line305">     305</a> </span>                :      * @return boolean (the class was found true, or not false)                                                                                                                                                          
 <span class="lineNum" id="container306"><a name="306"></a><a href="#306" id="line306">     306</a> </span>                :      */                                                                                                                                                                                                                  
 <span class="lineNum" id="container307"><a name="307"></a><a href="#307" id="line307">     307</a> </span>                :     public function autoload ($pClassName, $justCheck = true){                                                                                                                                                           
-<span class="lineNum" id="container308"><a name="308"></a><a href="#308" id="line308">     308</a> </span><span class="lineCov">              1 :         $pClassName = strtolower ($pClassName);                                                                                                                                                                          </span>
+<span class="lineNum" id="container308"><a name="308"></a><a href="#308" id="line308">     308</a> </span><span class="lineNoCov">              0 :         $pClassName = strtolower ($pClassName);                                                                                                                                                                          </span>
 <span class="lineNum" id="container309"><a name="309"></a><a href="#309" id="line309">     309</a> </span>                :                                                                                                                                                                                                                          
-<span class="lineNum" id="container310"><a name="310"></a><a href="#310" id="line310">     310</a> </span><span class="lineCov">              1 :         foreach ($this-&gt;_directories as $name=&gt;$recurse){                                                                                                                                                                </span>
-<span class="lineNum" id="container311"><a name="311"></a><a href="#311" id="line311">     311</a> </span><span class="lineCov">              1 :             if (isset ($this-&gt;_directoryClasses[$name])){                                                                                                                                                                </span>
-<span class="lineNum" id="container312"><a name="312"></a><a href="#312" id="line312">     312</a> </span><span class="lineCov">              1 :                 if (isset ($this-&gt;_directoryClasses[$name][$pClassName])){                                                                                                                                               </span>
-<span class="lineNum" id="container313"><a name="313"></a><a href="#313" id="line313">     313</a> </span><span class="lineCov">              1 :                     if (! $this-&gt;_includeDirectoryClass ($name, $pClassName)){                                                                                                                                           </span>
+<span class="lineNum" id="container310"><a name="310"></a><a href="#310" id="line310">     310</a> </span><span class="lineNoCov">              0 :         foreach ($this-&gt;_directories as $name=&gt;$recurse){                                                                                                                                                                </span>
+<span class="lineNum" id="container311"><a name="311"></a><a href="#311" id="line311">     311</a> </span><span class="lineNoCov">              0 :             if (isset ($this-&gt;_directoryClasses[$name])){                                                                                                                                                                </span>
+<span class="lineNum" id="container312"><a name="312"></a><a href="#312" id="line312">     312</a> </span><span class="lineNoCov">              0 :                 if (isset ($this-&gt;_directoryClasses[$name][$pClassName])){                                                                                                                                               </span>
+<span class="lineNum" id="container313"><a name="313"></a><a href="#313" id="line313">     313</a> </span><span class="lineNoCov">              0 :                     if (! $this-&gt;_includeDirectoryClass ($name, $pClassName)){                                                                                                                                           </span>
 <span class="lineNum" id="container314"><a name="314"></a><a href="#314" id="line314">     314</a> </span>                :                         //We couldn't include the class (maybe the file was deleted....                                                                                                                                  
 <span class="lineNum" id="container315"><a name="315"></a><a href="#315" id="line315">     315</a> </span>                :                         //We have to compile the file again.                                                                                                                                                             
 <span class="lineNum" id="container316"><a name="316"></a><a href="#316" id="line316">     316</a> </span><span class="lineNoCov">              0 :                         $this-&gt;_loadDirectoryClasses ($name, $recurse, true);                                                                                                                                            </span>
@@ -691,7 +691,7 @@
 <span class="lineNum" id="container319"><a name="319"></a><a href="#319" id="line319">     319</a> </span><span class="lineNoCov">              0 :                             return true;                                                                                                                                                                                 </span>
 <span class="lineNum" id="container320"><a name="320"></a><a href="#320" id="line320">     320</a> </span><span class="lineDeadCode">                :                         }//else we continue..... maybe the class is in another directory now                                                                                                                             </span>
 <span class="lineNum" id="container321"><a name="321"></a><a href="#321" id="line321">     321</a> </span><span class="lineNoCov">              0 :                     }else{                                                                                                                                                                                               </span>
-<span class="lineNum" id="container322"><a name="322"></a><a href="#322" id="line322">     322</a> </span><span class="lineCov">              1 :                         return true;                                                                                                                                                                                     </span>
+<span class="lineNum" id="container322"><a name="322"></a><a href="#322" id="line322">     322</a> </span><span class="lineNoCov">              0 :                         return true;                                                                                                                                                                                     </span>
 <span class="lineNum" id="container323"><a name="323"></a><a href="#323" id="line323">     323</a> </span>                :                     }                                                                                                                                                                                                    
 <span class="lineNum" id="container324"><a name="324"></a><a href="#324" id="line324">     324</a> </span><span class="lineNoCov">              0 :                 }                                                                                                                                                                                                        </span>
 <span class="lineNum" id="container325"><a name="325"></a><a href="#325" id="line325">     325</a> </span><span class="lineNoCov">              0 :             }else{                                                                                                                                                                                                       </span>
@@ -721,16 +721,16 @@
 <span class="lineNum" id="container349"><a name="349"></a><a href="#349" id="line349">     349</a> </span>                :      * @param string $pClassName                                                                                                                                                                                         
 <span class="lineNum" id="container350"><a name="350"></a><a href="#350" id="line350">     350</a> </span>                :      */                                                                                                                                                                                                                  
 <span class="lineNum" id="container351"><a name="351"></a><a href="#351" id="line351">     351</a> </span>                :     private function _includeDirectoryClass ($pDirectory, $pClassName){                                                                                                                                                  
-<span class="lineNum" id="container352"><a name="352"></a><a href="#352" id="line352">     352</a> </span><span class="lineCov">              1 :         if (! isset ($this-&gt;_directoryClasses[$pDirectory][$pClassName])){                                                                                                                                               </span>
+<span class="lineNum" id="container352"><a name="352"></a><a href="#352" id="line352">     352</a> </span><span class="lineNoCov">              0 :         if (! isset ($this-&gt;_directoryClasses[$pDirectory][$pClassName])){                                                                                                                                               </span>
 <span class="lineNum" id="container353"><a name="353"></a><a href="#353" id="line353">     353</a> </span><span class="lineNoCov">              0 :             return false;                                                                                                                                                                                                </span>
 <span class="lineNum" id="container354"><a name="354"></a><a href="#354" id="line354">     354</a> </span><span class="lineDeadCode">                :         }                                                                                                                                                                                                                </span>
-<span class="lineNum" id="container355"><a name="355"></a><a href="#355" id="line355">     355</a> </span><span class="lineCov">              1 :         if (is_array($this-&gt;_directoryClasses[$pDirectory][$pClassName])){                                                                                                                                               </span>
+<span class="lineNum" id="container355"><a name="355"></a><a href="#355" id="line355">     355</a> </span><span class="lineNoCov">              0 :         if (is_array($this-&gt;_directoryClasses[$pDirectory][$pClassName])){                                                                                                                                               </span>
 <span class="lineNum" id="container356"><a name="356"></a><a href="#356" id="line356">     356</a> </span><span class="lineNoCov">              0 :             $classFile = $this-&gt;_directoryClasses[$pDirectory][$pClassName][0];                                                                                                                                          </span>
 <span class="lineNum" id="container357"><a name="357"></a><a href="#357" id="line357">     357</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                                                                                                           </span>
-<span class="lineNum" id="container358"><a name="358"></a><a href="#358" id="line358">     358</a> </span><span class="lineCov">              1 :             $classFile = $this-&gt;_directoryClasses[$pDirectory][$pClassName];                                                                                                                                             </span>
+<span class="lineNum" id="container358"><a name="358"></a><a href="#358" id="line358">     358</a> </span><span class="lineNoCov">              0 :             $classFile = $this-&gt;_directoryClasses[$pDirectory][$pClassName];                                                                                                                                             </span>
 <span class="lineNum" id="container359"><a name="359"></a><a href="#359" id="line359">     359</a> </span>                :         }                                                                                                                                                                                                                
-<span class="lineNum" id="container360"><a name="360"></a><a href="#360" id="line360">     360</a> </span><span class="lineCov">              1 :         require_once ($classFile);                                                                                                                                                                                       </span>
-<span class="lineNum" id="container361"><a name="361"></a><a href="#361" id="line361">     361</a> </span><span class="lineCov">              1 :         return true;                                                                                                                                                                                                     </span>
+<span class="lineNum" id="container360"><a name="360"></a><a href="#360" id="line360">     360</a> </span><span class="lineNoCov">              0 :         require_once ($classFile);                                                                                                                                                                                       </span>
+<span class="lineNum" id="container361"><a name="361"></a><a href="#361" id="line361">     361</a> </span><span class="lineNoCov">              0 :         return true;                                                                                                                                                                                                     </span>
 <span class="lineNum" id="container362"><a name="362"></a><a href="#362" id="line362">     362</a> </span><span class="lineDeadCode">                :     }                                                                                                                                                                                                                    </span>
 <span class="lineNum" id="container363"><a name="363"></a><a href="#363" id="line363">     363</a> </span>                :                                                                                                                                                                                                                          
 <span class="lineNum" id="container364"><a name="364"></a><a href="#364" id="line364">     364</a> </span>                :     /**                                                                                                                                                                                                                  
@@ -763,7 +763,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 10:10:27 CET 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 10:33:49 CET 2011.</td></tr>
     </table>
 
     <br />
