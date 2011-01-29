@@ -32,8 +32,8 @@ class Autoloader {
 	public function register (){
 		if ($this->isRegistered ()){
 			require_once (OKTOPUS_PATH.'engine/exception/Exception.php');
-			require_once (__DIR__.'AutoaderException.php');
-			throw new Exception ('Oktopus\Autoloader is already registered');
+			require_once (__DIR__.'/AutoloaderException.php');
+			throw new AutoloaderException ('Oktopus\Autoloader is already registered');
 		}else{
 			spl_autoload_register (array ($this, 'autoload'));
 		}

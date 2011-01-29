@@ -16,26 +16,21 @@
         <td width="100%">
           <table cellpadding="1" border="0" width="100%">
             <tr>
-              <td class="headerItem" width="20%">Current directory:</td>
-              <td class="headerValue" width="80%"><a href="index.html">/home/gcroes/Desktop/oktopus/Oktopus</a>/<a href="engine.html">engine</a>/<a href="engine_autoloader.html">autoloader</a></td>
+              <td class="headerItem" width="20%">Current file:</td>
+              <td class="headerValue" width="80%"><a href="index.html">/home/gcroes/Desktop/oktopus/Oktopus</a>/<a href="engine.html">engine</a>/<a href="engine_exception.html">exception</a>/<a href="engine_exception_Exception.php.html">Exception.php</a></td>
             </tr>
             <tr>
               <td class="legendItem" width="20%">Legend:</td>
               <td class="legendValue" width="80%">
-                <span class="coverLegendLo">
-                  <b>Low:</b> 0% to 35%
-                </span>
-                <span class="coverLegendMed">
-                  <b>Medium:</b> 35% to 70%
-                </span>
-                <span class="coverLegendHi">
-                  <b>High:</b> 70% to 100%
-                </span>
+                <span class="legendCov">executed</span>
+                <span class="legendNoCov">not executed</span>
+                <span class="legendDeadCode">dead code</span>
               </td>
             </tr>
           </table>
         </td>
       </tr>
+
       <tr>
         <td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td>
       </tr>
@@ -51,77 +46,12 @@
         </tr>
         <tr>
           <td class="tableHead">&nbsp;</td>
-          <td class="tableHead" colspan="3">Lines</td>
-          <td class="tableHead" colspan="3">Functions / Methods</td>
           <td class="tableHead" colspan="3">Classes</td>
+          <td class="tableHead" colspan="3">Functions / Methods</td>
+          <td class="tableHead" colspan="3">Lines</td>
         </tr>
         <tr>
           <td class="coverItem">Total</td>
-          <td class="coverBar" align="center" width="100">
-            <table border="0" cellspacing="0" cellpadding="1">
-              <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="13" height="10" alt="13.71%"><img src="snow.png" width="87" height="10" alt="13.71%"></td>
-              </tr>
-            </table>
-          </td>
-          <td class="coverPerLo">13.71%</td>
-          <td class="coverNumLo">24 / 175</td>
-          <td class="coverBar" align="center" width="100">
-            <table border="0" cellspacing="0" cellpadding="1">
-              <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="36" height="10" alt="36.36%"><img src="snow.png" width="64" height="10" alt="36.36%"></td>
-              </tr>
-            </table>
-          </td>
-          <td class="coverPerMed">36.36%</td>
-          <td class="coverNumMed">4 / 11</td>
-          <td class="coverBar" align="center" width="100">
-            <table border="0" cellspacing="0" cellpadding="1">
-              <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="50" height="10" alt="50.00%"><img src="snow.png" width="50" height="10" alt="50.00%"></td>
-              </tr>
-            </table>
-          </td>
-          <td class="coverPerMed">50.00%</td>
-          <td class="coverNumMed">1 / 2</td>
-        </tr>
-
-        <tr>
-          <td class="tableHead" colspan="10">&nbsp;</td>
-        </tr>
-        <tr>
-          <td class="coverFile"><a href="engine_autoloader_Autoloader.php.html">Autoloader.php</a></td>
-          <td class="coverBar" align="center" width="100">
-            <table border="0" cellspacing="0" cellpadding="1">
-              <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="13" height="10" alt="13.71%"><img src="snow.png" width="87" height="10" alt="13.71%"></td>
-              </tr>
-            </table>
-          </td>
-          <td class="coverPerLo">13.71%</td>
-          <td class="coverNumLo">24 / 175</td>
-          <td class="coverBar" align="center" width="100">
-            <table border="0" cellspacing="0" cellpadding="1">
-              <tr>
-                <td class="coverBarOutline"><img src="butter.png" width="36" height="10" alt="36.36%"><img src="snow.png" width="64" height="10" alt="36.36%"></td>
-              </tr>
-            </table>
-          </td>
-          <td class="coverPerMed">36.36%</td>
-          <td class="coverNumMed">4 / 11</td>
-          <td class="coverBar" align="center" width="100">
-            <table border="0" cellspacing="0" cellpadding="1">
-              <tr>
-                <td class="coverBarOutline"><img src="scarlet_red.png" width="0" height="10" alt="0.00%"><img src="snow.png" width="100" height="10" alt="0.00%"></td>
-              </tr>
-            </table>
-          </td>
-          <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 1</td>
-        </tr>
-
-        <tr>
-          <td class="coverFile"><a href="engine_autoloader_AutoloaderException.php.html">AutoloaderException.php</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -130,7 +60,7 @@
             </table>
           </td>
           <td class="coverPerHi">100.00%</td>
-          <td class="coverNumHi">0 / 0</td>
+          <td class="coverNumHi">1 / 1</td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -148,7 +78,41 @@
             </table>
           </td>
           <td class="coverPerHi">100.00%</td>
+          <td class="coverNumHi">0 / 0</td>
+        </tr>
+
+        <tr>
+          <td class="tableHead" colspan="10">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="coverItem"><b><a href="#9">Oktopus\ObjectNotReadyException</a></b></td>
+          <td class="coverBar" align="center" width="100">
+            <table border="0" cellspacing="0" cellpadding="1">
+              <tr>
+                <td class="coverBarOutline"><img src="chameleon.png" width="100" height="10" alt="100.00%"><img src="snow.png" width="0" height="10" alt="100.00%"></td>
+              </tr>
+            </table>
+          </td>
+          <td class="coverPerHi">100.00%</td>
           <td class="coverNumHi">1 / 1</td>
+          <td class="coverBar" align="center" width="100">
+            <table border="0" cellspacing="0" cellpadding="1">
+              <tr>
+                <td class="coverBarOutline"><img src="snow.png" width="100" height="10" alt="&nbsp;"><img src="snow.png" width="0" height="10" alt="&nbsp;"></td>
+              </tr>
+            </table>
+          </td>
+          <td class="coverPerNone">&nbsp;</td>
+          <td class="coverNumNone">&nbsp;</td>
+          <td class="coverBar" align="center" width="100">
+            <table border="0" cellspacing="0" cellpadding="1">
+              <tr>
+                <td class="coverBarOutline"><img src="chameleon.png" width="100" height="10" alt="100.00%"><img src="snow.png" width="0" height="10" alt="100.00%"></td>
+              </tr>
+            </table>
+          </td>
+          <td class="coverPerHi">100.00%</td>
+          <td class="coverNumHi">0 / 0</td>
         </tr>
 
 
@@ -157,11 +121,32 @@
 
     <br />
 
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-      <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/" target="_top">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/" target="_top">Xdebug 2.0.5</a> using <a href="http://www.php.net/" target="_top">PHP 5.3.2-1ubuntu4.7</a> at Sat Jan 29 10:02:37 CET 2011.</td></tr>
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td><br /></td>
+      </tr>
+      <tr>
+        <td>
+<pre class="source">
+<span class="lineNum" id="container1"><a name="1"></a><a href="#1" id="line1">       1</a> </span>                : &lt;?php                                                   
+<span class="lineNum" id="container2"><a name="2"></a><a href="#2" id="line2">       2</a> </span>                : namespace Oktopus;                                      
+<span class="lineNum" id="container3"><a name="3"></a><a href="#3" id="line3">       3</a> </span>                :                                                         
+<span class="lineNum" id="container4"><a name="4"></a><a href="#4" id="line4">       4</a> </span>                : /**                                                     
+<span class="lineNum" id="container5"><a name="5"></a><a href="#5" id="line5">       5</a> </span>                :  * Exception when objects are called in an invalid state
+<span class="lineNum" id="container6"><a name="6"></a><a href="#6" id="line6">       6</a> </span>                :  *                                                      
+<span class="lineNum" id="container7"><a name="7"></a><a href="#7" id="line7">       7</a> </span>                :  * @author geraldcroes                                  
+<span class="lineNum" id="container8"><a name="8"></a><a href="#8" id="line8">       8</a> </span>                :  */                                                     
+
+</pre>
+        </td>
+      </tr>
     </table>
 
-    <br/>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 10:02:37 CET 2011.</td></tr>
+    </table>
+
+    <br />
   </body>
 </html>

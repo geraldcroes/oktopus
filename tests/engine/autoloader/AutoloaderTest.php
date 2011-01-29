@@ -19,5 +19,11 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$autoloader2->unregister ();
 		$this->assertFalse ($autoloader2->isRegistered());
 		$this->assertTrue($autoloader->isRegistered());
+		
+		try {
+			$autoloader->register ();
+			$this->failed ('Register twice should launch an exception');
+		}catch(Oktopus\AutoloaderException $e){
+		}
 	}
 }
