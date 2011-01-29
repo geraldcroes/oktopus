@@ -78,7 +78,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 266</td>
+          <td class="coverNumLo">0 / 267</td>
         </tr>
 
         <tr>
@@ -112,7 +112,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 266</td>
+          <td class="coverNumLo">0 / 267</td>
         </tr>
 
         <tr>
@@ -314,7 +314,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#564">public static function register_error_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#567">public static function register_error_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -336,7 +336,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#567">public static function unregister_error_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#570">public static function unregister_error_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -354,11 +354,11 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 4</td>
+          <td class="coverNumLo">0 / 5</td>
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#575">public static function register_exception_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#577">public static function register_exception_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -380,7 +380,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#578">public static function unregister_exception_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#580">public static function unregister_exception_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -975,29 +975,31 @@
 <span class="lineNum" id="container559"><a name="559"></a><a href="#559" id="line559">     559</a> </span>                :                                                                                                                                       
 <span class="lineNum" id="container560"><a name="560"></a><a href="#560" id="line560">     560</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
 <span class="lineNum" id="container561"><a name="561"></a><a href="#561" id="line561">     561</a> </span>                :                                                                                                                                       
-<span class="lineNum" id="container562"><a name="562"></a><a href="#562" id="line562">     562</a> </span>                :     private static $oldErrorHandler = null;                                                                                           
-<span class="lineNum" id="container563"><a name="563"></a><a href="#563" id="line563">     563</a> </span>                :     private static $oldExceptionHandler = null;                                                                                       
-<span class="lineNum" id="container564"><a name="564"></a><a href="#564" id="line564">     564</a> </span>                :     public static function register_error_handler (){                                                                                 
-<span class="lineNum" id="container565"><a name="565"></a><a href="#565" id="line565">     565</a> </span><span class="lineNoCov">              0 :         self::$oldErrorHandler = set_error_handler ('Oktopus\\Debug::error_handler');                                                 </span>
-<span class="lineNum" id="container566"><a name="566"></a><a href="#566" id="line566">     566</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container567"><a name="567"></a><a href="#567" id="line567">     567</a> </span>                :     public static function unregister_error_handler (){                                                                               
-<span class="lineNum" id="container568"><a name="568"></a><a href="#568" id="line568">     568</a> </span><span class="lineNoCov">              0 :         if (self::$oldErrorHandler !== null){                                                                                         </span>
-<span class="lineNum" id="container569"><a name="569"></a><a href="#569" id="line569">     569</a> </span><span class="lineNoCov">              0 :             die (var_export (self::$oldErrorHandler));                                                                                </span>
-<span class="lineNum" id="container570"><a name="570"></a><a href="#570" id="line570">     570</a> </span><span class="lineDeadCode">                :             set_error_handler(self::$oldErrorHandler);                                                                                </span>
-<span class="lineNum" id="container571"><a name="571"></a><a href="#571" id="line571">     571</a> </span><span class="lineDeadCode">                :         }else{                                                                                                                        </span>
-<span class="lineNum" id="container572"><a name="572"></a><a href="#572" id="line572">     572</a> </span><span class="lineNoCov">              0 :             restore_error_handler();                                                                                                  </span>
-<span class="lineNum" id="container573"><a name="573"></a><a href="#573" id="line573">     573</a> </span>                :         }                                                                                                                             
-<span class="lineNum" id="container574"><a name="574"></a><a href="#574" id="line574">     574</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container575"><a name="575"></a><a href="#575" id="line575">     575</a> </span>                :     public static function register_exception_handler (){                                                                             
-<span class="lineNum" id="container576"><a name="576"></a><a href="#576" id="line576">     576</a> </span><span class="lineNoCov">              0 :         self::$oldExceptionHandler = set_exception_handler ('Oktopus\\Debug::exception_handler');                                     </span>
-<span class="lineNum" id="container577"><a name="577"></a><a href="#577" id="line577">     577</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container578"><a name="578"></a><a href="#578" id="line578">     578</a> </span>                :     public static function unregister_exception_handler (){                                                                           
-<span class="lineNum" id="container579"><a name="579"></a><a href="#579" id="line579">     579</a> </span><span class="lineNoCov">              0 :         if (self::$oldExceptionHandler !== null){                                                                                     </span>
-<span class="lineNum" id="container580"><a name="580"></a><a href="#580" id="line580">     580</a> </span><span class="lineNoCov">              0 :             set_exception_handler(self::$oldExceptionHandler);                                                                        </span>
-<span class="lineNum" id="container581"><a name="581"></a><a href="#581" id="line581">     581</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                        </span>
-<span class="lineNum" id="container582"><a name="582"></a><a href="#582" id="line582">     582</a> </span><span class="lineNoCov">              0 :             restore_exception_handler();                                                                                              </span>
-<span class="lineNum" id="container583"><a name="583"></a><a href="#583" id="line583">     583</a> </span>                :         }                                                                                                                             
-<span class="lineNum" id="container584"><a name="584"></a><a href="#584" id="line584">     584</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container562"><a name="562"></a><a href="#562" id="line562">     562</a> </span>                :     /**                                                                                                                               
+<span class="lineNum" id="container563"><a name="563"></a><a href="#563" id="line563">     563</a> </span>                :      * The old error handler                                                                                                          
+<span class="lineNum" id="container564"><a name="564"></a><a href="#564" id="line564">     564</a> </span>                :      */                                                                                                                               
+<span class="lineNum" id="container565"><a name="565"></a><a href="#565" id="line565">     565</a> </span>                :     private static $oldErrorHandler;                                                                                                  
+<span class="lineNum" id="container566"><a name="566"></a><a href="#566" id="line566">     566</a> </span>                :     private static $oldExceptionHandler;                                                                                              
+<span class="lineNum" id="container567"><a name="567"></a><a href="#567" id="line567">     567</a> </span>                :     public static function register_error_handler (){                                                                                 
+<span class="lineNum" id="container568"><a name="568"></a><a href="#568" id="line568">     568</a> </span><span class="lineNoCov">              0 :         self::$oldErrorHandler = set_error_handler ('Oktopus\\Debug::error_handler');                                                 </span>
+<span class="lineNum" id="container569"><a name="569"></a><a href="#569" id="line569">     569</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container570"><a name="570"></a><a href="#570" id="line570">     570</a> </span>                :     public static function unregister_error_handler (){                                                                               
+<span class="lineNum" id="container571"><a name="571"></a><a href="#571" id="line571">     571</a> </span><span class="lineNoCov">              0 :         if (isset (self::$oldErrorHandler)){                                                                                          </span>
+<span class="lineNum" id="container572"><a name="572"></a><a href="#572" id="line572">     572</a> </span><span class="lineNoCov">              0 :             set_error_handler(self::$oldErrorHandler);                                                                                </span>
+<span class="lineNum" id="container573"><a name="573"></a><a href="#573" id="line573">     573</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                        </span>
+<span class="lineNum" id="container574"><a name="574"></a><a href="#574" id="line574">     574</a> </span><span class="lineNoCov">              0 :             restore_error_handler();                                                                                                  </span>
+<span class="lineNum" id="container575"><a name="575"></a><a href="#575" id="line575">     575</a> </span>                :         }                                                                                                                             
+<span class="lineNum" id="container576"><a name="576"></a><a href="#576" id="line576">     576</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container577"><a name="577"></a><a href="#577" id="line577">     577</a> </span>                :     public static function register_exception_handler (){                                                                             
+<span class="lineNum" id="container578"><a name="578"></a><a href="#578" id="line578">     578</a> </span><span class="lineNoCov">              0 :         self::$oldExceptionHandler = set_exception_handler ('Oktopus\\Debug::exception_handler');                                     </span>
+<span class="lineNum" id="container579"><a name="579"></a><a href="#579" id="line579">     579</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container580"><a name="580"></a><a href="#580" id="line580">     580</a> </span>                :     public static function unregister_exception_handler (){                                                                           
+<span class="lineNum" id="container581"><a name="581"></a><a href="#581" id="line581">     581</a> </span><span class="lineNoCov">              0 :         if (isset (self::$oldExceptionHandler)){                                                                                      </span>
+<span class="lineNum" id="container582"><a name="582"></a><a href="#582" id="line582">     582</a> </span><span class="lineNoCov">              0 :             set_exception_handler(self::$oldExceptionHandler);                                                                        </span>
+<span class="lineNum" id="container583"><a name="583"></a><a href="#583" id="line583">     583</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                        </span>
+<span class="lineNum" id="container584"><a name="584"></a><a href="#584" id="line584">     584</a> </span><span class="lineNoCov">              0 :             restore_exception_handler();                                                                                              </span>
+<span class="lineNum" id="container585"><a name="585"></a><a href="#585" id="line585">     585</a> </span>                :         }                                                                                                                             
+<span class="lineNum" id="container586"><a name="586"></a><a href="#586" id="line586">     586</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
 
 </pre>
         </td>
@@ -1006,7 +1008,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 14:07:54 CET 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 14:13:05 CET 2011.</td></tr>
     </table>
 
     <br />

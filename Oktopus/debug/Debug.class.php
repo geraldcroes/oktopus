@@ -559,14 +559,16 @@ class Debug {
 		
 	}
 	
-	private static $oldErrorHandler = null;
-	private static $oldExceptionHandler = null;
+	/**
+	 * The old error handler
+	 */
+	private static $oldErrorHandler;
+	private static $oldExceptionHandler;
 	public static function register_error_handler (){
 		self::$oldErrorHandler = set_error_handler ('Oktopus\\Debug::error_handler');
 	}
 	public static function unregister_error_handler (){
-		if (self::$oldErrorHandler !== null){
-			die (var_export (self::$oldErrorHandler));
+		if (isset (self::$oldErrorHandler)){
 			set_error_handler(self::$oldErrorHandler);
 		}else{
 			restore_error_handler();
@@ -576,7 +578,7 @@ class Debug {
 		self::$oldExceptionHandler = set_exception_handler ('Oktopus\\Debug::exception_handler');
 	}
 	public static function unregister_exception_handler (){
-		if (self::$oldExceptionHandler !== null){
+		if (isset (self::$oldExceptionHandler)){
 			set_exception_handler(self::$oldExceptionHandler);
 		}else{
 			restore_exception_handler();
