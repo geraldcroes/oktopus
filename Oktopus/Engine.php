@@ -166,14 +166,16 @@ class Autoloader {
 	 * @throws AutoloaderException if the given path is not writable
 	 */
 	public function setCachePath ($pTmp){
-		if (! file_exists ($pTmp)){
-			if (! @mkdir ($pTmp, 0755, true)){
-				throw new AutoloaderException('Cannot create the given CachePath ['.$pTmp.']');
-			}			
-		}elseif (!is_writable ($pTmp)){
-			throw new AutoloaderException('Cannot write in given CachePath directory ['.$pTmp.']');
+		if ($pTmp !== null){
+			if (! file_exists ($pTmp)){
+				if (! @mkdir ($pTmp, 0755, true)){
+					throw new AutoloaderException('Cannot create the given CachePath ['.$pTmp.']');
+				}			
+			}elseif (!is_writable ($pTmp)){
+				throw new AutoloaderException('Cannot write in given CachePath directory ['.$pTmp.']');
+			}
 		}
-		$this->_cachePath = $pTmp;
+		$this->_cachePath = ($pTmp !== null && substr ($pTmp, -1) !== '/') ? $pTmp.'/' : $pTmp;
 		return $this;
 	}
 
@@ -316,40 +318,10 @@ class Autoloader {
 	 * @param string $pRecurse
 	 */
 	private function _makeFileName ($pDirectoryName, $pRecurse){
-		return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).substr (realpath ($pDirectoryName).'index.php', 1);
-	}
-
-	/**
-	 * Recherche de toutes les classes dans les répertoires donnés
-	 */
-	private function _includesAll (){
-		//Inclusion de toute les classes connues
-		foreach ($this->_directories as $directory=>$recursive){
-			$directories = new \AppendIterator ();
-
-			//On ajoute tous les chemins à parcourir
-			if ($recursive){
-				$directories->append (new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator ($directory)));
-			}else{
-				$directories->append (new \DirectoryIterator ($directory));
-			}
-
-			//On va filtrer les fichiers php depuis les répertoires trouvés.
-			$files = new LambdaFilterIteratorDecorator($directories);
-			$files->setLambda(function ($filterIterator) {
-				if (substr ($filterIterator->current (), -1 * strlen ('.php')) === '.php'){
-					return is_readable ($filterIterator->current ());
-				}
-				return false;
-			}, false);
-
-			foreach ($files as $fileName){
-				$classes = $this->_classHunter->find ((string) $fileName);
-				foreach ($classes as $className=>$fileName){
-					$this->_classes[strtolower ($className)] = $fileName;
-				}
-			}
+		if ($this->_cachePath !== null){
+			return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).substr (realpath ($pDirectoryName).'index.php', 1);
 		}
+		return null;
 	}
 
 	/**
@@ -364,16 +336,18 @@ class Autoloader {
 	 * @throws AutoloaderException
 	 */
 	private function _saveIncache ($directoryIndex, $classes, $allClasses, $fileName){
-		$toSave = '<?php $classes = '.var_export ($classes, true).';';
-		$toSave .= '$allClasses = '.var_export ($allClasses, true).';';
-		$toSave .= '$directoryIndex = '.var_export ($directoryIndex, true).';';
-
-		if (!file_exists (dirname ($fileName))){
-			mkdir (dirname ($fileName), 0755, true);
-		}
-
-		if (file_put_contents ($fileName, $toSave, true) === false){
-			throw new AutoloaderException ('Cannot write cache file '.$this->_cachePath.'directoriesautoloader.cache.php');
+		if ($fileName !== null){
+			$toSave = '<?php $classes = '.var_export ($classes, true).';';
+			$toSave .= '$allClasses = '.var_export ($allClasses, true).';';
+			$toSave .= '$directoryIndex = '.var_export ($directoryIndex, true).';';
+	
+			if (!file_exists (dirname ($fileName))){
+				mkdir (dirname ($fileName), 0755, true);
+			}
+	
+			if (file_put_contents ($fileName, $toSave, true) === false){
+				throw new AutoloaderException ('Cannot write cache file '.$fileName);
+			}
 		}
 	}
 
@@ -446,14 +420,13 @@ class Autoloader {
 	 * @param boolean $pRecursive if we'll look recursively into the class tree
 	 */
 	public function addPath ($pDirectory, $pRecursive = true, $pMustExists = true){
-		if (! is_readable ($pDirectory)){
-			if ($pMustExists){
-				//The directory must exists. Raise an exception.
-				throw new AutoloaderException('Cannot read from ['.$pDirectory.']');
-			}
+		if (! is_readable ($pDirectory) && $pMustExists){
+			//The directory must exists. Raise an exception.
+			throw new AutoloaderException('Cannot read from ['.$pDirectory.']');
+		}else{
+			$this->_directories[$pDirectory] = $pRecursive ? true : false;
+			return $this;
 		}
-		$this->_directories[$pDirectory] = $pRecursive ? true : false;
-		return $this;
 	}
 
 	/**
@@ -484,6 +457,13 @@ class Engine {
 	 * The production mode of Oktopus
 	 */
 	const MODE_PRODUCTION = 1;
+
+	/**
+	 * The Oktopus Version
+	 * 
+	 * @var string
+	 */
+	const VERSION = '0.1';
 	
 	/**
 	 * The charset of Oktopus
@@ -540,6 +520,15 @@ class Engine {
 	public static function getTemporaryFilesPath (){
 		return self::$_temporaryFilesPath;
 	}
+	
+	/**
+	 * Sets the temporary files path
+	 * @param string $pTmpPath the path to set
+	 */
+	public static function setTemporaryFilesPath ($pTmpPath){
+		self::$_temporaryFilesPath = $pTmpPath;
+		self::autoloader ()->setCachePath($pTmpPath); 
+	}
 
 	/**
 	 * The engine Autoloader instance 
@@ -562,6 +551,7 @@ class Engine {
 	 * Gets the configured mode for Oktopus
 	 * @see Oktopus\Engine::MODE_DEBUG
 	 * @see Oktopus\Engine::MODE_PRODUCTION
+	 * @see Oktopus\Engine::MODE_RESET
 	 * @see Oktopus\Engine::start ();  
 	 */
 	public static function getMode (){
