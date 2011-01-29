@@ -16,5 +16,8 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse ($autoloader2->isRegistered());
 		$autoloader2->register();
 		$this->assertTrue($autoloader2->isRegistered());
+		$autoloader2->unregister ();
+		$this->assertFalse ($autoloader2->isRegistered());
+		$this->assertTrue($autoloader->isRegistered());
 	}
 }

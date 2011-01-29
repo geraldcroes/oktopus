@@ -44,7 +44,7 @@ class Autoloader {
 	 * Remove Autoloader from the autoload stack
 	 */
 	public function unregister (){
-		spl_autoload_unregister (array (self::$_instance, 'autoload'));
+		spl_autoload_unregister (array ($this, 'autoload'));
 	}
 
 	/**
@@ -84,7 +84,7 @@ class Autoloader {
 			}			
 		}else{
 			if (!is_writable ($pTmp)){
-				throw new AutoloaderException('Cannot write in given CachePath ['.$pTmp.']');
+				throw new AutoloaderException('Cannot write in given CachePath directory ['.$pTmp.']');
 			}
 		}
 		$this->_cachePath = $pTmp;
@@ -129,6 +129,8 @@ class Autoloader {
 		}else{
 			$directories = new \DirectoryIterator ($pDirectoryName);
 		}
+
+		require_once (OKTOPUS_PATH.'engine/decorator/LambdaFilterIteratorDecorator.php');
 		$files = new LambdaFilterIteratorDecorator($directories);
 		$files->setLambda(function ($filterIterator) {
 			if (substr ($filterIterator->current (), -1 * strlen ('.php')) === '.php'){
