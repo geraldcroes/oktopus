@@ -26,4 +26,18 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		}catch(Oktopus\AutoloaderException $e){
 		}
 	}
+	
+	/**
+	 * @expectedException Oktopus\AutoloaderException 
+	 */
+	public function testAutoloadNotWritablePath (){
+		$autoloader = new Autoloader('/etc/', new ClassParserForPHP5_3());
+	}
+	
+	/**
+	 * @expectedException Oktopus\AutoloaderException 
+	 */
+	public function testAutoloadNotMkDir (){
+		$autoloader = new Autoloader('/etc/OKTOPUS/', new ClassParserForPHP5_3());
+	}
 }

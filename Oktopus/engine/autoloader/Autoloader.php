@@ -82,10 +82,8 @@ class Autoloader {
 			if (! mkdir ($pTmp, 0755, true)){
 				throw new AutoloaderException('Cannot create the given CachePath ['.$pTmp.']');
 			}			
-		}else{
-			if (!is_writable ($pTmp)){
-				throw new AutoloaderException('Cannot write in given CachePath directory ['.$pTmp.']');
-			}
+		}elseif (!is_writable ($pTmp)){
+			throw new AutoloaderException('Cannot write in given CachePath directory ['.$pTmp.']');
 		}
 		$this->_cachePath = $pTmp;
 		return $this;
