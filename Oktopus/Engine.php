@@ -76,51 +76,6 @@ class ClassParserForPHP5_3 implements IClassParser {
 }
 
 /**
- * FilterIterator wich accept a lambda to implement the accept method
- *
- * @author geraldcroes
- */
-class LambdaFilterIteratorDecorator extends \FilterIterator {
-	/**
-	 * Lambda method to accept elements 
-	 */
-	private $_accept = null;
-
-	/**
-	 * Accept or not the current element
-	 * 
-	 * Uses the lambda function previously set.
-	 * @throws ObjectNotReadyException
-	 */
-	public function accept (){
-		if (!isset ($this->_accept)){
-			throw new ObjectNotReadyException('The iterator is not ready, you have to set a valid callback method using setLambda ($pCallBack)');
-		}
-		$func = $this->_accept;
-		return $func ($this);
-	}
-
-	/**
-	 * Defines the lambda method "accept" of the decorator
-	 *
-	 * @param lamda   $pCallBack
-	 * @param boolean $pCheck Says if LambdaFilterIteratorDecorator should check for your lamda function. If not and you're lamda is not correct, it may lead to Fatal Errors.
-	 * @throws \InvalidArgumentException
-	 */
-	public function setLambda ($pCallBack, $pCheck = true){
-		try {
-			$reflection = new \ReflectionFunction($pCallBack);
-			if ($reflection->getNumberOfParameters() !== 1){
-				throw new \InvalidArgumentException('Given callback should accept one parameter (the filteriterator object)');
-			}
-			$this->_accept = $pCallBack;
-		}catch (ReflectionException $e){
-			throw new \InvalidArgumentException('Given parameter is not a valid lambda');
-		}
-	}
-}
-
-/**
  * Base exception for Autolaoding errors
  *
  * @author geraldcroes
@@ -203,7 +158,7 @@ class Autoloader {
 	 */
 	public function setCachePath ($pTmp){
 		if (! file_exists ($pTmp)){
-			if (! mkdir ($pTmp, 0755, true)){
+			if (! @mkdir ($pTmp, 0755, true)){
 				throw new AutoloaderException('Cannot create the given CachePath ['.$pTmp.']');
 			}			
 		}elseif (!is_writable ($pTmp)){
@@ -247,21 +202,13 @@ class Autoloader {
 
 		//Prepare the iterator to compile all the directory classes
 		if ($pRecurse){
-			$directories = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator ($pDirectoryName));
+			$directories = new \RegexIterator(new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator ($pDirectoryName)), '/\\.php$/');
 		}else{
-			$directories = new \DirectoryIterator ($pDirectoryName);
+			$directories = new \RegexIterator(new \DirectoryIterator ($pDirectoryName), '/\\.php$/');
 		}
-
-		$files = new LambdaFilterIteratorDecorator($directories);
-		$files->setLambda(function ($filterIterator) {
-			if (substr ($filterIterator->current (), -1 * strlen ('.php')) === '.php'){
-				return is_readable ($filterIterator->current ());
-			}
-			return false;
-		}, false);
 		
 		//We iterate in the directories to find files.
-		foreach ($files as $fileName){
+		foreach ($directories as $fileName){
 			if ($checkContent){
 				if (!array_key_exists ((string) $fileName, $directoryIndex) || 
 					 ($directoryIndex[(string)$fileName] < ($fileMTime = $fileName->getMTime ()))){
@@ -550,18 +497,23 @@ class Engine {
 		}else{
 			self::$_mode = $pMode;
 		}
-		
+
 		if ($pMode === self::MODE_RESET){
 			rmdir($pTmpPath);
 		}
-		
+
 		if ($pMode === self::MODE_DEBUG){
 			ini_set ('display_errors', 1);
 			error_reporting (E_ALL | E_STRICT);
 		}
 
-		self::$_autoloader = new Autoloader ('/tmp/', new ClassParserForPHP5_3());
-		self::$_autoloader->addPath (__DIR__, true)->register ();
+		self::$_autoloader = new Autoloader($pTmpPath, new ClassParserForPHP5_3());
+		self::$_autoloader->addPath(__DIR__, true)->register ();
+		
+		if ($pMode === self::MODE_DEBUG && self::$_autoloader->autoload ('Oktopus\\Debug')){
+			Debug::register_error_handler();
+			Debug::register_exception_handler();
+		}
 	}
 
 	private static $_autoloader = false;

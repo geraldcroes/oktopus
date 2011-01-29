@@ -78,7 +78,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 269</td>
+          <td class="coverNumLo">0 / 266</td>
         </tr>
 
         <tr>
@@ -112,7 +112,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 269</td>
+          <td class="coverNumLo">0 / 266</td>
         </tr>
 
         <tr>
@@ -288,11 +288,11 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 5</td>
+          <td class="coverNumLo">0 / 1</td>
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#522">public static function error_handler($code, $error, $file = NULL, $line = NULL, $context = null)</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#518">public static function error_handler($code, $error, $file = NULL, $line = NULL, $context = null)</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -314,7 +314,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#569">public static function register_error_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#564">public static function register_error_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -336,7 +336,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#572">public static function unregister_error_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#567">public static function unregister_error_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -358,7 +358,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#577">public static function register_exception_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#575">public static function register_exception_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -380,7 +380,7 @@
         </tr>
 
         <tr>
-          <td class="coverFile" colspan="4">&nbsp;<a href="#580">public static function unregister_exception_handler ()</a></td>
+          <td class="coverFile" colspan="4">&nbsp;<a href="#578">public static function unregister_exception_handler ()</a></td>
           <td class="coverBar" align="center" width="100">
             <table border="0" cellspacing="0" cellpadding="1">
               <tr>
@@ -398,7 +398,7 @@
             </table>
           </td>
           <td class="coverPerLo">0.00%</td>
-          <td class="coverNumLo">0 / 4</td>
+          <td class="coverNumLo">0 / 5</td>
         </tr>
 
 
@@ -876,7 +876,7 @@
 <span class="lineNum" id="container460"><a name="460"></a><a href="#460" id="line460">     460</a> </span>                :             // Start an output buffer                                                                                                 
 <span class="lineNum" id="container461"><a name="461"></a><a href="#461" id="line461">     461</a> </span><span class="lineNoCov">              0 :             ob_start();                                                                                                               </span>
 <span class="lineNum" id="container462"><a name="462"></a><a href="#462" id="line462">     462</a> </span>                :             // Include the exception HTML                                                                                             
-<span class="lineNum" id="container463"><a name="463"></a><a href="#463" id="line463">     463</a> </span><span class="lineNoCov">              0 :             include OKTOPUS_PATH.'debug/error.view.php';                                                                              </span>
+<span class="lineNum" id="container463"><a name="463"></a><a href="#463" id="line463">     463</a> </span><span class="lineNoCov">              0 :             include __DIR__.'/error.view.php';                                                                                        </span>
 <span class="lineNum" id="container464"><a name="464"></a><a href="#464" id="line464">     464</a> </span>                :             // Display the contents of the output buffer                                                                              
 <span class="lineNum" id="container465"><a name="465"></a><a href="#465" id="line465">     465</a> </span><span class="lineNoCov">              0 :             echo ob_get_clean();                                                                                                      </span>
 <span class="lineNum" id="container466"><a name="466"></a><a href="#466" id="line466">     466</a> </span>                :                                                                                                                                       
@@ -921,82 +921,82 @@
 <span class="lineNum" id="container505"><a name="505"></a><a href="#505" id="line505">     505</a> </span>                :      */                                                                                                                               
 <span class="lineNum" id="container506"><a name="506"></a><a href="#506" id="line506">     506</a> </span>                :     public static function debug_path($file)                                                                                          
 <span class="lineNum" id="container507"><a name="507"></a><a href="#507" id="line507">     507</a> </span>                :     {                                                                                                                                 
-<span class="lineNum" id="container508"><a name="508"></a><a href="#508" id="line508">     508</a> </span><span class="lineNoCov">              0 :         if (strpos($file, OKTOPUS_PATH) === 0)                                                                                        </span>
-<span class="lineNum" id="container509"><a name="509"></a><a href="#509" id="line509">     509</a> </span><span class="lineNoCov">              0 :         {                                                                                                                             </span>
-<span class="lineNum" id="container510"><a name="510"></a><a href="#510" id="line510">     510</a> </span><span class="lineNoCov">              0 :             $file = 'Oktopus/'.DIRECTORY_SEPARATOR.substr($file, strlen(OKTOPUS_PATH));                                               </span>
-<span class="lineNum" id="container511"><a name="511"></a><a href="#511" id="line511">     511</a> </span><span class="lineNoCov">              0 :         }                                                                                                                             </span>
-<span class="lineNum" id="container512"><a name="512"></a><a href="#512" id="line512">     512</a> </span><span class="lineNoCov">              0 :         return $file;                                                                                                                 </span>
-<span class="lineNum" id="container513"><a name="513"></a><a href="#513" id="line513">     513</a> </span><span class="lineDeadCode">                :     }                                                                                                                                 </span>
-<span class="lineNum" id="container514"><a name="514"></a><a href="#514" id="line514">     514</a> </span>                :                                                                                                                                       
-<span class="lineNum" id="container515"><a name="515"></a><a href="#515" id="line515">     515</a> </span>                :     /**                                                                                                                               
-<span class="lineNum" id="container516"><a name="516"></a><a href="#516" id="line516">     516</a> </span>                :      * PHP error handler, converts all errors into ErrorExceptions. This handler                                                      
-<span class="lineNum" id="container517"><a name="517"></a><a href="#517" id="line517">     517</a> </span>                :      * respects error_reporting settings.                                                                                             
-<span class="lineNum" id="container518"><a name="518"></a><a href="#518" id="line518">     518</a> </span>                :      *                                                                                                                                
-<span class="lineNum" id="container519"><a name="519"></a><a href="#519" id="line519">     519</a> </span>                :      * @throws  ErrorException                                                                                                        
-<span class="lineNum" id="container520"><a name="520"></a><a href="#520" id="line520">     520</a> </span>                :      * @return  TRUE                                                                                                                  
-<span class="lineNum" id="container521"><a name="521"></a><a href="#521" id="line521">     521</a> </span>                :      */                                                                                                                               
-<span class="lineNum" id="container522"><a name="522"></a><a href="#522" id="line522">     522</a> </span>                :     public static function error_handler($code, $error, $file = NULL, $line = NULL, $context = null)                                  
-<span class="lineNum" id="container523"><a name="523"></a><a href="#523" id="line523">     523</a> </span>                :     {                                                                                                                                 
-<span class="lineNum" id="container524"><a name="524"></a><a href="#524" id="line524">     524</a> </span><span class="lineNoCov">              0 :         if (! (error_reporting () &amp; $code)){                                                                                          </span>
-<span class="lineNum" id="container525"><a name="525"></a><a href="#525" id="line525">     525</a> </span><span class="lineNoCov">              0 :             return true;                                                                                                              </span>
-<span class="lineNum" id="container526"><a name="526"></a><a href="#526" id="line526">     526</a> </span><span class="lineDeadCode">                :         }                                                                                                                             </span>
-<span class="lineNum" id="container527"><a name="527"></a><a href="#527" id="line527">     527</a> </span>                :         switch ($code){                                                                                                               
-<span class="lineNum" id="container528"><a name="528"></a><a href="#528" id="line528">     528</a> </span><span class="lineNoCov">              0 :             case E_ERROR:                                                                                                             </span>
-<span class="lineNum" id="container529"><a name="529"></a><a href="#529" id="line529">     529</a> </span><span class="lineNoCov">              0 :             case E_USER_ERROR:                                                                                                        </span>
-<span class="lineNum" id="container530"><a name="530"></a><a href="#530" id="line530">     530</a> </span><span class="lineNoCov">              0 :                 $type = 'Error';                                                                                                      </span>
+<span class="lineNum" id="container508"><a name="508"></a><a href="#508" id="line508">     508</a> </span><span class="lineNoCov">              0 :         return $file;                                                                                                                 </span>
+<span class="lineNum" id="container509"><a name="509"></a><a href="#509" id="line509">     509</a> </span><span class="lineDeadCode">                :     }                                                                                                                                 </span>
+<span class="lineNum" id="container510"><a name="510"></a><a href="#510" id="line510">     510</a> </span>                :                                                                                                                                       
+<span class="lineNum" id="container511"><a name="511"></a><a href="#511" id="line511">     511</a> </span>                :     /**                                                                                                                               
+<span class="lineNum" id="container512"><a name="512"></a><a href="#512" id="line512">     512</a> </span>                :      * PHP error handler, converts all errors into ErrorExceptions. This handler                                                      
+<span class="lineNum" id="container513"><a name="513"></a><a href="#513" id="line513">     513</a> </span>                :      * respects error_reporting settings.                                                                                             
+<span class="lineNum" id="container514"><a name="514"></a><a href="#514" id="line514">     514</a> </span>                :      *                                                                                                                                
+<span class="lineNum" id="container515"><a name="515"></a><a href="#515" id="line515">     515</a> </span>                :      * @throws  ErrorException                                                                                                        
+<span class="lineNum" id="container516"><a name="516"></a><a href="#516" id="line516">     516</a> </span>                :      * @return  TRUE                                                                                                                  
+<span class="lineNum" id="container517"><a name="517"></a><a href="#517" id="line517">     517</a> </span>                :      */                                                                                                                               
+<span class="lineNum" id="container518"><a name="518"></a><a href="#518" id="line518">     518</a> </span>                :     public static function error_handler($code, $error, $file = NULL, $line = NULL, $context = null)                                  
+<span class="lineNum" id="container519"><a name="519"></a><a href="#519" id="line519">     519</a> </span>                :     {                                                                                                                                 
+<span class="lineNum" id="container520"><a name="520"></a><a href="#520" id="line520">     520</a> </span><span class="lineNoCov">              0 :         if (! (error_reporting () &amp; $code)){                                                                                          </span>
+<span class="lineNum" id="container521"><a name="521"></a><a href="#521" id="line521">     521</a> </span><span class="lineNoCov">              0 :             return true;                                                                                                              </span>
+<span class="lineNum" id="container522"><a name="522"></a><a href="#522" id="line522">     522</a> </span><span class="lineDeadCode">                :         }                                                                                                                             </span>
+<span class="lineNum" id="container523"><a name="523"></a><a href="#523" id="line523">     523</a> </span>                :         switch ($code){                                                                                                               
+<span class="lineNum" id="container524"><a name="524"></a><a href="#524" id="line524">     524</a> </span><span class="lineNoCov">              0 :             case E_ERROR:                                                                                                             </span>
+<span class="lineNum" id="container525"><a name="525"></a><a href="#525" id="line525">     525</a> </span><span class="lineNoCov">              0 :             case E_USER_ERROR:                                                                                                        </span>
+<span class="lineNum" id="container526"><a name="526"></a><a href="#526" id="line526">     526</a> </span><span class="lineNoCov">              0 :                 $type = 'Error';                                                                                                      </span>
+<span class="lineNum" id="container527"><a name="527"></a><a href="#527" id="line527">     527</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
+<span class="lineNum" id="container528"><a name="528"></a><a href="#528" id="line528">     528</a> </span><span class="lineNoCov">              0 :             case E_WARNING:                                                                                                           </span>
+<span class="lineNum" id="container529"><a name="529"></a><a href="#529" id="line529">     529</a> </span><span class="lineNoCov">              0 :             case E_USER_WARNING:                                                                                                      </span>
+<span class="lineNum" id="container530"><a name="530"></a><a href="#530" id="line530">     530</a> </span><span class="lineNoCov">              0 :                 $type = 'Warning';                                                                                                    </span>
 <span class="lineNum" id="container531"><a name="531"></a><a href="#531" id="line531">     531</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
-<span class="lineNum" id="container532"><a name="532"></a><a href="#532" id="line532">     532</a> </span><span class="lineNoCov">              0 :             case E_WARNING:                                                                                                           </span>
-<span class="lineNum" id="container533"><a name="533"></a><a href="#533" id="line533">     533</a> </span><span class="lineNoCov">              0 :             case E_USER_WARNING:                                                                                                      </span>
-<span class="lineNum" id="container534"><a name="534"></a><a href="#534" id="line534">     534</a> </span><span class="lineNoCov">              0 :                 $type = 'Warning';                                                                                                    </span>
+<span class="lineNum" id="container532"><a name="532"></a><a href="#532" id="line532">     532</a> </span><span class="lineNoCov">              0 :             case E_NOTICE:                                                                                                            </span>
+<span class="lineNum" id="container533"><a name="533"></a><a href="#533" id="line533">     533</a> </span><span class="lineNoCov">              0 :             case E_USER_NOTICE:                                                                                                       </span>
+<span class="lineNum" id="container534"><a name="534"></a><a href="#534" id="line534">     534</a> </span><span class="lineNoCov">              0 :                 $type = 'Notice';                                                                                                     </span>
 <span class="lineNum" id="container535"><a name="535"></a><a href="#535" id="line535">     535</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
-<span class="lineNum" id="container536"><a name="536"></a><a href="#536" id="line536">     536</a> </span><span class="lineNoCov">              0 :             case E_NOTICE:                                                                                                            </span>
-<span class="lineNum" id="container537"><a name="537"></a><a href="#537" id="line537">     537</a> </span><span class="lineNoCov">              0 :             case E_USER_NOTICE:                                                                                                       </span>
-<span class="lineNum" id="container538"><a name="538"></a><a href="#538" id="line538">     538</a> </span><span class="lineNoCov">              0 :                 $type = 'Notice';                                                                                                     </span>
-<span class="lineNum" id="container539"><a name="539"></a><a href="#539" id="line539">     539</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
-<span class="lineNum" id="container540"><a name="540"></a><a href="#540" id="line540">     540</a> </span><span class="lineNoCov">              0 :             case E_STRICT:                                                                                                            </span>
-<span class="lineNum" id="container541"><a name="541"></a><a href="#541" id="line541">     541</a> </span><span class="lineNoCov">              0 :                 $type = 'Strict';                                                                                                     </span>
+<span class="lineNum" id="container536"><a name="536"></a><a href="#536" id="line536">     536</a> </span><span class="lineNoCov">              0 :             case E_STRICT:                                                                                                            </span>
+<span class="lineNum" id="container537"><a name="537"></a><a href="#537" id="line537">     537</a> </span><span class="lineNoCov">              0 :                 $type = 'Strict';                                                                                                     </span>
+<span class="lineNum" id="container538"><a name="538"></a><a href="#538" id="line538">     538</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
+<span class="lineNum" id="container539"><a name="539"></a><a href="#539" id="line539">     539</a> </span><span class="lineNoCov">              0 :             case E_DEPRECATED:                                                                                                        </span>
+<span class="lineNum" id="container540"><a name="540"></a><a href="#540" id="line540">     540</a> </span><span class="lineNoCov">              0 :             case E_USER_DEPRECATED:                                                                                                   </span>
+<span class="lineNum" id="container541"><a name="541"></a><a href="#541" id="line541">     541</a> </span><span class="lineNoCov">              0 :                 $type = 'Deprecated';                                                                                                 </span>
 <span class="lineNum" id="container542"><a name="542"></a><a href="#542" id="line542">     542</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
-<span class="lineNum" id="container543"><a name="543"></a><a href="#543" id="line543">     543</a> </span><span class="lineNoCov">              0 :             case E_DEPRECATED:                                                                                                        </span>
-<span class="lineNum" id="container544"><a name="544"></a><a href="#544" id="line544">     544</a> </span><span class="lineNoCov">              0 :             case E_USER_DEPRECATED:                                                                                                   </span>
-<span class="lineNum" id="container545"><a name="545"></a><a href="#545" id="line545">     545</a> </span><span class="lineNoCov">              0 :                 $type = 'Deprecated';                                                                                                 </span>
-<span class="lineNum" id="container546"><a name="546"></a><a href="#546" id="line546">     546</a> </span><span class="lineNoCov">              0 :                 break;                                                                                                                </span>
-<span class="lineNum" id="container547"><a name="547"></a><a href="#547" id="line547">     547</a> </span><span class="lineNoCov">              0 :             default:                                                                                                                  </span>
-<span class="lineNum" id="container548"><a name="548"></a><a href="#548" id="line548">     548</a> </span><span class="lineNoCov">              0 :                 $type = 'Unknown Error';                                                                                              </span>
-<span class="lineNum" id="container549"><a name="549"></a><a href="#549" id="line549">     549</a> </span><span class="lineNoCov">              0 :         }                                                                                                                             </span>
-<span class="lineNum" id="container550"><a name="550"></a><a href="#550" id="line550">     550</a> </span><span class="lineNoCov">              0 :         $message = $error;                                                                                                            </span>
-<span class="lineNum" id="container551"><a name="551"></a><a href="#551" id="line551">     551</a> </span><span class="lineNoCov">              0 :         if (count ($trace = debug_backtrace ()) &gt; 2){                                                                                 </span>
-<span class="lineNum" id="container552"><a name="552"></a><a href="#552" id="line552">     552</a> </span><span class="lineNoCov">              0 :             $trace = array_slice ($trace, 2);                                                                                         </span>
-<span class="lineNum" id="container553"><a name="553"></a><a href="#553" id="line553">     553</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                        </span>
-<span class="lineNum" id="container554"><a name="554"></a><a href="#554" id="line554">     554</a> </span><span class="lineNoCov">              0 :             $trace = array ();                                                                                                        </span>
-<span class="lineNum" id="container555"><a name="555"></a><a href="#555" id="line555">     555</a> </span>                :         }                                                                                                                             
-<span class="lineNum" id="container556"><a name="556"></a><a href="#556" id="line556">     556</a> </span>                :                                                                                                                                       
-<span class="lineNum" id="container557"><a name="557"></a><a href="#557" id="line557">     557</a> </span>                :         // Start an output buffer                                                                                                     
-<span class="lineNum" id="container558"><a name="558"></a><a href="#558" id="line558">     558</a> </span><span class="lineNoCov">              0 :         ob_start();                                                                                                                   </span>
-<span class="lineNum" id="container559"><a name="559"></a><a href="#559" id="line559">     559</a> </span>                :         // Include the exception HTML                                                                                                 
-<span class="lineNum" id="container560"><a name="560"></a><a href="#560" id="line560">     560</a> </span><span class="lineNoCov">              0 :         include OKTOPUS_PATH.'debug/error.view.php';                                                                                  </span>
-<span class="lineNum" id="container561"><a name="561"></a><a href="#561" id="line561">     561</a> </span>                :         // Display the contents of the output buffer                                                                                  
-<span class="lineNum" id="container562"><a name="562"></a><a href="#562" id="line562">     562</a> </span><span class="lineNoCov">              0 :         echo ob_get_clean();                                                                                                          </span>
-<span class="lineNum" id="container563"><a name="563"></a><a href="#563" id="line563">     563</a> </span>                :                                                                                                                                       
-<span class="lineNum" id="container564"><a name="564"></a><a href="#564" id="line564">     564</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container565"><a name="565"></a><a href="#565" id="line565">     565</a> </span>                :                                                                                                                                       
-<span class="lineNum" id="container566"><a name="566"></a><a href="#566" id="line566">     566</a> </span>                :     private static $oldErrorHandler = false;                                                                                          
-<span class="lineNum" id="container567"><a name="567"></a><a href="#567" id="line567">     567</a> </span>                :     private static $oldExceptionHandler = false;                                                                                      
-<span class="lineNum" id="container568"><a name="568"></a><a href="#568" id="line568">     568</a> </span>                :                                                                                                                                       
-<span class="lineNum" id="container569"><a name="569"></a><a href="#569" id="line569">     569</a> </span>                :     public static function register_error_handler (){                                                                                 
-<span class="lineNum" id="container570"><a name="570"></a><a href="#570" id="line570">     570</a> </span><span class="lineNoCov">              0 :         self::$oldErrorHandler = set_error_handler ('Oktopus\\Debug::error_handler');                                                 </span>
-<span class="lineNum" id="container571"><a name="571"></a><a href="#571" id="line571">     571</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container572"><a name="572"></a><a href="#572" id="line572">     572</a> </span>                :     public static function unregister_error_handler (){                                                                               
-<span class="lineNum" id="container573"><a name="573"></a><a href="#573" id="line573">     573</a> </span><span class="lineNoCov">              0 :         if (self::$oldErrorHandler !== false){                                                                                        </span>
-<span class="lineNum" id="container574"><a name="574"></a><a href="#574" id="line574">     574</a> </span><span class="lineNoCov">              0 :             set_error_handler(self::$oldErrorHandler);                                                                                </span>
-<span class="lineNum" id="container575"><a name="575"></a><a href="#575" id="line575">     575</a> </span><span class="lineNoCov">              0 :         }                                                                                                                             </span>
-<span class="lineNum" id="container576"><a name="576"></a><a href="#576" id="line576">     576</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container577"><a name="577"></a><a href="#577" id="line577">     577</a> </span>                :     public static function register_exception_handler (){                                                                             
-<span class="lineNum" id="container578"><a name="578"></a><a href="#578" id="line578">     578</a> </span><span class="lineNoCov">              0 :         self::$oldExceptionHandler = set_exception_handler ('Oktopus\\Debug::exception_handler');                                     </span>
-<span class="lineNum" id="container579"><a name="579"></a><a href="#579" id="line579">     579</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
-<span class="lineNum" id="container580"><a name="580"></a><a href="#580" id="line580">     580</a> </span>                :     public static function unregister_exception_handler (){                                                                           
-<span class="lineNum" id="container581"><a name="581"></a><a href="#581" id="line581">     581</a> </span><span class="lineNoCov">              0 :         if (self::$oldExceptionHandler !== false){                                                                                    </span>
-<span class="lineNum" id="container582"><a name="582"></a><a href="#582" id="line582">     582</a> </span><span class="lineNoCov">              0 :             set_error_handler(self::$oldExceptionHandler);                                                                            </span>
-<span class="lineNum" id="container583"><a name="583"></a><a href="#583" id="line583">     583</a> </span><span class="lineNoCov">              0 :         }                                                                                                                             </span>
+<span class="lineNum" id="container543"><a name="543"></a><a href="#543" id="line543">     543</a> </span><span class="lineNoCov">              0 :             default:                                                                                                                  </span>
+<span class="lineNum" id="container544"><a name="544"></a><a href="#544" id="line544">     544</a> </span><span class="lineNoCov">              0 :                 $type = 'Unknown Error';                                                                                              </span>
+<span class="lineNum" id="container545"><a name="545"></a><a href="#545" id="line545">     545</a> </span><span class="lineNoCov">              0 :         }                                                                                                                             </span>
+<span class="lineNum" id="container546"><a name="546"></a><a href="#546" id="line546">     546</a> </span><span class="lineNoCov">              0 :         $message = $error;                                                                                                            </span>
+<span class="lineNum" id="container547"><a name="547"></a><a href="#547" id="line547">     547</a> </span><span class="lineNoCov">              0 :         if (count ($trace = debug_backtrace ()) &gt; 2){                                                                                 </span>
+<span class="lineNum" id="container548"><a name="548"></a><a href="#548" id="line548">     548</a> </span><span class="lineNoCov">              0 :             $trace = array_slice ($trace, 2);                                                                                         </span>
+<span class="lineNum" id="container549"><a name="549"></a><a href="#549" id="line549">     549</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                        </span>
+<span class="lineNum" id="container550"><a name="550"></a><a href="#550" id="line550">     550</a> </span><span class="lineNoCov">              0 :             $trace = array ();                                                                                                        </span>
+<span class="lineNum" id="container551"><a name="551"></a><a href="#551" id="line551">     551</a> </span>                :         }                                                                                                                             
+<span class="lineNum" id="container552"><a name="552"></a><a href="#552" id="line552">     552</a> </span>                :                                                                                                                                       
+<span class="lineNum" id="container553"><a name="553"></a><a href="#553" id="line553">     553</a> </span>                :         // Start an output buffer                                                                                                     
+<span class="lineNum" id="container554"><a name="554"></a><a href="#554" id="line554">     554</a> </span><span class="lineNoCov">              0 :         ob_start();                                                                                                                   </span>
+<span class="lineNum" id="container555"><a name="555"></a><a href="#555" id="line555">     555</a> </span>                :         // Include the exception HTML                                                                                                 
+<span class="lineNum" id="container556"><a name="556"></a><a href="#556" id="line556">     556</a> </span><span class="lineNoCov">              0 :         include __DIR__.'/error.view.php';                                                                                            </span>
+<span class="lineNum" id="container557"><a name="557"></a><a href="#557" id="line557">     557</a> </span>                :         // Display the contents of the output buffer                                                                                  
+<span class="lineNum" id="container558"><a name="558"></a><a href="#558" id="line558">     558</a> </span><span class="lineNoCov">              0 :         echo ob_get_clean();                                                                                                          </span>
+<span class="lineNum" id="container559"><a name="559"></a><a href="#559" id="line559">     559</a> </span>                :                                                                                                                                       
+<span class="lineNum" id="container560"><a name="560"></a><a href="#560" id="line560">     560</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container561"><a name="561"></a><a href="#561" id="line561">     561</a> </span>                :                                                                                                                                       
+<span class="lineNum" id="container562"><a name="562"></a><a href="#562" id="line562">     562</a> </span>                :     private static $oldErrorHandler = null;                                                                                           
+<span class="lineNum" id="container563"><a name="563"></a><a href="#563" id="line563">     563</a> </span>                :     private static $oldExceptionHandler = null;                                                                                       
+<span class="lineNum" id="container564"><a name="564"></a><a href="#564" id="line564">     564</a> </span>                :     public static function register_error_handler (){                                                                                 
+<span class="lineNum" id="container565"><a name="565"></a><a href="#565" id="line565">     565</a> </span><span class="lineNoCov">              0 :         self::$oldErrorHandler = set_error_handler ('Oktopus\\Debug::error_handler');                                                 </span>
+<span class="lineNum" id="container566"><a name="566"></a><a href="#566" id="line566">     566</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container567"><a name="567"></a><a href="#567" id="line567">     567</a> </span>                :     public static function unregister_error_handler (){                                                                               
+<span class="lineNum" id="container568"><a name="568"></a><a href="#568" id="line568">     568</a> </span><span class="lineNoCov">              0 :         if (self::$oldErrorHandler !== null){                                                                                         </span>
+<span class="lineNum" id="container569"><a name="569"></a><a href="#569" id="line569">     569</a> </span><span class="lineNoCov">              0 :             die (var_export (self::$oldErrorHandler));                                                                                </span>
+<span class="lineNum" id="container570"><a name="570"></a><a href="#570" id="line570">     570</a> </span><span class="lineDeadCode">                :             set_error_handler(self::$oldErrorHandler);                                                                                </span>
+<span class="lineNum" id="container571"><a name="571"></a><a href="#571" id="line571">     571</a> </span><span class="lineDeadCode">                :         }else{                                                                                                                        </span>
+<span class="lineNum" id="container572"><a name="572"></a><a href="#572" id="line572">     572</a> </span><span class="lineNoCov">              0 :             restore_error_handler();                                                                                                  </span>
+<span class="lineNum" id="container573"><a name="573"></a><a href="#573" id="line573">     573</a> </span>                :         }                                                                                                                             
+<span class="lineNum" id="container574"><a name="574"></a><a href="#574" id="line574">     574</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container575"><a name="575"></a><a href="#575" id="line575">     575</a> </span>                :     public static function register_exception_handler (){                                                                             
+<span class="lineNum" id="container576"><a name="576"></a><a href="#576" id="line576">     576</a> </span><span class="lineNoCov">              0 :         self::$oldExceptionHandler = set_exception_handler ('Oktopus\\Debug::exception_handler');                                     </span>
+<span class="lineNum" id="container577"><a name="577"></a><a href="#577" id="line577">     577</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
+<span class="lineNum" id="container578"><a name="578"></a><a href="#578" id="line578">     578</a> </span>                :     public static function unregister_exception_handler (){                                                                           
+<span class="lineNum" id="container579"><a name="579"></a><a href="#579" id="line579">     579</a> </span><span class="lineNoCov">              0 :         if (self::$oldExceptionHandler !== null){                                                                                     </span>
+<span class="lineNum" id="container580"><a name="580"></a><a href="#580" id="line580">     580</a> </span><span class="lineNoCov">              0 :             set_exception_handler(self::$oldExceptionHandler);                                                                        </span>
+<span class="lineNum" id="container581"><a name="581"></a><a href="#581" id="line581">     581</a> </span><span class="lineNoCov">              0 :         }else{                                                                                                                        </span>
+<span class="lineNum" id="container582"><a name="582"></a><a href="#582" id="line582">     582</a> </span><span class="lineNoCov">              0 :             restore_exception_handler();                                                                                              </span>
+<span class="lineNum" id="container583"><a name="583"></a><a href="#583" id="line583">     583</a> </span>                :         }                                                                                                                             
 <span class="lineNum" id="container584"><a name="584"></a><a href="#584" id="line584">     584</a> </span><span class="lineNoCov">              0 :     }                                                                                                                                 </span>
 
 </pre>
@@ -1006,7 +1006,7 @@
 
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <tr><td class="ruler"><img src="glass.png" width="3" height="3" alt=""></td></tr>
-      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 10:32:21 CET 2011.</td></tr>
+      <tr><td class="versionInfo">Generated by <a href="http://www.phpunit.de/">PHPUnit 3.4.5</a> and <a href="http://www.xdebug.org/">Xdebug 2.0.5</a> at Sat Jan 29 14:07:54 CET 2011.</td></tr>
     </table>
 
     <br />

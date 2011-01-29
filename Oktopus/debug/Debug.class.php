@@ -460,7 +460,7 @@ class Debug {
 			// Start an output buffer
 			ob_start();
 			// Include the exception HTML
-			include OKTOPUS_PATH.'debug/error.view.php';
+			include __DIR__.'/error.view.php';
 			// Display the contents of the output buffer
 			echo ob_get_clean();
 
@@ -505,10 +505,6 @@ class Debug {
 	 */
 	public static function debug_path($file)
 	{
-		if (strpos($file, OKTOPUS_PATH) === 0)
-		{
-			$file = 'Oktopus/'.DIRECTORY_SEPARATOR.substr($file, strlen(OKTOPUS_PATH));
-		}
 		return $file;
 	}
 	
@@ -557,29 +553,33 @@ class Debug {
 		// Start an output buffer
 		ob_start();
 		// Include the exception HTML
-		include OKTOPUS_PATH.'debug/error.view.php';
+		include __DIR__.'/error.view.php';
 		// Display the contents of the output buffer
 		echo ob_get_clean();
 		
 	}
 	
-	private static $oldErrorHandler = false;
-	private static $oldExceptionHandler = false;
-
+	private static $oldErrorHandler = null;
+	private static $oldExceptionHandler = null;
 	public static function register_error_handler (){
 		self::$oldErrorHandler = set_error_handler ('Oktopus\\Debug::error_handler');
 	}
 	public static function unregister_error_handler (){
-		if (self::$oldErrorHandler !== false){
+		if (self::$oldErrorHandler !== null){
+			die (var_export (self::$oldErrorHandler));
 			set_error_handler(self::$oldErrorHandler);
+		}else{
+			restore_error_handler();
 		}
 	}
 	public static function register_exception_handler (){
 		self::$oldExceptionHandler = set_exception_handler ('Oktopus\\Debug::exception_handler');
 	}
 	public static function unregister_exception_handler (){
-		if (self::$oldExceptionHandler !== false){
-			set_error_handler(self::$oldExceptionHandler);
+		if (self::$oldExceptionHandler !== null){
+			set_exception_handler(self::$oldExceptionHandler);
+		}else{
+			restore_exception_handler();
 		}
 	}
 }
