@@ -8,26 +8,20 @@ namespace Oktopus;
  */
 class Autoloader {
 	/**
-	 * Singleton
+	 * Construct
+	 * @param string $pTmpPath the path where to store the cache files
+	 * @param ICLassParser the class parser to find classes in PHPFiles.
 	 */
-	private final function __construct (){}
+	public final function __construct ($pTmpPath, IClassParser $pClassParser){
+		$this->_classHunter = $pClassParser;
+		$this->setCachePath($pTmpPath);	
+	}
+	
 	/**
-	 * Singleton
+	 * The class parser Oktopus will use
+	 * @var Oktopus\IClassParser
 	 */
-	private final function __sleep (){}
-	/**
-	 * Singleton
-	 */
-	private final function __clone (){}
-	/**
-	 * Singleton
-	 */
-	private final function __wakeup(){}
-	/**
-	 * Singleton
-	 * @var Oktopus\Autoloader
-	 */
-	private static $_instance = false;
+	private $_pClassParser;
 
 	/**
 	 * Register the autoloader to the stack
@@ -36,29 +30,16 @@ class Autoloader {
 	 * @throws Exception if the autoloader is already registered
 	 */
 	public function register (){
-		if (self::isRegistered ()){
+		if ($this->isRegistered ()){
+			require_once (OKTOPUS_PATH.'engine/exception/Exception.php');
+			require_once (__DIR__.'AutoaderException.php');
 			throw new Exception ('Oktopus\Autoloader is already registered');
 		}else{
-			spl_autoload_register (array (self::$_instance, 'autoload'));
+			spl_autoload_register (array ($this, 'autoload'));
 		}
 		return $this;
 	}
 	
-	/**
-	 * Gets a single instance of the Autoloader 
-	 * @return Autoloader
-	 */
-	public static function instance (){
-		if(self::$_instance === false){
-			include (OKTOPUS_PATH.'engine/codeparser/ClassParserForPHP5_3.class.php');
-			include (OKTOPUS_PATH.'engine/decorator/LambdaFilterIteratorDecorator.class.php');
-
-			self::$_instance = new Autoloader();
-			self::$_instance->_classHunter = new ClassParserForPHP5_3();
-		}
-		return self::$_instance;
-	} 
-
 	/**
 	 * Remove Autoloader from the autoload stack
 	 */
@@ -74,7 +55,7 @@ class Autoloader {
 		if (($stack = spl_autoload_functions ()) !== false){
 			foreach ($stack as $autoloadDescription){
 				if (is_array ($autoloadDescription)){
-					if (isset ($autoloadDescription[0]) && $autoloadDescription[0] === self::$_instance){
+					if (isset ($autoloadDescription[0]) && $autoloadDescription[0] === $this){
 						return true;
 					}
 				}

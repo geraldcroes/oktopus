@@ -4,6 +4,13 @@ namespace Oktopus;
 define ('OKTOPUS_PATH', __DIR__.'/');
 
 /**
+ * Base Oktopus Exception
+ *
+ * @author geraldcroes
+ */
+class Exception extends \Exception {}
+
+/**
  * Main base class for Oktopus
  * 
  * @author geraldcroes
@@ -56,13 +63,20 @@ class Engine {
 			error_reporting (E_ALL | E_STRICT);
 		}
 
-		require_once (OKTOPUS_PATH.'engine/autoloader/Autoloader.class.php');
-		Autoloader::instance ()->setCachePath ($pTmpPath)->addPath (OKTOPUS_PATH, true)->register ();
+		require_once (OKTOPUS_PATH.'engine/codeparser/ClassParserForPHP.php');
+		require_once (OKTOPUS_PATH.'engine/autoloader/Autoloader.php');
+		self::$_autoloader = new Autoloader ('/tmp/', new ClassParserForPHP5_3());
+		self::$_autoloader->addPath (OKTOPUS_PATH, true)->register ();
 		
-		if ($pMode === self::MODE_DEBUG && Autoloader::instance ()->autoload ('Oktopus\\Debug')){
+		if ($pMode === self::MODE_DEBUG && self::$_autoloader->autoload ('Oktopus\\Debug')){
 			Debug::register_error_handler();
 			Debug::register_exception_handler();
 		}
+	}
+
+	private static $_autoloader = false;
+	public static function autoloader (){
+		return self::$_autoloader;
 	}
 
 	/**

@@ -31,17 +31,17 @@ class LambdaFilterIteratorDecorator extends \FilterIterator {
 	 *
 	 * @param lamda   $pCallBack
 	 * @param boolean $pCheck Says if LambdaFilterIteratorDecorator should check for your lamda function. If not and you're lamda is not correct, it may lead to Fatal Errors.
-	 * @throws WrongParameterException
+	 * @throws \InvalidArgumentException
 	 */
 	public function setLambda ($pCallBack, $pCheck = true){
 		try {
 			$reflection = new \ReflectionFunction($pCallBack);
 			if ($reflection->getNumberOfParameters() !== 1){
-				throw new WrongParameterException('Given callback should accept one parameter (the filteriterator object)');
+				throw new \InvalidArgumentException('Given callback should accept one parameter (the filteriterator object)');
 			}
 			$this->_accept = $pCallBack;
 		}catch (ReflectionException $e){
-			throw new WrongParameterException('Given parameter is not a valid lambda');
+			throw new \InvalidArgumentException('Given parameter is not a valid lambda');
 		}
 	}
 }

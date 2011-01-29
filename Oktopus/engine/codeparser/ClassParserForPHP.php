@@ -1,12 +1,16 @@
 <?php
 namespace Oktopus;
 
+interface IClassParser {
+	public function find ($pFileName);
+}
+
 /**
  * Algorithm to find classes in a given file 
  * 
  * @author geraldcroes
  */
-class ClassParserForPHP5_3 {
+class ClassParserForPHP5_3 implements IClassParser {
 	/**
 	 * Find classes in $pFileName
 	 *

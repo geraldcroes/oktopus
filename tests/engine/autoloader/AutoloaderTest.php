@@ -1,12 +1,20 @@
-<?php 
+<?php
+use Oktopus\Autoloader;
+use Oktopus\ClassParserForPHP5_3;
+
 class AutoloaderTest extends PHPUnit_Framework_TestCase {
-	public function setUp (){
-		require ('./Oktopus/Engine.class.php');
-		require ('./Oktopus/engine/autoloader/Autoloader.class.php');
-		require ('./Oktopus/engine/exception/Exception.class.php');
-		require ('./Oktopus/engine/autoloader/AutoloaderException.class.php');
-	}
-	public function testAutoloaderInstance (){
-		Oktopus\Autoloader::instance ();
+	/**
+	 * Test register / unregister.
+	 */
+	public function testAutoloaderCreate (){
+		$autoloader = new Autoloader('/tmp/', new ClassParserForPHP5_3());
+		$this->assertFalse ($autoloader->isRegistered());
+		$autoloader->register();
+		$this->assertTrue($autoloader->isRegistered());
+		
+		$autoloader2 = new Autoloader('/tmp/', new ClassParserForPHP5_3());
+		$this->assertFalse ($autoloader2->isRegistered());
+		$autoloader2->register();
+		$this->assertTrue($autoloader2->isRegistered());
 	}
 }
