@@ -99,6 +99,15 @@ class Autoloader {
 	}
 	
 	/**
+	 * Gets the configured cache path
+	 * 
+	 * @return string
+	 */
+	public function getCachePath (){
+		return $this->_cachePath;
+	}
+	
+	/**
 	 * The class parser Oktopus will use
 	 * @var Oktopus\IClassParser
 	 */
@@ -501,6 +510,8 @@ class Engine {
 		if ($pMode === self::MODE_RESET){
 			rmdir($pTmpPath);
 		}
+		
+		self::$_temporaryFilesPath = $pTmpPath;
 
 		if ($pMode === self::MODE_DEBUG){
 			ini_set ('display_errors', 1);
@@ -515,9 +526,35 @@ class Engine {
 			Debug::register_exception_handler();
 		}
 	}
+	
+	/**
+	 * The temporary files path
+	 * @var string
+	 */
+	private static $_temporaryFilesPath;
 
+	/**
+	 * Gets the Temporary Files path
+	 * @return string
+	 */
+	public static function getTemporaryFilesPath (){
+		return self::$_temporaryFilesPath;
+	}
+
+	/**
+	 * The engine Autoloader instance 
+	 * @var Oktopus\Autoloader
+	 */
 	private static $_autoloader = false;
+
+	/**
+	 * Gets the Engine Autoloader instance
+	 * @return Oktopus\Autoloader
+	 */
 	public static function autoloader (){
+		if (self::$_autoloader === false){
+			throw new AutoloaderException ('The Engine Autoloader is not ready, you have to call Oktopus\\Engine::start () before');
+		}
 		return self::$_autoloader;
 	}
 

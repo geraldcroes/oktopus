@@ -40,4 +40,9 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	public function testAutoloadNotMkDir (){
 		$autoloader = new Autoloader('/etc/OKTOPUS/', new ClassParserForPHP5_3());
 	}
+	
+	public function testEngineAutoloader (){
+		//Check that the engine autoloader has the Oktopus temporary files path configured 
+		$this->assertEquals (Oktopus\Engine::getTemporaryFilesPath (), Oktopus\Engine::autoloader()->getCachePath ());
+	}
 }
