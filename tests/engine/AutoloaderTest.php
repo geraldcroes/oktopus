@@ -219,6 +219,16 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Oktopus\AutoloaderException
 	 */
 	public function testCannotWriteInCache (){
+		if (is_dir($dir = '/tmp/nowriteincache/')) {
+			chmod('/tmp/nowriteincache/', 0700); 
+     		$objects = scandir($dir); 
+     		foreach ($objects as $object) { 
+       			if ($object != "." && $object != "..") { 
+         			if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object); 
+       			}	 
+     		}
+		} 
+
 		$autoloader = new Autoloader ('/tmp/nowriteincache/', new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
 		chmod('/tmp/nowriteincache/', 0400);
@@ -233,8 +243,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		//cache should have been writen, going to make it read only
 		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
 		foreach ($directory as $element){
-			echo $element->getPathName(), "\n";
-			echo chmod($element->getPathName(), 0400);
+			chmod($element->getPathName(), 0400);
 		}
 
 		//now trying to raise the exception
