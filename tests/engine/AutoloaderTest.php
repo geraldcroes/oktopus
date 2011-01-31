@@ -214,4 +214,43 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('foo3\\foo', $values);
 		$this->assertEquals(5, count($values));
 	}
+	
+	/**
+	 * @expectedException Oktopus\AutoloaderException
+	 */
+	public function testCannotWriteInCache (){
+		$autoloader = new Autoloader ('/tmp/nowriteincache/', new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		chmod('/tmp/nowriteincache/', 0400);
+		$autoloader->includesAll ();
+	}
+	
+	public function testCannotWriteInCacheFile (){
+		$autoloader = new Autoloader ('/tmp/nowriteincache2/', new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		$autoloader->includesAll ();
+		
+		//cache should have been writen, going to make it read only
+		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+		foreach ($directory as $element){
+			echo $element->getPathName(), "\n";
+			echo chmod($element->getPathName(), 0400);
+		}
+
+		//now trying to raise the exception
+		$autoloader = new Autoloader ('/tmp/nowriteincache2/', new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		try{
+			$autoloader->includesAll ();
+			$this->fail('Includes all should raise an exception (should not be able to write its cache)');
+		}catch(Oktopus\AutoloaderException $e){
+			$this->assertTrue (true);//ok, raised an exception
+		}
+		
+		//Back to writable
+		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+		foreach ($directory as $element){
+			chmod($element->getPathName(), 0700);
+		}
+	}	
 }

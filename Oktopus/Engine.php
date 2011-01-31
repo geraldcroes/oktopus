@@ -340,7 +340,7 @@ class Autoloader {
 				}
 			}
 	
-			if (file_put_contents ($fileName, $toSave, true) === false){
+			if (@file_put_contents ($fileName, $toSave, true) === false){
 				throw new AutoloaderException ('Cannot write cache file '.$fileName);
 			}
 		}
