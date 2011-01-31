@@ -202,7 +202,8 @@ class Autoloader {
 		$listHasChanged = false;
 
 		//If we did not asks to force the autoload to look for classes, we'll include the cache if it exists 
-		if ($pForce === false && is_readable ($cacheFileName = $this->_makeFileName($pDirectoryName, $pRecurse))){
+		$cacheFileName = $this->_makeFileName($pDirectoryName, $pRecurse);
+		if ($pForce === false && is_readable ($cacheFileName)){
 			require ($cacheFileName);
 			$this->_directoryClasses[$pDirectoryName] = $allClasses;
 
@@ -428,12 +429,11 @@ class Autoloader {
 	 */
 	public function getKnownClasses (){
 		$toReturn = array();
-		foreach ($this->_directoryClasses as $name=>$classes){
+		foreach ($this->_directoryClasses as $fileName=>$classes){
 			if (count($classes)){
-				$toReturn[$name] = array_keys($classes);
+				$toReturn[$fileName] = array_keys($classes);
 			}			
 		}
-
 		return $toReturn;
 	}
 	

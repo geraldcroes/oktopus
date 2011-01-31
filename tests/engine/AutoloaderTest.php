@@ -141,9 +141,77 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$autoloader = new Autoloader ('/tmp/'.uniqid (), new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/resources/nowarning/');		
 		$this->assertTrue ($autoloader->autoload ('foo'));
-		
+
 		//Sees if the exception is raised while adding a path to look into that must exists
 		$this->setExpectedException ('Oktopus\\AutoloaderException');
 		$autoloader->addPath ('AZERTYQWERTY/this/does/not/exists/or/this/is/very/very/bad_luck/'.uniqid (), true);
-	}	
+	}
+
+	public function testKnownClasses (){
+		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+
+		//No class has been loaded.
+		$this->assertEquals (array(), $autoloader->getKnownClasses());
+		$this->assertTrue ($autoloader->autoload('foo'));
+
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+
+		$this->assertContains('foo', $values);
+		$this->assertContains('foo2', $values);
+		$this->assertContains('foo3', $values);
+		$this->assertEquals(3, count($values));
+	}
+	
+	public function testIncludesAll (){
+		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+
+		//No class has been loaded.
+		$this->assertEquals(array(), $autoloader->getKnownClasses());
+		$autoloader->includesAll();
+
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+		$this->assertContains('foo', $values);
+		$this->assertContains('foo2', $values);
+		$this->assertContains('foo3', $values);
+		$this->assertEquals(3, count($values));
+		
+		$autoloader->addPath(__DIR__.'/resources/nowarning/namespaces', false);
+
+		//Still not known, adding a path does not trigger the autoload
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+		$this->assertContains('foo', $values);
+		$this->assertContains('foo2', $values);
+		$this->assertContains('foo3', $values);
+		$this->assertEquals(3, count($values));
+		
+		$autoloader->autoload ('foo');
+		//Still not known, adding the cache should be enought
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+		$this->assertContains('foo', $values);
+		$this->assertContains('foo2', $values);
+		$this->assertContains('foo3', $values);
+		$this->assertEquals(3, count($values));
+		
+		$autoloader->includesAll ();
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+		$this->assertContains('foo', $values);
+		$this->assertContains('foo2', $values);
+		$this->assertContains('foo3', $values);
+		$this->assertEquals(3, count($values));
+		
+		list(, $values) = each($knownClasses);
+		$this->assertContains('foo\\foo', $values);
+		$this->assertContains('foofoo', $values);
+		$this->assertContains('foo2\\foo', $values);
+		$this->assertContains('foo2\\foo2', $values);
+		$this->assertContains('foo3\\foo', $values);
+		$this->assertEquals(5, count($values));
+	}
 }
