@@ -78,29 +78,52 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testAutoloaderWarningTwoSameClassesSameFile (){
-		$autoloader = new AUtoloader (null, new ClassParserForPHP5_3());
+		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/resources/warning/');
 		
-		$this->setExpectedException ('PHPUnit_Framework_ERROR');
+		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
+		$o = new ReflectionObject ($this);
+		$error_handler->expects ($this->atLeastOnce())->method ('error_handler');
+		set_error_handler (array($error_handler, 'error_handler'));
 		$this->assertFalse ($autoloader->autoload ('not_exists'));
 	}
 	
 	public function testAutoloaderWarningTwoSameClassesTwoFile (){
-		$autoloader = new AUtoloader (null, new ClassParserForPHP5_3());
+		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/resources/warning2files');
 		
-		$this->setExpectedException ('PHPUnit_Framework_ERROR');
+		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
+		$error_handler->expects ($this->atLeastOnce ())->method ('error_handler');
+		set_error_handler (array($error_handler, 'error_handler'));
 		$autoloader->autoload ('not_exists');
+		restore_error_handler ();
 	}
 	
 	public function testAutoloaderWarningTwoSameNamespaceClassesTwoFile (){
 		$autoloader = new AUtoloader (null, new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/resources/warningnamespace2files');
 		
-		$this->setExpectedException ('PHPUnit_Framework_ERROR');
+		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
+		$error_handler->expects ($this->atLeastOnce ())->method ('error_handler');
+		set_error_handler (array($error_handler, 'error_handler'));
 		$autoloader->autoload ('not_exists');
+		restore_error_handler ();
 	}
 	
+	public function testUpdatedFileTimeLoader (){
+		//Simple autoload with no cache
+		$autoloader = new Autoloader ('/tmp/UpdatedFileTimeLoader/', new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/');
+		$this->assertTrue ($autoloader->autoload ('foo'));
+		
+		sleep (1);
+		touch (__DIR__.'/resources/nowarning/foo.php');
+		$autoloader = new Autoloader ('/tmp/UpdatedFileTimeLoader/', new ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/resources/nowarning/');
+		$this->assertTrue ($autoloader->autoload ('foo', true));//asking to check files
+		restore_error_handler ();
+	}
+
 	public function testAutoloaderCacheAndNoCache (){
 		//Simple autoload with no cache
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
