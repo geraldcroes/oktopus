@@ -1,8 +1,8 @@
 <?php
-class foo {
+class Afoo {
 	
 }
 
-class foo2 {
+class Afoo2 {
 
 }

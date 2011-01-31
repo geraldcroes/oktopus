@@ -95,7 +95,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
 		$error_handler->expects ($this->atLeastOnce ())->method ('error_handler');
 		set_error_handler (array($error_handler, 'error_handler'));
-		$autoloader->autoload ('not_exists');
+		$this->assertTrue ($autoloader->autoload ('Afoo'));
 		restore_error_handler ();
 	}
 	
