@@ -168,7 +168,7 @@ class Autoloader {
 	public function setCachePath ($pTmp){
 		if ($pTmp !== null){
 			if (! file_exists ($pTmp)){
-				if (! @mkdir ($pTmp, 0755, true)){
+				if (@mkdir ($pTmp, 0755, true) === false){
 					throw new AutoloaderException('Cannot create the given CachePath ['.$pTmp.']');
 				}			
 			}elseif (!is_writable ($pTmp)){
@@ -335,7 +335,9 @@ class Autoloader {
 			$toSave .= '$directoryIndex = '.var_export ($directoryIndex, true).';';
 	
 			if (!file_exists (dirname ($fileName))){
-				mkdir (dirname ($fileName), 0755, true);
+				if (@mkdir (dirname ($fileName), 0755, true) === false){
+					throw new AutoloaderException ('Cannot create cache directory '.dirname($fileName));
+				}
 			}
 	
 			if (file_put_contents ($fileName, $toSave, true) === false){
