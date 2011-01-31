@@ -1,5 +1,5 @@
 <?php
-namespace foo;
+namespace foo2;
 
 class foo {
 }
@@ -12,9 +12,9 @@ class foo2 {
 
 namespace 
 
-foo2
+foo3
 
 ;
 
-class foo3 {
+class foo {
 }

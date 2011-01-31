@@ -178,91 +178,88 @@ class Autoloader {
 		$this->_cachePath = ($pTmp !== null && substr ($pTmp, -1) !== '/') ? $pTmp.'/' : $pTmp;
 		return $this;
 	}
+	
+	/**
+	 * Known classes by directories
+	 * 
+	 * @var array
+	 */
+	private $_directoryClasses = array ();
 
 	/**
 	 * Loads the Directory classes
 	 *  (check if the cache file exists, then check its content (debug mode) and compiles if needed)
-	 * 
+	 *  
+	 *  
 	 * @param string $pDirectoryName the directory name we want to compile
+	 * @param boolean $pRecurse if we want to find files recursively into the given path 
+	 * @param boolean $pForce if true, will look for files and compile every data without checking the cache files.
+	 * @param boolean $pCheckFiles if true, will check the MTime of each files to know if we should re-check for its classes, and will check for new / removed files.
 	 */
-	private function _loadDirectoryClasses ($pDirectoryName, $pRecurse, $pForce = false, $doNotCheck = false){
+	private function _loadDirectoryClasses ($pDirectoryName, $pRecurse, $pForce = false, $pCheckFiles = true){
 		///Can we find the directory index ?
-		$directoryIndex = array ();
+		$directoryIndex = array();
 		$listHasChanged = false;
 
-		if ($pForce == false && is_readable ($cacheFileName = $this->_makeFileName ($pDirectoryName, $pRecurse))){
+		//If we did not asks to force the autoload to look for classes, we'll include the cache if it exists 
+		if ($pForce === false && is_readable ($cacheFileName = $this->_makeFileName($pDirectoryName, $pRecurse))){
 			require ($cacheFileName);
 			$this->_directoryClasses[$pDirectoryName] = $allClasses;
-			$checkContent = true;
+
 			//we'll get directoryIndex in the included file
 			//we'll also get the classes by files
-			if ($doNotCheck === true){
+			if ($pCheckFiles === false){
 				//We were asked to just load the file if it exists.... exiting
 				return;
 			}
-		}else{
-			$checkContent = false;
-			//we just don't have to check the content, we know we have to autoload everything
-		}
-
-		//We are not gonna check the files of the directoryIndex if we are in a production mode.
-		if ($checkContent && 
-				(Engine::getMode () === Engine::MODE_PRODUCTION)){
-			return;			
 		}
 
 		//Prepare the iterator to compile all the directory classes
 		if ($pRecurse){
-			$directories = new \RegexIterator(new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator ($pDirectoryName)), '/\\.php$/');
+			$directories = new \RegexIterator(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator ($pDirectoryName)), '/\\.php$/');
 		}else{
-			$directories = new \RegexIterator(new \DirectoryIterator ($pDirectoryName), '/\\.php$/');
+			$directories = new \RegexIterator(new \DirectoryIterator($pDirectoryName), '/\\.php$/');
 		}
 		
-		//We iterate in the directories to find files.
+		//We iterate in the directories to find its files...
 		foreach ($directories as $fileName){
-			if ($checkContent){
-				if (!array_key_exists ((string) $fileName, $directoryIndex) || 
-					 ($directoryIndex[(string)$fileName] < ($fileMTime = $fileName->getMTime ()))){
-					 	//The file is not registered in the directory index
-					 	//Or the file is not up to date....
-					$directoryIndex[(string) $fileName] = $fileMTime;//we want to use the compared fileMTime to avoid shortcut conditions
-					$compileFile = true;
-				}else{
-					//The file is up to date and is in the directoryIndex
-					$compileFile = false;
-				}
+			if (!array_key_exists ($fileName->getPathName(), $directoryIndex)){
+			 	//The file is not registered in the directory index, we have to analyze the new file
+				$haveToAnalizeFile = true;
+			}elseif ($directoryIndex[$fileName->getPathName()] < $fileName->getMTime()) {
+			 	//The file is not up to date, we have to analyze.
+				$haveToAnalizeFile = true;
 			}else{
-				//We did not have to check the directory index content....
-				//meaning that we have to compile everything.
-				$compileFile = true;
+				//The file is up to date and is in the directoryIndex
+				$haveToAnalizeFile = false;
 			}
 
-			//So we have to compile the file
-			if ($compileFile){
-				$directoryIndex[(string) $fileName] = $fileName->getMTime ();
-				$classes[(string) $fileName]= $this->_classHunter->find ((string) $fileName);
-				$compiledFiles[(string) $fileName] = true;
+			//So we have to analyze the file ?
+			if ($haveToAnalizeFile){
+				$directoryIndex[$fileName->getPathName()] = $fileName->getMTime();
+				$classes[$fileName->getPathName()]= $this->_classHunter->find($fileName->getPathName());
+				$analyzedFiles[$fileName->getPathName()] = true;
 				$listHasChanged = true;
 			}else{
-				$compiledFiles[(string) $fileName] = false;
+				$analyzedFiles[$fileName->getPathName()] = false;
 			}
 		}
 
 		//if we had to check the content of the index, we'll now have to iterate through the old index to find
 		// if there are no missing classes.
-		$toRemoveFiles = array ();
-		foreach ($directoryIndex as $fileName=>$fileMTime){
+		$toRemoveFiles = array();
+		foreach ($directoryIndex as $filePathName=>$fileMTime){
 			//The file has just been checked or is up to date ?
-			if (isset ($compiledFiles[$fileName])){
-				//nothing to do!
+			if (isset ($analyzedFiles[$filePathName])){
+				//nothing to do, the file was found in the directories
 				continue;
 			}
-			
-			//the file does not exists anymore ? (only reason or it would have been in the iterated elements)
-			$toRemoveFiles[] = $fileName; 
-		}
 
-		//we're gonna remove old files from classes.
+			//the file does not exists anymore ? (only reason or it would have been in the iterated elements)
+			$toRemoveFiles[] = $filePathName;
+		}
+		
+		//We're gonna remove old files from classes.
 		foreach ($toRemoveFiles as $fileName){
 			if (isset ($classes[$fileName])){
 				$listHasChanged = true;
@@ -270,11 +267,12 @@ class Autoloader {
 			}
 		}
 
-		//now we're gonna make a direct access array to get the files.
-		if (!$listHasChanged){
+		//Nothing changed.... ne need to go further
+		if (! $listHasChanged){
 			return; 
 		}
 
+		//now we're gonna make a direct access array to get the files.
 		$allClasses = array ();
 		foreach ($classes as $fileName=>$classesInFileName){
 			foreach ($classesInFileName as $className){
@@ -325,12 +323,6 @@ class Autoloader {
 	}
 
 	/**
-	 * The founded classes
-	 *
-	 * @var array
-	 */
-	private $_classes = array ();
-	/**
 	 * Saves the classes in the cache path
 	 *
 	 * @throws AutoloaderException
@@ -357,7 +349,7 @@ class Autoloader {
 	 * @param string $pClassName the class name to find
 	 * @return boolean (the class was found true, or not false)
 	 */
-	public function autoload ($pClassName, $justCheck = true){
+	public function autoload ($pClassName, $pAnalyzeChangedFiles = false){
 		$pClassName = strtolower ($pClassName);
 
 		foreach ($this->_directories as $name=>$recurse){
@@ -376,7 +368,7 @@ class Autoloader {
 					}
 				}
 			}else{
-				$this->_loadDirectoryClasses ($name, $recurse, false, $justCheck);
+				$this->_loadDirectoryClasses ($name, $recurse, false, $pAnalyzeChangedFiles);
 				//we check if the class has been found
 				if ($this->_includeDirectoryClass($name, $pClassName)){
 					//founded, return
@@ -385,10 +377,12 @@ class Autoloader {
 			}
 		}
 
-		//did not find the class.... we then try with not "just a check"
-		//justACheck enables the developpement mode to be not that a heavy time cost
-		if ($justCheck && Engine::getMode () !== Engine::MODE_PRODUCTION){
-			return $this->autoload ($pClassName, false);
+		//did not find the class.... if in developpment, we'll redo the autoload 
+		//asking for an analyzing of files in the directories.
+		//In a production environnement, we want the autoloader to trust its cached files  
+		// (to avoid the situation where multiple autoloaders check every files....)
+		if ((!$pAnalyzeChangedFiles) && (Engine::getMode () !== Engine::MODE_PRODUCTION)){
+			return $this->autoload ($pClassName, true);
 		}
 
 		//there are no class that match at all
@@ -426,6 +420,29 @@ class Autoloader {
 		}else{
 			$this->_directories[$pDirectory] = $pRecursive ? true : false;
 			return $this;
+		}
+	}
+	
+	/**
+	 * Gets the known classes
+	 */
+	public function getKnownClasses (){
+		$toReturn = array();
+		foreach ($this->_directoryClasses as $name=>$classes){
+			if (count($classes)){
+				$toReturn[$name] = array_keys($classes);
+			}			
+		}
+
+		return $toReturn;
+	}
+	
+	/**
+	 * Includes every classes the autoloader may know
+	 */
+	public function includesAll (){
+		foreach ($this->_directories as $name=>$recurse){
+			$this->_loadDirectoryClasses($name, $recurse, true);
 		}
 	}
 
