@@ -4,6 +4,9 @@ use Oktopus\ClassParserForPHP5_3;
 use Oktopus\Engine;
 
 class AutoloaderTest extends PHPUnit_Framework_TestCase {
+	public function setUp (){
+		include (__DIR__.'/../bootstrap.php');
+	}
 	/**
 	 * Test register / unregister.
 	 */

@@ -4,6 +4,9 @@ use Oktopus\ClassParserForPHP5_3;
 use Oktopus\Engine;
 
 class AutoloaderMovedTest extends PHPUnit_Framework_TestCase {
+	public function setUp (){
+		include (__DIR__.'/../bootstrap.php');
+	}
 	public function testCannotWriteInCacheFile (){
 		//Remove old cache file if it exists and copy sources to test
 		exec('rm -Rf /tmp/OktopusTest/testDeleteFile/tmp/');

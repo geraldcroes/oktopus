@@ -508,10 +508,6 @@ class Engine {
 			self::$_mode = $pMode;
 		}
 
-		if ($pMode === self::MODE_RESET){
-			rmdir($pTmpPath);
-		}
-		
 		self::$_temporaryFilesPath = $pTmpPath;
 
 		if ($pMode === self::MODE_DEBUG){

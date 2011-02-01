@@ -2,6 +2,10 @@
 use Oktopus\ClassParserForPHP5_3;
 
 class ClassParserForPHPTest extends PHPUnit_Framework_TestCase {
+	public function setUp (){
+		include (__DIR__.'/../bootstrap.php');
+	}
+	
 	public function testSimpleFile (){
 		$parser = new ClassParserForPHP5_3();
 		$this->assertEquals (array ('foo'), $parser->find (__DIR__.'/resources/nowarning/foo.php'));
