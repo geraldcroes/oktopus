@@ -33,6 +33,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testNotWritablePath (){
 		$autoloader = new Autoloader('/etc/', new ClassParserForPHP5_3());
+		$this->assertTrue (false);
 	}
 	
 	/**
@@ -82,10 +83,10 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$autoloader->addPath(__DIR__.'/resources/warning/');
 		
 		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
-		$o = new ReflectionObject ($this);
 		$error_handler->expects ($this->atLeastOnce())->method ('error_handler');
 		set_error_handler (array($error_handler, 'error_handler'));
 		$this->assertFalse ($autoloader->autoload ('not_exists'));
+		restore_error_handler ();
 	}
 	
 	public function testAutoloaderWarningTwoSameClassesTwoFile (){
