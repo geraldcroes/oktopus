@@ -241,15 +241,16 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
 		$autoloader->includesAll ();
 		
-		//cache should have been writen, going to make it read only
-		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
-		foreach ($directory as $element){
-			chmod($element->getPathName(), 0400);
-		}
-
 		//now trying to raise the exception
 		$autoloader = new Autoloader ('/tmp/nowriteincache2/', new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		//cache should have been writen, going to make it read only
+		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+		foreach ($directory as $element){
+			if (! in_array ($element->getFileName (), array ('.', '..'), true)){
+				chmod($element->getPathName(), 0400);
+			}
+		}
 		try{
 			$autoloader->includesAll ();
 			$this->fail('Includes all should raise an exception (should not be able to write its cache)');
@@ -260,7 +261,9 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		//Back to writable
 		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
 		foreach ($directory as $element){
-			chmod($element->getPathName(), 0700);
+			if (! in_array ($element->getFileName (), array ('.', '..'), true)){
+				chmod($element->getPathName(), 0700);
+			}
 		}
 	}	
 }
