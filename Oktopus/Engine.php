@@ -354,21 +354,19 @@ class Autoloader {
 	 */
 	public function autoload ($pClassName, $pAnalyzeChangedFiles = false){
 		$pClassName = strtolower ($pClassName);
-
 		foreach ($this->_directories as $name=>$recurse){
-			if (isset ($this->_directoryClasses[$name])){
-				if (isset ($this->_directoryClasses[$name][$pClassName])){
-					if (! $this->_includeDirectoryClass ($name, $pClassName)){
-						//We couldn't include the class (maybe the file was deleted....
-						//We have to compile the file again.
-						$this->_loadDirectoryClasses ($name, $recurse, true);
-						if ($this->_includeDirectoryClass($name, $pClassName)){
-							//founded, return
-							return true;
-						}//else we continue..... maybe the class is in another directory now
-					}else{
+			if (isset ($this->_directoryClasses[$name]) 
+				&& isset ($this->_directoryClasses[$name][$pClassName])){
+				if (! $this->_includeDirectoryClass ($name, $pClassName)){
+					//We couldn't include the class (maybe the file was deleted....
+					//We have to compile the file again.
+					$this->_loadDirectoryClasses ($name, $recurse, true);
+					if ($this->_includeDirectoryClass($name, $pClassName)){
+						//founded, return
 						return true;
-					}
+					}//else we continue..... maybe the class is in another directory now
+				}else{
+					return true;
 				}
 			}else{
 				$this->_loadDirectoryClasses ($name, $recurse, false, $pAnalyzeChangedFiles);
@@ -407,8 +405,12 @@ class Autoloader {
 		}else{
 			$classFile = $this->_directoryClasses[$pDirectory][$pClassName];
 		}
-		require_once ($classFile);
-		return true;
+		if (is_readable($classFile)){
+			require_once ($classFile);
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
