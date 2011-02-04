@@ -37,7 +37,6 @@ class ClassParserForPHP5_3 implements IClassParser {
 		$namespaceHunt = false;
 		$validatedNamespaceHunt = false;
 		$classHunt = false;
-		$whitespaceCount = 0;
 		foreach ($tokens as $token){
 			if (is_array ($token)){
 				if ($token[0] === T_INTERFACE || $token[0] === T_CLASS){
@@ -47,7 +46,6 @@ class ClassParserForPHP5_3 implements IClassParser {
 					$namespaceHunt = true;
 					continue;
 				}
-
 				if ($classHunt && $token[0] === T_STRING){
 					$toReturn[] = (strlen ($currentNamespace) > 0 ? $currentNamespace.'\\' : '').$token[1];
 					$classHunt = false;
