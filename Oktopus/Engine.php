@@ -585,8 +585,8 @@ class Engine
         self::$_autoloader->addPath(__DIR__, true)->register();
 
         if ($pMode === self::MODE_DEBUG && self::$_autoloader->autoload('Oktopus\\Debug')) {
-            Debug::register_error_handler();
-            Debug::register_exception_handler();
+            Debug::registerErrorHandler();
+            Debug::registerExceptionHandler();
         }
     }
 
