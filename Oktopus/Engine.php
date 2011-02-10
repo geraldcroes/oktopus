@@ -21,6 +21,11 @@ class Exception extends \Exception
  */
 interface IClassParser
 {
+    /**
+     * Algorithm to find classes in a given file
+     * 
+     * @param string $pFileName the filename to inspect
+     */
     public function find($pFileName);
 }
 
@@ -35,14 +40,16 @@ interface IClassParser
  * ?>
  * </code>
  *
- * @see Oktopus\IClassParser
+ * @see IClassParser
  */
 class ClassParserForPHP5_3 implements IClassParser
 {
     /**
      * Find classes in $pFileName
      *
-     * @param unknown_type $pFileName
+     * @param string $pFileName the filename to inspect
+     * 
+     * @return array
      */
     public function find ($pFileName)
     {
@@ -65,7 +72,8 @@ class ClassParserForPHP5_3 implements IClassParser
                 if ($classHunt && $token[0] === T_STRING) {
                     $toReturn[] = (strlen($currentNamespace) > 0 ? $currentNamespace.'\\' : '').$token[1];
                     $classHunt = false;
-                } elseif ($namespaceHunt && $validatedNamespaceHunt && ($token[0] === T_STRING || $token[0] === T_NS_SEPARATOR)) {
+                } elseif ($namespaceHunt && $validatedNamespaceHunt 
+                          && ($token[0] === T_STRING || $token[0] === T_NS_SEPARATOR)) {
                     $currentNamespace .= $token[1];
                 } elseif ($namespaceHunt && !$validatedNamespaceHunt && $token[0] === T_WHITESPACE) {
                     $currentNamespace = '';
@@ -125,7 +133,7 @@ class Autoloader
 
     /**
      * The class parser Oktopus will use
-     * @var Oktopus\IClassParser
+     * @var IClassParser
      */
     private $_pClassParser;
 
@@ -133,6 +141,8 @@ class Autoloader
      * Register the autoloader to the stack
      * 
      * @throws Exception if the autoloader is already registered
+     * 
+     * @return Autoloader
      */
     public function register ()
     {
@@ -184,6 +194,8 @@ class Autoloader
      * @param string $pTmp the path where to store cache files
      * 
      * @throws AutoloaderException if the given path is not writable
+     * 
+     * @return Autoloader
      */
     public function setCachePath ($pTmp)
     {
@@ -214,8 +226,10 @@ class Autoloader
      *
      * @param string  $pDirectoryName the directory name we want to compile
      * @param boolean $pRecurse       if we want to find files recursively into the given path
-     * @param boolean $pForce         if true, will look for files and compile every data without checking the cache files.
-     * @param boolean $pCheckFiles    if true, will check the MTime of each files to know if we should re-check for its classes, and will check for new / removed files.
+     * @param boolean $pForce         if true, will look for files and compile every data without checking 
+     *                                the cache files.
+     * @param boolean $pCheckFiles    if true, will check the MTime of each files to know if we 
+     *                                should re-check for its classes, and will check for new / removed files.
      */
     private function _loadDirectoryClasses ($pDirectoryName, $pRecurse, $pForce = false, $pCheckFiles = true)
     {
@@ -239,7 +253,11 @@ class Autoloader
 
         //Prepare the iterator to compile all the directory classes
         if ($pRecurse) {
-            $directories = new \RegexIterator(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($pDirectoryName)), '/\\.php$/');
+            $directories = new \RegexIterator(
+                new \RecursiveIteratorIterator(
+                    new \RecursiveDirectoryIterator($pDirectoryName)
+                ), '/\\.php$/'
+            );
         } else {
             $directories = new \RegexIterator(new \DirectoryIterator($pDirectoryName), '/\\.php$/');
         }
@@ -305,13 +323,19 @@ class Autoloader
                         if (!in_array($fileName, $allClasses[$className], true)) {
                             $allClasses[$className][] = $fileName;
                         } else {
-                            trigger_error("The class $className was found twice or more in the file $fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING);
+                            trigger_error(
+                                "The class $className was found twice or more in the file ".
+                                "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
+                            );
                         }
                     } else {
                         if ($allClasses[$className] !== $fileName) {
                             $allClasses[$className] = array($allClasses[$className], $fileName);
                         } else {
-                            trigger_error("The class $className was found twice or more in the file $fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING);
+                            trigger_error(
+                                "The class $className was found twice or more in the file ".
+                                "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
+                            );
                         }
                     }
                 } else {
@@ -324,7 +348,11 @@ class Autoloader
         foreach ($allClasses as $className=>$files) {
             if (is_array($files)) {
                 $countFiles = count($files);
-                trigger_error("The class $className was found in $countFiles different files ".implode(', ', $files) .", the Oktopus Autoloader will use the first file while autoloading the Object", E_USER_WARNING);
+                trigger_error(
+                    "The class $className was found in $countFiles different files ".
+                    implode(', ', $files) .", the Oktopus Autoloader will use the ".
+                    "first file while autoloading the Object", E_USER_WARNING
+                );
             }
         }
 
@@ -337,11 +365,14 @@ class Autoloader
      *
      * @param string $pDirectoryName
      * @param string $pRecurse
+     * 
+     * @return null|string null if no cachePath was given, or a filepath for the cache file 
      */
     private function _makeFileName ($pDirectoryName, $pRecurse)
     {
         if ($this->_cachePath !== null) {
-            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).substr(realpath($pDirectoryName).'index.php', 1);
+            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).
+                   substr(realpath($pDirectoryName).'index.php', 1);
         }
         return null;
     }
@@ -551,11 +582,12 @@ class Engine
 
     /**
      * Includes the base class for Oktopus
-     *
+     * 
      * In debug mode, Oktopus will add its own error and exception handlers.
-     *
+     * 
      * @param string $pTmpPath the temporary path
-     * @param int    $pMode    the mode the engine will be in (Engine::MODE_DEBUG, Engine::MODE_PRODUCTION), default is DEBUG
+     * @param int    $pMode    the mode the engine will be in (Engine::MODE_DEBUG, 
+     *                         Engine::MODE_PRODUCTION), default is DEBUG
      *
      * @throws \InvalidArgumentException
      *
@@ -567,7 +599,10 @@ class Engine
     public static function start ($pTmpPath, $pMode = self::MODE_DEBUG)
     {
         if (!in_array($pMode, array(self::MODE_DEBUG, self::MODE_PRODUCTION, self::MODE_RESET))) {
-            throw new \InvalidArgumentException('Unknown start mode, you can start the engine using Oktopus\Engine::MODE_DEBUG or Oktopus\Engine::MODE_PRODUCTION');
+            throw new \InvalidArgumentException(
+                'Unknown start mode, you can start the engine using Oktopus\Engine::MODE_DEBUG '.
+                'or Oktopus\Engine::MODE_PRODUCTION'
+            );
         } else {
             self::$_mode = $pMode;
         }
@@ -577,7 +612,7 @@ class Engine
         if ($pMode === self::MODE_DEBUG) {
             ini_set('display_errors', 1);
             error_reporting(E_ALL | E_STRICT);
-        }else{
+        } else {
             ini_set('display_errors', 0);
         }
 
@@ -599,6 +634,8 @@ class Engine
 
     /**
      * Gets the Temporary Files path
+     * 
+     * @return string
      */
     public static function getTemporaryFilesPath ()
     {
@@ -619,19 +656,21 @@ class Engine
     /**
      * The engine Autoloader instance
      * 
-     * @var Oktopus\Autoloader
+     * @var Autoloader
      */
     private static $_autoloader = false;
 
     /**
      * Gets the Engine Autoloader instance
      * 
-     * @return Oktopus\Autoloader
+     * @return Autoloader
      */
     public static function autoloader ()
     {
         if (self::$_autoloader === false) {
-            throw new AutoloaderException ('The Engine Autoloader is not ready, you have to call Oktopus\\Engine::start () before');
+            throw new AutoloaderException (
+                'The Engine Autoloader is not ready, you have to call Oktopus\\Engine::start () before'
+            );
         }
         return self::$_autoloader;
     }
@@ -639,10 +678,10 @@ class Engine
     /**
      * Gets the configured mode for Oktopus
      * 
-     * @see Oktopus\Engine::MODE_DEBUG
-     * @see Oktopus\Engine::MODE_PRODUCTION
-     * @see Oktopus\Engine::MODE_RESET
-     * @see Oktopus\Engine::start ();
+     * @see Engine::MODE_DEBUG
+     * @see Engine::MODE_PRODUCTION
+     * @see Engine::MODE_RESET
+     * @see Engine::start ();
      * 
      * @return int
      */
