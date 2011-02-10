@@ -552,7 +552,7 @@ class Engine
     /**
      * Includes the base class for Oktopus
      *
-     * In debug mode, Oktopus will add its own error and exception handlers
+     * In debug mode, Oktopus will add its own error and exception handlers.
      *
      * @param string $pTmpPath the temporary path
      * @param int    $pMode    the mode the engine will be in (Engine::MODE_DEBUG, Engine::MODE_PRODUCTION), default is DEBUG
@@ -577,6 +577,8 @@ class Engine
         if ($pMode === self::MODE_DEBUG) {
             ini_set('display_errors', 1);
             error_reporting(E_ALL | E_STRICT);
+        }else{
+            ini_set('display_errors', 0);
         }
 
         self::$_autoloader = new Autoloader($pTmpPath, new ClassParserForPHP5_3());
