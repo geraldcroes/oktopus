@@ -13,10 +13,6 @@ namespace Oktopus;
  * @author geraldcroes
  */
 class Debug {
-	public static function formatErrorMessage ($pMessage){
-		return '<strong>'.$pMessage.'</strong>';		
-	}
-
 	/**
 	 * Returns an HTML string, highlighting a specific line of a file, with some
 	 * number of lines padded above and below.
