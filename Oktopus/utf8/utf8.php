@@ -19,7 +19,6 @@ namespace Oktopus;
  * [!!] This file is licensed differently from the rest of Oktopus. As a port of
  * [phputf8](http://phputf8.sourceforge.net/), this file is released under the LGPL.
  *
- * @author     Kohana Team
  * @copyright  (c) 2011 Oktopus Team
  * @copyright  (c) 2007-2010 Kohana Team
  * @copyright  (c) 2005 Harry Fuecks

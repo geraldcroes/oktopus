@@ -3,7 +3,6 @@ namespace Oktopus;
 /**
  * UTF8::strcasecmp
  *
- * @package    Kohana
  * @author     Kohana Team
  * @copyright  (c) 2007-2010 Kohana Team
  * @copyright  (c) 2005 Harry Fuecks

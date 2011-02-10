@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class Autoloader</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class Autoloader</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+															<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Main Oktopus Autoloader</p>
+		<p class="notes">
+			Located in <a class="field" href="_Engine.php.html">/Engine.php</a> (line <span class="field">102</span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+												<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+																																																																																				
+												<div class="method-definition">
+											<span class="method-result">Autoloader</span>
+										<a href="#__construct" title="details" class="method-name">__construct</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$pTmpPath</span>, <span class="var-type"><a href="../default/IClassParser.html">IClassParser</a></span>&nbsp;<span class="var-name">$pClassParser</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">Oktopus\Autoloader</span>
+										<a href="#addPath" title="details" class="method-name">addPath</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$pDirectory</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pRecursive</span> = <span class="var-default">true</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pMustExists</span> = <span class="var-default">true</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#autoload" title="details" class="method-name">autoload</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$pClassName</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$pAnalyzeChangedFiles</span> = <span class="var-default">false</span>])
+									</div>
+																<div class="method-definition">
+											<span class="method-result">string</span>
+										<a href="#getCachePath" title="details" class="method-name">getCachePath</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">array</span>
+										<a href="#getKnownClasses" title="details" class="method-name">getKnownClasses</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#includesAll" title="details" class="method-name">includesAll</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">boolean</span>
+										<a href="#isRegistered" title="details" class="method-name">isRegistered</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#register" title="details" class="method-name">register</a>
+										()
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#setCachePath" title="details" class="method-name">setCachePath</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$pTmp</span>)
+									</div>
+																<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#unregister" title="details" class="method-name">unregister</a>
+										()
+									</div>
+								</div>
+		</div>
+	</div>		
+
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+
+<a name="method__construct" id="__construct"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Constructor __construct</span> (line <span class="line-number">110</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Construct</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Autoloader</span>
+		<span class="method-name">
+			__construct
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$pTmpPath</span>, <span class="var-type"><a href="../default/IClassParser.html">IClassParser</a></span>&nbsp;<span class="var-name">$pClassParser</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pTmpPath</span><span class="var-description">: the path where to store the cache files</span>			</li>
+					<li>
+				<span class="var-type">ICLassParser</span>
+				<span class="var-name">$pClassParser</span><span class="var-description">: the class parser to find classes in PHPFiles.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodaddPath" id="addPath"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">addPath</span> (line <span class="line-number">463</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a path to look for classes</p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> AutoloaderException If $pMustExists and the directory is not readable</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">Oktopus\Autoloader</span>
+		<span class="method-name">
+			addPath
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$pDirectory</span>, [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pRecursive</span> = <span class="var-default">true</span>], [<span class="var-type">boolean</span>&nbsp;<span class="var-name">$pMustExists</span> = <span class="var-default">true</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pDirectory</span><span class="var-description">: where to look for php files</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$pRecursive</span><span class="var-description">: if we'll look recursively into the class tree</span>			</li>
+					<li>
+				<span class="var-type">boolean</span>
+				<span class="var-name">$pMustExists</span><span class="var-description">: if addPath must check the existence of the directory or not.</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodautoload" id="autoload"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">autoload</span> (line <span class="line-number">387</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Trys to find a class</p>
+	<ul class="tags">
+				<li><span class="field">return:</span> (the class was found true, or not false)</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			autoload
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$pClassName</span>, [<span class="var-type"></span>&nbsp;<span class="var-name">$pAnalyzeChangedFiles</span> = <span class="var-default">false</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pClassName</span><span class="var-description">: the class name to find</span>			</li>
+					<li>
+				<span class="var-type"></span>
+				<span class="var-name">$pAnalyzeChangedFiles</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodgetCachePath" id="getCachePath"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">getCachePath</span> (line <span class="line-number">121</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the configured cache path</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">string</span>
+		<span class="method-name">
+			getCachePath
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodgetKnownClasses" id="getKnownClasses"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getKnownClasses</span> (line <span class="line-number">479</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Gets the known classes</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">array</span>
+		<span class="method-name">
+			getKnownClasses
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodincludesAll" id="includesAll"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">includesAll</span> (line <span class="line-number">493</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Includes every classes the autoloader may know</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			includesAll
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodisRegistered" id="isRegistered"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">isRegistered</span> (line <span class="line-number">160</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Says if the Autoloader is registered</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">boolean</span>
+		<span class="method-name">
+			isRegistered
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodregister" id="register"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">register</span> (line <span class="line-number">137</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Register the autoloader to the stack</p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> Exception if the autoloader is already registered</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			register
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+<a name="methodsetCachePath" id="setCachePath"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">setCachePath</span> (line <span class="line-number">188</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Defines the cache where Oktopus\Autoload can write cache files</p>
+	<ul class="tags">
+				<li><span class="field">throws:</span> AutoloaderException if the given path is not writable</li>
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			setCachePath
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$pTmp</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$pTmp</span><span class="var-description">: the path where to store cache files</span>			</li>
+				</ul>
+		
+			
+	</div>
+<a name="methodunregister" id="unregister"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">unregister</span> (line <span class="line-number">150</span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Remove Autoloader from the autoload stack</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			unregister
+		</span>
+				()
+			</div>
+	
+		
+			
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Thu, 10 Feb 2011 12:56:51 +0100 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.4.3</a>
+	</p>
+	</div></body>
+</html>

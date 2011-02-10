@@ -5,6 +5,8 @@ error_reporting (E_ALL);
 $pFileName = __DIR__.'/tests/engine/resources/nowarning/foo.php';
 $tokens = token_get_all (file_get_contents ($pFileName, false));
 
+print_r ($tokens);exit;
+
 $currentNamespace = '';
 $namespaceHunt = false;
 $interfaceHunt = false;
@@ -68,7 +70,6 @@ foreach ($tokens as $token){
 print_r($toReturn);
 exit;
 
-
 class ParserContext {
 	private $_parent;
 
@@ -109,10 +110,6 @@ echo '<pre>';
 echo htmlentities (var_export ($tokens, true));
 echo '</pre>';
 exit;
-
-
-
-
 
 require_once ('./Oktopus/Engine.php');
 Oktopus\Engine::start('/tmp/');
