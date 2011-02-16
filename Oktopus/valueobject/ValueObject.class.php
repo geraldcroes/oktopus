@@ -1,18 +1,18 @@
 <?php
+namespace Oktopus;
 /**
  * @package Oktopus
  * @author "Gérald Croës <gerald@croes.org>"
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public Licence, see LICENCE file
  */
 
-namespace Oktopus;
 
 /**
  * Value Object
  *
  * @package Oktopus
  */
-class ValueObject implements ArrayAccess {
+class ValueObject implements \ArrayAccess {
     /**
      * Gets the property by its name
      *
@@ -69,18 +69,18 @@ class ValueObject implements ArrayAccess {
 
     public function offsetSet ($pOffset, $pValue) {
         if ($pOffset === null) {
-            $vars = get_object_vars ($this);
-            if (count ($vars) === 0) {
+            $vars = get_object_vars($this);
+            if (count($vars) === 0) {
                 $pOffset = 0;
             } else {
-                $pOffset = max (array_keys (get_object_vars ($this))) + 1;
+                $pOffset = max(array_keys(get_object_vars ($this))) + 1;
             }
         }
         $this->$pOffset = $pValue;
     }
 
     public function offsetExists ($pOffset) {
-        return isset ($this->$pOffset);
+        return isset($this->$pOffset);
     }
 
     public function offsetUnset ($pOffset) {
@@ -89,10 +89,10 @@ class ValueObject implements ArrayAccess {
 
     public function merge ($pToMerge) {
         if (is_array ($pToMerge)) {
-            $pToMerge = new CopixPPO ($pToMerge);
+            $pToMerge = new ValueObject($pToMerge);
         } else if (is_object ($pToMerge)) {
-            if (!($pToMerge instanceof CopixPPO)) {
-                $pToMerge = new CopixPPO (get_object_vars ($pToMerge));
+            if (!($pToMerge instanceof ValueObject)) {
+                $pToMerge = new ValueObject(get_object_vars($pToMerge));
             }
         } else {
             $pToMerge = array ($pToMerge);
