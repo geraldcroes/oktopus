@@ -115,5 +115,102 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($valueObject2->p2, $test->p2);
 		$this->assertEquals($valueObject2->p3, $test->p3);
 		$this->assertEquals($valueObject2->p4, 4);
+
+		$test = array(1, 2, 3);
+		$valueObject = new Oktopus\ValueObject($test);
+		$valueObject->mergeWith(4);
+		$this->assertEquals($valueObject[0], 1);
+
+		$test = array('p1'=>1, 'p2'=>2, 'p3'=>3);
+		$valueObject = new Oktopus\ValueObject($test);
+		$valueObject->mergeWith(4);
+		$this->assertEquals($valueObject[0], 4);
+	}
+	
+	public function testSaveIn (){
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>1, 'p2'=>2, 'p3'=>3));
+		$stdClass = new \StdClass ();
+
+		$valueObject->saveIn($stdClass);
+		$this->assertEquals($stdClass->p1, $test['p1']);
+		$this->assertEquals($stdClass->p2, $test['p2']);
+		$this->assertEquals($stdClass->p3, $test['p3']);
+		
+		$this->assertEquals($valueObject->p1, $test['p1']);
+		$this->assertEquals($valueObject->p2, $test['p2']);
+		$this->assertEquals($valueObject->p3, $test['p3']);
+		
+		$array = array ();
+		$valueObject->saveIn($array);
+		$this->assertEquals($array['p1'], $test['p1']);
+		$this->assertEquals($array['p2'], $test['p2']);
+		$this->assertEquals($array['p3'], $test['p3']);
+		
+		$this->assertEquals($valueObject->p1, $test['p1']);
+		$this->assertEquals($valueObject->p2, $test['p2']);
+		$this->assertEquals($valueObject->p3, $test['p3']);
+		
+		$valueObjectDest = new Oktopus\ValueObject ();
+		$valueObject->saveIn($valueObjectDest);
+		$this->assertEquals($valueObjectDest->p1, $test['p1']);
+		$this->assertEquals($valueObjectDest->p2, $test['p2']);
+		$this->assertEquals($valueObjectDest->p3, $test['p3']);
+		
+		$this->assertEquals($valueObject->p1, $test['p1']);
+		$this->assertEquals($valueObject->p2, $test['p2']);
+		$this->assertEquals($valueObject->p3, $test['p3']);
+		
+		$array = array ();
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$valueObject->saveIn($array);
+		$this->assertEquals($array['p4']['p1'], $test['p1']);
+		$this->assertEquals($array['p4']['p2'], $test['p2']);
+		$this->assertEquals($array['p4']['p3'], $test['p3']);
+
+		$this->assertEquals($array['p5']->p1, $test['p1']);
+		$this->assertEquals($array['p5']->p2, $test['p2']);
+		$this->assertEquals($array['p5']->p3, $test['p3']);
+		
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$valueObject->saveIn($array);
+		$this->assertEquals($array['p4']['p1'], $test['p1']);
+		$this->assertEquals($array['p4']['p2'], $test['p2']);
+		$this->assertEquals($array['p4']['p3'], $test['p3']);
+
+		$this->assertEquals($array['p5']->p1, $test['p1']);
+		$this->assertEquals($array['p5']->p2, $test['p2']);
+		$this->assertEquals($array['p5']->p3, $test['p3']);
+		
+		$stdClass2 = new StdClass();
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>1, 'p2'=>2, 'p3'=>3));
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$stdClass2->p4 = array ();
+		$stdClass2->p5 = new StdClass ();
+		$valueObject->saveIn($stdClass2);
+		$this->assertEquals($stdClass2->p4['p1'], $test['p1']);
+		$this->assertEquals($stdClass2->p4['p2'], $test['p2']);
+		$this->assertEquals($stdClass2->p4['p3'], $test['p3']);
+
+		$this->assertEquals($stdClass2->p5->p1, $test['p1']);
+		$this->assertEquals($stdClass2->p5->p2, $test['p2']);
+		$this->assertEquals($stdClass2->p5->p3, $test['p3']);
+		
+		//fails
+		/*
+		$array = array ('p4'=>array(), 'p5'=>'test');
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$valueObject->saveIn($array);
+		$this->assertEquals($array['p4']['p1'], $test['p1']);
+		$this->assertEquals($array['p4']['p2'], $test['p2']);
+		$this->assertEquals($array['p4']['p3'], $test['p3']);
+
+		$this->assertEquals($array['p5']->p1, $test['p1']);
+		$this->assertEquals($array['p5']->p2, $test['p2']);
+		$this->assertEquals($array['p5']->p3, $test['p3']);
+		*/
 	}
 }

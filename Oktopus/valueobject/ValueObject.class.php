@@ -114,29 +114,29 @@ class ValueObject implements \ArrayAccess {
 
 	public function saveIn (&$pDest, $pCreateNew = true) {
 		//détermine le "type" de l'objet
-		if (!($array = is_array ($pDest))) {
-			if (!($object = is_object ($pDest))) {
+		if (!($array = is_array($pDest))) {
+			if (!($object = is_object($pDest))) {
 				$natural = true;
 			}
 		}
-		$elementVars = array ();
+		$elementVars = array();
 		if ($array || $object) {
-			$elementVars = array_keys ($this->_getElementVars ($pDest));
+			$elementVars = array_keys($this->_getElementVars ($pDest));
 		}
 
 		//on parcours chacune des propriétés de l'élément
-		foreach (get_object_vars ($this) as $name => $element) {
+		foreach ($this->_properties as $name => $element) {
 			//on regarde si la propriété existe dans la destination
-			if (($inArray = in_array ($name, $elementVars)) || $pCreateNew) {
-				if ($inArray && (is_object ($element) || is_array ($element))) {
+			if (($inArray = in_array($name, $elementVars)) || $pCreateNew) {
+				if ($inArray && (is_object($element) || is_array($element))) {
 					//la propriété existait déja et c'est un tableau ou un objet,
 					//on reparcours le tout pour y appliquer les changements
 					if ($array) {
 						$valueObject = new ValueObject($element);
-						$valueObject->saveIn ($pDest[$name], $pCreateNew);
+						$valueObject->saveIn($pDest[$name], $pCreateNew);
 					} else {
 						$valueObject = new ValueObject($element);
-						$valueObject->saveIn ($pDest->$name, $pCreateNew);
+						$valueObject->saveIn($pDest->$name, $pCreateNew);
 					}
 					// NOTE : il n'est pas possible d'avoir recours a l'opérateur
 					// ternaire pour les passages par référence
@@ -156,7 +156,13 @@ class ValueObject implements \ArrayAccess {
 	}
 
 	protected function _getElementVars ($pElement) {
-		return is_array ($pElement) ? $pElement : ($pElement instanceof ValueObject ? $pElment->asArray() : get_object_vars($pElement));
+		if (is_array($pElement)){
+			return $pElement;
+		} elseif ($pElement instanceof ValueObject) {
+			return $pElement->asArray();
+		} else {
+			return get_object_vars($pElement);
+		}
 	}
 
 	public function __invoke() {
