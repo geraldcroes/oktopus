@@ -198,19 +198,103 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($stdClass2->p5->p2, $test['p2']);
 		$this->assertEquals($stdClass2->p5->p3, $test['p3']);
 		
-		//fails
-		/*
-		$array = array ('p4'=>array(), 'p5'=>'test');
+		//Trying to save in an object where the key with a primitive exists in the dest (will be replaced by the value)
+		$stdClass = new StdClass();
+		$stdClass->p1 = 'stdP1';
+		$stdClass->p2 = 'stdP2';
+		$stdClass->p3 = 'stdP3';
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>'t1', 'p2'=>'t2', 'p3'=>'t3'));
 		$valueObject->p4 = $test;
 		$valueObject->p5 = $stdClass;
+		$array = array ('p4'=>array(), 'p5'=>'ap5');
 		$valueObject->saveIn($array);
 		$this->assertEquals($array['p4']['p1'], $test['p1']);
 		$this->assertEquals($array['p4']['p2'], $test['p2']);
 		$this->assertEquals($array['p4']['p3'], $test['p3']);
 
-		$this->assertEquals($array['p5']->p1, $test['p1']);
-		$this->assertEquals($array['p5']->p2, $test['p2']);
-		$this->assertEquals($array['p5']->p3, $test['p3']);
-		*/
+		$this->assertEquals($array['p5']->p1, $stdClass->p1);
+		$this->assertEquals($array['p5']->p2, $stdClass->p2);
+		$this->assertEquals($array['p5']->p3, $stdClass->p3);
+		
+		//Trying to save in an object where the key exists, keeping the array/object type if so
+		$stdClass = new StdClass();
+		$stdClass->p1 = 'stdP1';
+		$stdClass->p2 = 'stdP2';
+		$stdClass->p3 = 'stdP3';
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>'t1', 'p2'=>'t2', 'p3'=>'t3'));
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$array = array ('p4'=>array(), 'p5'=>array('p1'=>'std3'));
+		$valueObject->saveIn($array);
+		$this->assertEquals($array['p4']['p1'], $test['p1']);
+		$this->assertEquals($array['p4']['p2'], $test['p2']);
+		$this->assertEquals($array['p4']['p3'], $test['p3']);
+
+		$this->assertEquals($array['p5']['p1'], $stdClass->p1);
+		$this->assertEquals($array['p5']['p2'], $stdClass->p2);
+		$this->assertEquals($array['p5']['p3'], $stdClass->p3);
+		
+		//Trying to save in an object where the key with a primitive exists in the dest (will be replaced by the value)
+		$stdClass = new StdClass();
+		$stdClass->p1 = 'stdP1';
+		$stdClass->p2 = 'stdP2';
+		$stdClass->p3 = 'stdP3';
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>'t1', 'p2'=>'t2', 'p3'=>'t3'));
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$stdDest = new StdClass ();
+		$stdDest->p4 = array();
+		$stdDest->p5 = 'ap5';
+		$valueObject->saveIn($stdDest);
+		$this->assertEquals($stdDest->p4['p1'], $test['p1']);
+		$this->assertEquals($stdDest->p4['p2'], $test['p2']);
+		$this->assertEquals($stdDest->p4['p3'], $test['p3']);
+
+		$this->assertEquals($stdDest->p5->p1, $stdClass->p1);
+		$this->assertEquals($stdDest->p5->p2, $stdClass->p2);
+		$this->assertEquals($stdDest->p5->p3, $stdClass->p3);
+		
+		//Trying to save in an object where the key exists, keeping the array/object type if so
+		$stdClass = new StdClass();
+		$stdClass->p1 = 'stdP1';
+		$stdClass->p2 = 'stdP2';
+		$stdClass->p3 = 'stdP3';
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>'t1', 'p2'=>'t2', 'p3'=>'t3'));
+		$valueObject->p4 = $test;
+		$valueObject->p5 = $stdClass;
+		$stdDest = new StdClass ();
+		$stdDest->p4 = array();
+		$stdDest->p5 = array('p1'=>'std3');
+		$valueObject->saveIn($stdDest);
+		$this->assertEquals($stdDest->p4['p1'], $test['p1']);
+		$this->assertEquals($stdDest->p4['p2'], $test['p2']);
+		$this->assertEquals($stdDest->p4['p3'], $test['p3']);
+
+		$this->assertEquals($stdDest->p5->p1, $stdClass->p1);
+		$this->assertEquals($stdDest->p5->p2, $stdClass->p2);
+		$this->assertEquals($stdDest->p5->p3, $stdClass->p3);
+		
+		//---
+		$valueObject = new Oktopus\ValueObject($test = array('p1'=>'t1', 'p2'=>'t2'));
+		$dest = new StdClass();
+		$dest->p1 = 'ap1';
+		$valueObject->saveIn ($dest);
+		$this->assertEquals ($valueObject->p2, $dest->p2);
+		$this->assertEquals ($valueObject->p1, $dest->p1);
+		
+		//---assign a primitive
+		$dest = 'string';
+		$valueObject->saveIn ($dest);
+		$this->assertEquals ($valueObject->p2, $dest['p2']);
+		$this->assertEquals ($valueObject->p1, $dest['p1']);
+	}
+	
+	public function testLoadFrom (){
+	    $valueObject = new Oktopus\ValueObject ();
+	    $valueObject->loadFrom ('1;2;3');
+	    
+	    $this->assertEquals($valueObject[0], '1');
+	    $this->assertEquals($valueObject[1], '2');
+	    $this->assertEquals($valueObject[2], '3');
 	}
 }

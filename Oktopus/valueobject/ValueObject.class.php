@@ -19,7 +19,7 @@ class ValueObject implements \ArrayAccess {
 		if (array_key_exists($pName, $this->_properties)){
 			if ($this->_properties[$pName] instanceof ValueObject){
 				$toInvoke = $this->_properties[$pName];
-				return $toInvoke(); 				
+				return $toInvoke() !== null; 				
 			}
 			return isset($this->_properties[$pName]);
 		}
@@ -76,7 +76,7 @@ class ValueObject implements \ArrayAccess {
 				$pOffset = max(array_keys($this->_properties)) + 1;
 			}
 		}
-		$this->$pOffset = $pValue;
+		$this->$pOffset = $pValue === null ? new ValueObject() : $pValue;
 	}
 
 	public function offsetExists ($pOffset) {
@@ -115,28 +115,45 @@ class ValueObject implements \ArrayAccess {
 	public function saveIn (&$pDest, $pCreateNew = true) {
 		//détermine le "type" de l'objet
 		if (!($array = is_array($pDest))) {
-			if (!($object = is_object($pDest))) {
-				$natural = true;
-			}
+			$object = is_object($pDest);
+		}else{
+		    $object = false;
 		}
-		$elementVars = array();
 		if ($array || $object) {
 			$elementVars = array_keys($this->_getElementVars ($pDest));
+		}else{
+		    $pDest = $this->_properties;//lost base type
+		    return $this;
 		}
 
 		//on parcours chacune des propriétés de l'élément
-		foreach ($this->_properties as $name => $element) {
+   		foreach ($this->_properties as $name => $element) {
 			//on regarde si la propriété existe dans la destination
 			if (($inArray = in_array($name, $elementVars)) || $pCreateNew) {
-				if ($inArray && (is_object($element) || is_array($element))) {
+				if ($inArray) {
 					//la propriété existait déja et c'est un tableau ou un objet,
 					//on reparcours le tout pour y appliquer les changements
-					if ($array) {
-						$valueObject = new ValueObject($element);
-						$valueObject->saveIn($pDest[$name], $pCreateNew);
+					if (is_array($element) || is_object($element)){
+					    if (($array && is_array ($pDest[$name])) || ($object && is_object($pDest->$name))){
+    				        $valueObject = new ValueObject($element);
+        				    if ($array) {
+        						$valueObject->saveIn($pDest[$name], $pCreateNew);
+        					} else {
+        						$valueObject->saveIn($pDest->$name, $pCreateNew);
+        					}
+					    } else {
+					        if ($array) {
+        						$pDest[$name] = $element;
+        					} else {
+        						$pDest->$name = $element;
+        					}
+					    }
 					} else {
-						$valueObject = new ValueObject($element);
-						$valueObject->saveIn($pDest->$name, $pCreateNew);
+					    if ($array) {
+    						$pDest[$name] = $element;
+    					} else {
+    						$pDest->$name = $element;
+    					}
 					}
 					// NOTE : il n'est pas possible d'avoir recours a l'opérateur
 					// ternaire pour les passages par référence
@@ -149,8 +166,8 @@ class ValueObject implements \ArrayAccess {
 						$pDest->$name = $element;
 					}
 				}
-			}
-		}
+   			}
+   		}
 
 		return $this;
 	}
