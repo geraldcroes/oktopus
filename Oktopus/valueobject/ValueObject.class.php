@@ -176,12 +176,12 @@ class ValueObject implements \ArrayAccess
      *   - Merged as an array if destination is an array
      *   - Merged as an object if destination is an object
      *   
-     * During a merge, if the properties exists both in the source and the destination, 
-     *   the destination value will be lost
+     * During a merge, if the properties exists both in the source and the 
+     *   destination, the destination value will be lost
      * 
      * @param mixed   $pDest      the variable that will be written
-     * @param boolean $pCreateNew if we want to create properties that do not exist 
-     *                            in the destination (default is true)
+     * @param boolean $pCreateNew if we want to create properties that do not  
+     *                            exist in the destination (default is true)
      *                            
      * @return Oktopus\ValueObject the original object 
      */
@@ -200,22 +200,19 @@ class ValueObject implements \ArrayAccess
         }
 
         foreach ($this->_properties as $name => $element) {
-            if (($inArray = in_array($name, $elementVars)) || $pCreateNew) {
-                if ($inArray) {
-                    if (is_array($element) || is_object($element)) {
-                        if (($array && is_array($pDest[$name])) || ($object && is_object($pDest->$name))) {
-                            $valueObject = new ValueObject($element);
-                            if ($array) {
-                                $valueObject->saveIn($pDest[$name], $pCreateNew);
-                            } else {
-                                $valueObject->saveIn($pDest->$name, $pCreateNew);
-                            }
+            if (! (($inArray = in_array($name, $elementVars)) || $pCreateNew)) {
+                //We won't create news properties if not told
+                continue;
+            }
+
+            if ($inArray) {
+                if (is_array($element) || is_object($element)) {
+                    if (($array && is_array($pDest[$name])) or ($object && is_object($pDest->$name))) {
+                        $valueObject = new ValueObject($element);
+                        if ($array) {
+                            $valueObject->saveIn($pDest[$name], $pCreateNew);
                         } else {
-                            if ($array) {
-                                $pDest[$name] = $element;
-                            } else {
-                                $pDest->$name = $element;
-                            }
+                            $valueObject->saveIn($pDest->$name, $pCreateNew);
                         }
                     } else {
                         if ($array) {
@@ -231,6 +228,12 @@ class ValueObject implements \ArrayAccess
                         $pDest->$name = $element;
                     }
                 }
+            } else {
+                if ($array) {
+                    $pDest[$name] = $element;
+                } else {
+                    $pDest->$name = $element;
+                }
             }
         }
 
@@ -238,7 +241,9 @@ class ValueObject implements \ArrayAccess
     }
 
     /**
-     * Gets the elements variables (properties if an object, asArray if a valueObject, $elements if not)
+     * Gets the elements variables
+     * 
+     * properties if an object, asArray if a valueObject, $elements if not
      * 
      * @param object|array $pElement the element we wants to get the properties
      * 
