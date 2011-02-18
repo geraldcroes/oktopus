@@ -44,6 +44,12 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertFalse(isset($valueObject['notSet']));
 		$this->assertTrue(isset($valueObject['p1']));
+		
+		$valueObject->p1 = null;
+		$this->assertFalse(isset($valueObject->p1));
+		//Following line should not raise an error
+		$valueObject->p1['foo'] = 'foo';
+		
 	}
 
 	public function testUnset () {
@@ -74,6 +80,13 @@ class ValueObjectTest extends PHPUnit_Framework_TestCase {
 		
 		$valueObject[2][] = '7';
 		$this->assertEquals($valueObject[2][0], '7');
+		
+		unset($valueObject[2]);
+		$this->assertFalse(isset($valueObject[2]));
+
+		//followingLine should not raise an error
+		
+		
 	}
 	
 	public function testMerge () {
