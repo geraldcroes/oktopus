@@ -21,17 +21,17 @@ class AbstractDecorator
 
    public function __call ($pMethodName, $pArgs)
    {
-      return call_func_array(array($this->_decorated, $pMethodName), $pArgs);
+      return call_user_func_array(array($this->_decorated, $pMethodName), $pArgs);
    }
 
    public function __get ($pPropertyName)
    {
-      return $this->$pPropertyName;
+      return $this->_decorated->$pPropertyName;
    }
 
    public function __set ($pPropertyName, $pValue)
    {
-      $this->$pPropertyName = $pValue;
+      $this->_decorated->$pPropertyName = $pValue;
    }
 
    public function __invoke ()
@@ -45,5 +45,3 @@ class AbstractDecorator
       return isset($this->_decorated->$pPropertyName);
    } 
 }
-
-
