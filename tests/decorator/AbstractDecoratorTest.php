@@ -23,30 +23,24 @@ class AbstractDecoratorTest extends PHPUnit_Framework_TestCase
    {
       //Assert a simple method call
    	  $mock = $this->getMock('Decorated', array('testMethod'));
-      $mock->expects($this->atLeastOnce())->method('testMethod');
+      $mock->expects($this->atLeastOnce())
+           ->method('testMethod')
+           ->will($this->returnValue('foo'));
       
       $decorator = new Oktopus\AbstractDecorator($mock);
-      $decorator->testMethod();
+      $this->assertEquals ('foo', $decorator->testMethod());
 
       //Assert a method call with one parameter
       $mock = $this->getMock('Decorated', array('testMethod'));
       $mock->expects($this->atLeastOnce())
            ->method('testMethod')
-           ->with($this->equalTo('something'));
+           ->with($this->equalTo('something'))
+           ->will($this->returnValue('foo'));
            
       $decorator = new Oktopus\AbstractDecorator($mock);
-      $decorator->testMethod('something');
+      $this->assertEquals ('foo', $decorator->testMethod('something'));
       
       //Assert a method call with two parameters
-      $mock = $this->getMock('Decorated', array('testMethod'));
-      $mock->expects($this->atLeastOnce())
-           ->method('testMethod')
-           ->with($this->equalTo('something'), $this->equalTo('something2'));
-
-      $decorator = new Oktopus\AbstractDecorator($mock);
-      $decorator->testMethod('something', 'something2');
-      
-      //Assert that the decorator returns the decorated value in method call
       $mock = $this->getMock('Decorated', array('testMethod'));
       $mock->expects($this->atLeastOnce())
            ->method('testMethod')
@@ -74,10 +68,33 @@ class AbstractDecoratorTest extends PHPUnit_Framework_TestCase
 
    public function testInvoke ()
    {
-      $mock = $this->getMock('Decorated', array('__invoke'));
-      $mock->expects($this->once())->method('__invoke');
+      //simple invoke
+   	  $mock = $this->getMock('Decorated', array('__invoke'));
+      $mock->expects($this->once())
+            ->method('__invoke')
+            ->will($this->returnValue('foo'));
       
       $decorator = new Oktopus\AbstractDecorator($mock);
-      $decorator();
+      $this->assertEquals ('foo', $decorator());
+      
+      //invoke with one paramter
+   	  $mock = $this->getMock('Decorated', array('__invoke'));
+      $mock->expects($this->once())
+            ->method('__invoke')
+            ->with($this->equalTo('something'))
+            ->will($this->returnValue('foo'));
+      
+      $decorator = new Oktopus\AbstractDecorator($mock);
+      $this->assertEquals ('foo', $decorator('something'));
+      
+      //invoke with two parameters
+   	  $mock = $this->getMock('Decorated', array('__invoke'));
+      $mock->expects($this->once())
+            ->method('__invoke')
+            ->with($this->equalTo('something'), $this->equalTo('something2'))
+            ->will($this->returnValue('foo'));
+      
+      $decorator = new Oktopus\AbstractDecorator($mock);
+      $this->assertEquals('foo', $decorator('something', 'something2'));
    }
 }

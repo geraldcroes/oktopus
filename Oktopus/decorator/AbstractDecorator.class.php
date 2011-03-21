@@ -36,8 +36,9 @@ class AbstractDecorator
 
    public function __invoke ()
    {
-      $func = $this->_decorated;
-      return $func();
+      $args = func_get_args();
+   	  $func = $this->_decorated;
+      return call_user_func_array($func, $args);
    }
 
    public function __isset ($pPropertyName)
