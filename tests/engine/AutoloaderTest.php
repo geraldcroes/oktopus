@@ -58,7 +58,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	public function testAutoloaderRecursiveAndNonRecursive (){
 		//testing recursive
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3 ());
-		$autoloader->addPath (__DIR__.'/resources/nowarning/', false);
+		$autoloader->addPath (__DIR__.'/../resources/nowarning/', false);
 
 		//we test that we can find foo, foo2 and foo3 (non recursive call)
 		$this->assertTrue ($autoloader->autoload('foo'));
@@ -70,7 +70,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		
 		//--- Recursive test
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3 ());
-		$autoloader->addPath (__DIR__.'/resources/nowarning/');
+		$autoloader->addPath (__DIR__.'/../resources/nowarning/');
 
 		//we test that we can find foo, foo2 and foo3 (non recursive call)
 		$this->assertTrue ($autoloader->autoload('foo'));
@@ -83,7 +83,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testAutoloaderWarningTwoSameClassesSameFile (){
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/warning/');
+		$autoloader->addPath(__DIR__.'/../resources/warning/');
 		
 		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
 		$error_handler->expects ($this->atLeastOnce())->method ('error_handler');
@@ -94,7 +94,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testAutoloaderWarningTwoSameClassesTwoFile (){
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/warning2files');
+		$autoloader->addPath(__DIR__.'/../resources/warning2files');
 	
 		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
 		$error_handler->expects ($this->atLeastOnce ())->method ('error_handler');
@@ -105,7 +105,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testAutoloaderWarningTwoSameNamespaceClassesTwoFile (){
 		$autoloader = new AUtoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/warningnamespace2files');
+		$autoloader->addPath(__DIR__.'/../resources/warningnamespace2files');
 		
 		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
 		$error_handler->expects ($this->atLeastOnce ())->method ('error_handler');
@@ -117,13 +117,13 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	public function testUpdatedFileTimeLoader (){
 		//Simple autoload with no cache
 		$autoloader = new Autoloader ('/tmp/UpdatedFileTimeLoader/', new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/');
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assertTrue ($autoloader->autoload ('foo'));
 		
 		sleep (1);
-		touch (__DIR__.'/resources/nowarning/foo.php');
+		touch (__DIR__.'/../resources/nowarning/foo.php');
 		$autoloader = new Autoloader ('/tmp/UpdatedFileTimeLoader/', new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/');
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assertTrue ($autoloader->autoload ('foo', true));//asking to check files
 		restore_error_handler ();
 	}
@@ -131,19 +131,19 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	public function testAutoloaderCacheAndNoCache (){
 		//Simple autoload with no cache
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/');
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assertTrue ($autoloader->autoload ('foo'));
 
 		//Testing several cases, forcing or not the loading of the class
 		$autoloader = new Autoloader ('/tmp/', new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/');		
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');		
 		$this->assertTrue ($autoloader->autoload ('foo'));
 		$this->assertTrue ($autoloader->autoload ('foo'));		
 		$this->assertFalse ($autoloader->autoload ('FOONOTEXISTS___'));
 
 		//Testing to generate a cache file (tmp/somethingnew)
 		$autoloader = new Autoloader ('/tmp/'.uniqid (), new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/');		
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');		
 		$this->assertTrue ($autoloader->autoload ('foo'));
 
 		//Sees if the exception is raised while adding a path to look into that must exists
@@ -153,7 +153,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 
 	public function testKnownClasses (){
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 
 		//No class has been loaded.
 		$this->assertEquals (array(), $autoloader->getKnownClasses());
@@ -170,7 +170,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 	
 	public function testIncludesAll (){
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 
 		//No class has been loaded.
 		$this->assertEquals(array(), $autoloader->getKnownClasses());
@@ -183,7 +183,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$this->assertContains('foo3', $values);
 		$this->assertEquals(3, count($values));
 		
-		$autoloader->addPath(__DIR__.'/resources/nowarning/namespaces', false);
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/namespaces', false);
 
 		//Still not known, adding a path does not trigger the autoload
 		$knownClasses = $autoloader->getKnownClasses();
@@ -234,19 +234,19 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		} 
 
 		$autoloader = new Autoloader ('/tmp/nowriteincache/', new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 		chmod('/tmp/nowriteincache/', 0400);
 		$autoloader->includesAll ();
 	}
 	
 	public function testCannotWriteInCacheFile (){
 		$autoloader = new Autoloader ('/tmp/nowriteincache2/', new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 		$autoloader->includesAll ();
 		
 		//now trying to raise the exception
 		$autoloader = new Autoloader ('/tmp/nowriteincache2/', new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/resources/nowarning/', false);
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 		//cache should have been writen, going to make it read only
 		$directory = new RecursiveIteratorIterator (new RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
 		foreach ($directory as $element){
