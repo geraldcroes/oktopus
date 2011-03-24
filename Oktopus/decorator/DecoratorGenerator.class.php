@@ -14,7 +14,6 @@ class DecoratorGenerator
     public function generate ($pClassName, $pMode = self::DECORATOR)
     {
         $this->_buffer = '';
-
         $reflection = new \ReflectionClass($pClassName);
         return $this->_fetch($reflection, $pMode);
     }
@@ -50,33 +49,46 @@ class DecoratorGenerator
     {
         $this->_b ($method->getDocComment());
 
-        $functionDeclaration = 'public function '.$method->getName();
-        $methodParameter = '';
-        $methodCallParameter = '';
+        $functionDeclaration = 'public function '.($method->returnsReference() ? '&' : '').$method->getName();
+        $methodParameter = array();
+        $methodCallParameter = array();
         foreach ($method->getParameters() as $parameter) {
-            echo " name : ", $parameter->getName();
-            echo " isPassedByReference : ", $parameter->isPassedByreference();
-            echo " getDeclaringFunction : ", $parameter->getDeclaringFunction();
-            echo " getDeclaringClass : ", $parameter->getDeclaringClass();
-            echo " getClass : ", $parameter->getClass();
-            echo " isArray : ", $parameter->isArray();
-            echo " allowsNull : ", $parameter->allowsNull();
-            echo " getPosition : ", $parameter->getPosition();
+        	//Type of the argument
+        	if ($parameter->getClass() !== null) {
+        		$parameterName = $parameter->getClass()->name.' $'.$parameter->getName(); 
+        	} elseif ($parameter->isArray()) {
+        		$parameterName = 'array $'.$parameter->getName();
+        	} else {
+        		$parameterName = '$'.$parameter->getName();
+        	}
+        	
+        	//Default value of the argument
+        	if ($parameter->isDefaultValueAvailable()) {
+        		$parameterName .= ' = '.var_export($parameter->getDefaultValue(), true);
+        	}
+
+        	//Agument as it should be called to the delegated element
+        	$methodParameter[] = $parameterName;
+        	$methodCallParameter[] = '$'.$parameter->getName();
         }
-        $this->_b($functionDeclaration);
+        $methodParameter = implode(',', $methodParameter);
+        $methodCallParameter = implode(',', $methodCallParameter);
+
+        $this->_b($functionDeclaration.= '('.$methodParameter.')');
         $this->_b('{');
-        $this->_b('   \Oktopus\AOP\Brocker::instance()->beforeCall('.$reflection->getName().', '.$method->getName().')');
-        $methodCall = 'foo';
+        $this->_b('   if (\Oktopus\AOP\Broker::instance()->beforeCall(\''.$reflection->getName().'\', \''.$method->getName().'\')) {');
+        $this->_b('      \Oktopus\AOP\Broker::instance()->beforeCall(\''.$reflection->getName().'\', \''.$method->getName().'\');');
+        $this->_b('   }');
         $this->_b('   try {');
         if ($pMode === self::DECORATOR) {
-           $this->_b('      $return = $this->_decorator->'.$methodCall);
+           $this->_b('      $return = $this->_decorator->'.$method->getName().'('.$methodCallParameter.');');
         } else {
-           $this->_b('      $return = parent::'.$methodCall); 
+           $this->_b('      $return = parent::'.$method->getName().'('.$methodCallParameter.');'); 
         }
         $this->_b('   } catch (\Exception $e) {');
-        $this->_b('      ');
+        $this->_b('      return \Oktopus\AOP\Broker::instance()->catchException($e);');
         $this->_b('   }');
-        $this->_b('   \Oktopus\AOP\Brocker::instance()->afterCall('.$reflection->getName().', '.$method->getName().', $return)');
+        $this->_b('   return \Oktopus\AOP\Broker::instance()->afterCall(\''.$reflection->getName().'\', \''.$method->getName().'\', $return);');
         $this->_b('}');
     }
 
