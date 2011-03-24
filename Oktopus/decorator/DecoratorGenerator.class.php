@@ -11,7 +11,7 @@ class DecoratorGenerator
 
     const SUBCLASSING = 1;
 
-    public function generate ($pClassName, $pMode = self::DECORATOR)
+    public function generate ($pClassName, $pMode = self::SUBCLASSING)
     {
         $this->_buffer = '';
         $reflection = new \ReflectionClass($pClassName);
@@ -34,7 +34,7 @@ class DecoratorGenerator
 
         $this->_b($classDeclaration);
         $this->_b("{");
-        $this->_b('   private $_decorated');
+        $this->_b('   private $_decorated;');
         
         $this->_bia(3);
         foreach ($reflection->getMethods() as $method) {
@@ -81,7 +81,7 @@ class DecoratorGenerator
         $this->_b('   }');
         $this->_b('   try {');
         if ($pMode === self::DECORATOR) {
-           $this->_b('      $return = $this->_decorator->'.$method->getName().'('.$methodCallParameter.');');
+           $this->_b('      $return = $this->_decorated->'.$method->getName().'('.$methodCallParameter.');');
         } else {
            $this->_b('      $return = parent::'.$method->getName().'('.$methodCallParameter.');'); 
         }
