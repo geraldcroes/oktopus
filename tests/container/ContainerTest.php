@@ -10,7 +10,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	{
 		$container = new Oktopus\Container();
 		$container->define('foo')
-		          ->setClass('foo')
+		          ->setClass('foodi')
 		          ->setProperty('_fooDirect', '_fooDirect')
 		          ->setMethod('setFoo', array('foo'))
 		          ->setMethod('setFoo2', array('foo2'))		          
@@ -40,7 +40,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	        
 		$container = new Oktopus\Container();
 		$container->define('foo')
-		          ->setClass('foo')
+		          ->setClass('foodi')
 		          ->setProperty('_fooDirect', function () use($mockFoo) {
 		          	  $mockFoo->fooDirect();  
 		          	  return '_fooDirect';
@@ -73,7 +73,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	}	
 }
 
-class Foo
+class FooDI
 {
 	private $_fooDirect;
 	
