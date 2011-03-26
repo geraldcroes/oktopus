@@ -29,7 +29,7 @@ class Container
     public function get ($pId)
     {
         if (! array_key_exists($pId, $this->_componentDefinitions)) {
-            throw new ContextException('Unknown component '.$pId);
+            throw new ContainerException('Unknown component '.$pId);
         }
 
         if ($this->_componentDefinitions[$pId]->isShared()) {
