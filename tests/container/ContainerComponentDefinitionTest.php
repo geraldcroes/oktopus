@@ -10,9 +10,10 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 	{
 		$cd = new Oktopus\ContainerComponentDefinition('foo');
 		$this->assertFalse($cd->hasProperty('foo'));
-		$cd->setProperty('foo', 'value');
+		$return = $cd->setProperty('foo', 'value');
 		$this->assertTrue($cd->hasProperty('foo'));
 		$this->assertEquals($cd->getProperty('foo'), 'value');
+		$this->assertEquals($cd, $return);
 		
 		try {
 			$cd->getProperty('foo2');
@@ -35,7 +36,8 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		//Testing with a single parameter method name
 		$cd = new Oktopus\ContainerComponentDefinition('foo');
 		$this->assertFalse($cd->hasMethod('foo'));
-		$cd->setMethod('foo', array('value'));
+		$return = $cd->setMethod('foo', array('value'));
+		$this->assertEquals($cd, $return);		
 		$this->assertTrue($cd->hasMethod('foo'));
 		$this->assertEquals($cd->getMethod('foo'), array('value'));
 		try {
@@ -64,7 +66,8 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		$cd = new Oktopus\ContainerComponentDefinition('foo');
 		$this->assertFalse($cd->hasMethod('__construct'));
 		$this->assertFalse($cd->hasConstructor());
-		$cd->setConstructor(array('value'));
+		$return = $cd->setConstructor(array('value'));
+		$this->assertEquals($cd, $return);		
 		$this->assertTrue($cd->hasMethod('__construct'));
 		$this->assertTrue($cd->hasConstructor());
 		$this->assertEquals($cd->getConstructor(), array('value'));
@@ -76,7 +79,8 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		$cd = new Oktopus\ContainerComponentDefinition('foo');
 		$this->assertTrue($cd->isShared());//default shared value is true
 		
-		$cd->setShared(false);
+		$return = $cd->setShared(false);
+		$this->assertEquals($cd, $return);		
 		$this->assertFalse($cd->isShared());
 	}
 	
@@ -90,7 +94,8 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 			$this->assertTrue(true);
 		}
 
-		$cd->setClass('UneClass');
+		$return = $cd->setClass('UneClass');
+		$this->assertEquals($cd, $return);
 		$this->assertEquals('UneClass', $cd->getClass());
 		
 		//trying to set a incorrect classname
