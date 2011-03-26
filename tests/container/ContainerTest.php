@@ -23,6 +23,54 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($foo->getFirstParameter(), 'foo1');
 		$this->assertEquals($foo->getSecondParameter(), 'foo2');
 	}
+	
+	public function testLazyConstruction ()
+	{
+		$mockFoo = $this->getMock('MockFoo', array('fooDirect', 'setFoo', 'setFoo2', 'firstParameter', 'secondParameter'));
+		$mockFoo->expects($this->once())
+		        ->method('fooDirect');
+		$mockFoo->expects($this->once())
+		        ->method('setFoo');
+		$mockFoo->expects($this->once())
+		        ->method('setFoo2');
+		$mockFoo->expects($this->once())
+		        ->method('firstParameter');
+		$mockFoo->expects($this->once())
+		        ->method('secondParameter');
+	        
+		$container = new Oktopus\Container();
+		$container->define('foo')
+		          ->setClass('foo')
+		          ->setProperty('_fooDirect', function () use($mockFoo) {
+		          	  $mockFoo->fooDirect();  
+		          	  return '_fooDirect';
+		          })
+		          ->setMethod('setFoo', array(function() use($mockFoo){
+		          	$mockFoo->setFoo();
+		          	return 'foo';
+		          }))
+		          ->setMethod('setFoo2', array(function() use($mockFoo){
+		          	$mockFoo->setFoo2();
+		          	return 'foo2';
+		          }))		          
+		          ->setConstructor(array(
+		             function() use($mockFoo){
+		          	    $mockFoo->firstParameter();
+		          	    return 'foo1';
+		             }, 
+		             function() use($mockFoo){
+		          	    $mockFoo->secondParameter();
+		          	    return 'foo2';
+		             }));
+
+		$foo = $container->get('foo');
+		
+		$this->assertEquals($foo->getFooDirect(), '_fooDirect');
+		$this->assertEquals($foo->getFoo(), 'foo');
+		$this->assertEquals($foo->getFoo2(), 'foo2');
+		$this->assertEquals($foo->getFirstParameter(), 'foo1');
+		$this->assertEquals($foo->getSecondParameter(), 'foo2');
+	}	
 }
 
 class Foo

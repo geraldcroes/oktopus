@@ -51,7 +51,7 @@ class Container
         if ($pDefinition->hasConstructor()){
             $args = array();
             foreach ($pDefinition->getConstructor() as $paramName=>$paramValue) {
-                if ($paramValue instanceof Closure) {
+                if ($paramValue instanceof \Closure) {
                     $paramValue = call_user_func($paramValue);
                 }
                 $args[] = $paramValue;
@@ -68,15 +68,14 @@ class Container
             if (! $reflectionProperty->isPublic()){
                 $reflectionProperty->setAccessible(true);
             }
-            $reflectionProperty->setValue($object, $value);
-
+            $reflectionProperty->setValue($object, $value instanceof \Closure ? call_user_func($value): $value);
         }
         
         //Calling methods
         foreach ($pDefinition->getMethods() as $methodName=>$parameters) {
         	$args = array();
             foreach ($parameters as $paramName=>$paramValue) {
-                if ($paramValue instanceof Closure) {
+                if ($paramValue instanceof \Closure) {
                     $paramValue = call_user_func($paramValue);
                 }
                 $args[] = $paramValue;
