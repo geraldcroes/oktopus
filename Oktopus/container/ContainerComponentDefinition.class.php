@@ -1,7 +1,18 @@
 <?php
-use Oktopus\ContainerComponentDefinition;
 namespace Oktopus;
 
+/**
+ * Base exception for container component definition exception
+ */
+class ContainerComponentDefinitionException extends \Exception
+{
+}
+
+/**
+ * Component definition
+ * 
+ * @author gcroes
+ */
 class ContainerComponentDefinition
 {
     /**
@@ -16,7 +27,7 @@ class ContainerComponentDefinition
      * 
      * @var string
      */
-    private $_class;
+    private $_class = null;
     
     /**
      * The components properties
@@ -58,6 +69,7 @@ class ContainerComponentDefinition
      */
     public function setClass ($pClass)
     {
+    	$this->_assertClassNameIsString($pClass);
         $this->_class = $pClass;
         return $this;
     }
@@ -68,7 +80,10 @@ class ContainerComponentDefinition
      */
     public function getClass ()
     {
-        return $this->getClass();
+        if ($this->_class === null) {
+        	throw new ContainerComponentDefinitionException('Class name is not set');
+        }
+    	return $this->_class;
     }
 
     /**
@@ -81,6 +96,7 @@ class ContainerComponentDefinition
      */
     public function setProperty ($pName, $pValue)
     {
+    	$this->_assertPropertyNameIsString($pName);
         $this->_properties[$pName] = $pValue;
         return $this;
     }
@@ -133,40 +149,82 @@ class ContainerComponentDefinition
     public function hasMethod ($pName)
     {
         $this->_assertMethodNameIsString($pName);
-        return array_key_exists(array_key_exists($pName, $this->_methods));
+        return array_key_exists($pName, $this->_methods);
     }
+    /**
+     * Gets the method parameters
+     * 
+     * @param string $pName the method name
+     * 
+     * @return array
+     */
     public function getMethod ($pName)
     {
         if ($this->hasMethod($pName)) {
-            return $this->_properties[$pName];
+            return $this->_methods[$pName];
         }
         throw new ContainerComponentDefinitionException("Method $pName is not defined");
     }
-
+	/**
+	 * Gets the constructor parameters
+	 * 
+	 * @param array $pArgs the contructor parameters
+	 * 
+	 * @return ContainerComponentDefinition
+	 */
     public function setConstructor (array $pArgs = array())
     {
-        $this->method('__construct', $pArgs);
+        $this->setMethod('__construct', $pArgs);
         return $this;
     }
+    /**
+     * Tells if there is a defined constructor
+     * 
+     * @return boolean
+     */
     public function hasConstructor ()
     {
         return $this->hasMethod('__construct');
     }
+    /**
+     * Gets the constructor parameters
+     * 
+     * @return array
+     */
     public function getConstructor()
     {
         return $this->getMethod('__construct');
     }
-    
+    /**
+     * Tells if the component should be shared or not
+     * 
+     * @param mixed $pShared true - Singleton, false not shared 
+     * 
+     * @return ContainerComponentDefinition
+     */
     public function setShared ($pShared)
     {
         $this->_shared = $pShared;
+        return $this;
     }
     
+    /**
+     * Tells if the component is Shared
+     * 
+     * @return boolean
+     */
     public function isShared ()
     {
-        return $this->_shared;
+        return $this->_shared !== false;
     }
     
+    /**
+     * Asserts that the given parameter is a string
+     * 
+     * @param string $pMethodName the method name to check
+     * 
+     * @throws ContainerComponentDefinitionException
+     */
     private function _assertMethodNameIsString ($pMethodName)
     {
         if (!is_string($pMethodName)) {
@@ -174,6 +232,13 @@ class ContainerComponentDefinition
         }
     }
     
+    /**
+     * Asserts that the given parameter is a string
+     * 
+     * @param string $pMethodName the method name to check
+     * 
+     * @throws ContainerComponentDefinitionException
+     */
     private function _assertPropertyNameIsString ($pPropertyName)
     {
         if (!is_string($pPropertyName)) {
@@ -181,6 +246,13 @@ class ContainerComponentDefinition
         }
     }
 
+    /**
+     * Asserts that the given parameter is a string
+     * 
+     * @param string $pMethodName the method name to check
+     * 
+     * @throws ContainerComponentDefinitionException
+     */
     private function _assertClassNameIsString ($pClassName)
     {
         if (!is_string($pClassName)) {
