@@ -48,15 +48,22 @@ class ContainerComponentDefinition
      * 
      * @var array
      */
-    private $_constructor = null;
+    private $_constructorArguments = null;
     
+    /**
+     * The constructor method
+     * 
+     * @var array
+     */
+    private $_constructorMethod = null;
+        
     /**
      * If the component is shared or not
      * 
      * @var boolean
      */
     private $_shared = true;
-
+    
     /**
      * Construction of the definition
      * 
@@ -197,9 +204,9 @@ class ContainerComponentDefinition
 	 * 
 	 * @return ContainerComponentDefinition
 	 */
-    public function setConstructor (array $pArgs = array())
+    public function setConstructorArguments (array $pArgs = array())
     {
-        $this->_constructor = $pArgs;
+        $this->_constructorArguments = $pArgs;
         return $this;
     }
     /**
@@ -207,19 +214,36 @@ class ContainerComponentDefinition
      * 
      * @return boolean
      */
-    public function hasConstructor ()
+    public function hasConstructorArguments ()
     {
-        return $this->_constructor !== null;
+        return $this->_constructorArguments !== null;
     }
     /**
      * Gets the constructor parameters
      * 
      * @return array
      */
-    public function getConstructor()
+    public function getConstructorArguments()
     {
-        return $this->_constructor;
+        return $this->_constructorArguments;
     }
+    /**
+     * 
+     */
+    public function setConstructorMethod ($pCallBack, array $pArgs = array())
+    {
+    	$this->_constructorMethod = array($pCallBack, $pArgs);
+    }
+    public function hasConstructorMethod ()
+    {
+    	return $this->_constructorMethod !== null;
+    }
+    public function getConstructorMethod()
+    {
+    	return $this->_constructorMethod;
+    	
+    }  
+    
     /**
      * Tells if the component should be shared or not
      * 
@@ -232,7 +256,6 @@ class ContainerComponentDefinition
         $this->_shared = $pShared;
         return $this;
     }
-    
     /**
      * Tells if the component is Shared
      * 

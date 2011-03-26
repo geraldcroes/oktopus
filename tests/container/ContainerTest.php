@@ -15,7 +15,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		          ->setProperty('_fooDirect', '_fooDirect')
 		          ->setMethod('setFoo', array('foo'))
 		          ->setMethod('setFoo2', array('foo2'))		          
-		          ->setConstructor(array('foo1', 'foo2'));
+		          ->setConstructorArguments(array('foo1', 'foo2'));
 		$foo = $container->get('foo');
 		
 		$this->assertEquals($foo->getFooDirect(), '_fooDirect');
@@ -34,7 +34,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		          ->setMethod('setFoo', array('foo'));
 		$container->define('foo')
 		          ->setMethod('setFoo2', array('foo2'))		          
-		          ->setConstructor(array('foo1', 'foo2'));
+		          ->setConstructorArguments(array('foo1', 'foo2'));
 		$foo = $container->get('foo');
 
 		$this->assertEquals($foo->getFooDirect(), '_fooDirect');
@@ -73,7 +73,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		          	$mockFoo->setFoo2();
 		          	return 'foo2';
 		          }))		          
-		          ->setConstructor(array(
+		          ->setConstructorArguments(array(
 		             function() use($mockFoo){
 		          	    $mockFoo->firstParameter();
 		          	    return 'foo1';
@@ -109,7 +109,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$container = new Oktopus\Container();
 		$container->define('foo')
 		          ->setClass('foodi')
-		          ->setConstructor(array('foo1', 'foo2'))
+		          ->setConstructorArguments(array('foo1', 'foo2'))
 		          ->setShared(true);
 		$foo  = $container->get('foo');
 		$foo2 = $container->get('foo');
@@ -119,7 +119,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$container = new Oktopus\Container();
 		$container->define('foo')
 		          ->setClass('foodi')
-		          ->setConstructor(array('foo1', 'foo2'))
+		          ->setConstructorArguments(array('foo1', 'foo2'))
 		          ->setShared(false);
 		$foo  = $container->get('foo');
 		$foo2 = $container->get('foo');
@@ -133,7 +133,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$container->define('foo')
 		          ->setClass('foodi2')
 		          ->setMethod('setFoo')
-		          ->setConstructor();
+		          ->setConstructorArguments();
 		$foo = $container->get('foo');
 		
 		$this->assertEquals($foo->getFoo(), 'value of foo');
@@ -144,6 +144,20 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$container->define('foo')
 		          ->setClass('foodi2')
 		          ->setMethod('setFoo');
+		$foo = $container->get('foo');
+
+		$this->assertEquals($foo->getFoo(), 'value of foo');
+		$this->assertEquals($foo->getFoo2(), 'value of foo2');
+	}
+	
+	public function testExternalFactory ()
+	{
+		//Setting no parameters to the constructor
+		$container = new Oktopus\Container();
+		$container->define('foo')
+		          ->setClass('foodi2')
+		          ->setMethod('setFoo')
+		          ->setConstructorMethod(array('FooDi2Factory', 'getInstance'));
 		$foo = $container->get('foo');
 		
 		$this->assertEquals($foo->getFoo(), 'value of foo');
@@ -224,5 +238,13 @@ class FooDI2
 	public function __construct ()
 	{
 		$this->_foo2 = 'value of foo2';
+	}
+}
+
+class FooDI2Factory
+{
+	public static function getInstance ()
+	{
+		return new FooDI2();
 	}
 }

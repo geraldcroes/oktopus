@@ -48,15 +48,29 @@ class Container
     public function _create (ContainerComponentDefinition $pDefinition)
     {
         $reflection = new \ReflectionClass($pDefinition->getClass());
-        if ($pDefinition->hasConstructor()){
+        if ($pDefinition->hasConstructorMethod()) {
+        	$args = array();
+        	$factory = $pDefinition->getConstructorMethod();
+        	foreach ($factory[1] as $paramName=>$paramValue) {
+                if ($paramValue instanceof \Closure) {
+                    $paramValue = call_user_func($paramValue);
+                }
+                $args[] = $paramValue;
+        	}
+        	
+        	if (count($args)) {
+        		$object = call_user_func_array($factory[0], $args);
+        	} else {
+        		$object = call_user_func($factory[0]);
+        	}
+        } elseif ($pDefinition->hasConstructorArguments()) {
             $args = array();
-            foreach ($pDefinition->getConstructor() as $paramName=>$paramValue) {
+            foreach ($pDefinition->getConstructorArguments() as $paramName=>$paramValue) {
                 if ($paramValue instanceof \Closure) {
                     $paramValue = call_user_func($paramValue);
                 }
                 $args[] = $paramValue;
             }
-            //First instance
             $object = $reflection->newInstanceArgs($args);
         } else {
             $object = $reflection->newInstance();
