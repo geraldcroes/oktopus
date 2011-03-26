@@ -18,13 +18,10 @@ class Container
     
     private $_components = array();
 
-    public function defineComponent ($pId)
+    public function define ($pId)
     {
-        if (!is_string($pId)) {
-            throw new ContainerException('');
-        }
         if (! array_key_exists($pId, $this->_componentDefinitions)) {
-            return $this->_componentDefinitions[$pId] = new ContainerComponent($pId, $this);
+            return $this->_componentDefinitions[$pId] = new ContainerComponentDefinition($pId);
         } else {
             return $this->_componentDefinitions[$pId];
         }
@@ -36,17 +33,23 @@ class Container
             throw new ContextException('Unknown component '.$pId);
         }
 
-        if ($this->_componentDefinition[$pId]->isShared()) {
-            
+        if ($this->_componentDefinitions[$pId]->isShared()) {
+        	if (isset($this->_components[$pId])) {
+        		return $this->_components[$pId];
+        	}
         }
 
-        return $this->_componentDefinitions[$pId];
+        $toReturn = $this->_create($this->_componentDefinitions[$pId]);
+        if ($this->_componentDefinitions[$pId]->isShared()) {
+        	$this->_components[$pId] = $toReturn;
+        }
+        return $toReturn;
     }
     
     public function _create (ContainerComponentDefinition $pDefinition)
     {
         $reflection = new \ReflectionClass($pDefinition->getClass());
-        if ($pDefinition->hasMethod('__construct')){
+        if ($pDefinition->hasConstructor()){
             $args = array();
             foreach ($pDefinition->getConstructor() as $paramName=>$paramValue) {
                 if ($paramValue instanceof Closure) {
@@ -72,6 +75,7 @@ class Container
         
         //Calling methods
         foreach ($pDefinition->getMethods() as $methodName=>$parameters) {
+        	$args = array();
             foreach ($parameters as $paramName=>$paramValue) {
                 if ($paramValue instanceof Closure) {
                     $paramValue = call_user_func($paramValue);
@@ -79,10 +83,10 @@ class Container
                 $args[] = $paramValue;
             }
             $reflectionMethod = $reflection->getMethod($methodName);
-            if (count($args)) {
-                $reflectionMethod->invoke();
+            if (count($args) === 0) {
+                $reflectionMethod->invoke($object);
             } else {
-                $reflectionMethod->invokeArgs();
+                $reflectionMethod->invokeArgs($object, $args);
             }
         }
 
