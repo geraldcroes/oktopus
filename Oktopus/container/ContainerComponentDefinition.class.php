@@ -44,6 +44,13 @@ class ContainerComponentDefinition
     private $_methods = array();
     
     /**
+     * The constructor parameter
+     * 
+     * @var array
+     */
+    private $_constructor = null;
+    
+    /**
      * If the component is shared or not
      * 
      * @var boolean
@@ -126,6 +133,15 @@ class ContainerComponentDefinition
         throw new ContainerComponentDefinitionException("Property $pName is not defined");
     }
     /**
+     * Get the configured properties
+     * 
+     * @return array
+     */
+    public function getProperties ()
+    {
+    	return $this->_properties;
+    }
+    /**
      * Defines a method to call after the construction of the object
      * 
      * @param string $pName the method name
@@ -165,6 +181,15 @@ class ContainerComponentDefinition
         }
         throw new ContainerComponentDefinitionException("Method $pName is not defined");
     }
+    /**
+     * Get the configured methods
+     * 
+     * @return array
+     */
+    public function getMethods ()
+    {
+    	return $this->_methods;
+    }
 	/**
 	 * Gets the constructor parameters
 	 * 
@@ -174,7 +199,7 @@ class ContainerComponentDefinition
 	 */
     public function setConstructor (array $pArgs = array())
     {
-        $this->setMethod('__construct', $pArgs);
+        $this->_constructor = $pArgs;
         return $this;
     }
     /**
@@ -184,7 +209,7 @@ class ContainerComponentDefinition
      */
     public function hasConstructor ()
     {
-        return $this->hasMethod('__construct');
+        return $this->_constructor !== null;
     }
     /**
      * Gets the constructor parameters
@@ -193,7 +218,7 @@ class ContainerComponentDefinition
      */
     public function getConstructor()
     {
-        return $this->getMethod('__construct');
+        return $this->_constructor;
     }
     /**
      * Tells if the component should be shared or not
