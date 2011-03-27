@@ -64,11 +64,11 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 	public function testConstructor ()
 	{
 		$cd = new Oktopus\ContainerComponentDefinition('foo');
-		$this->assertFalse($cd->hasConstructor());
-		$return = $cd->setConstructor(array('value'));
+		$this->assertFalse($cd->hasConstructorArguments());
+		$return = $cd->setConstructorArguments(array('value'));
 		$this->assertEquals($cd, $return);		
-		$this->assertTrue($cd->hasConstructor());
-		$this->assertEquals($cd->getConstructor(), array('value'));
+		$this->assertTrue($cd->hasConstructorArguments());
+		$this->assertEquals($cd->getConstructorArguments(), array('value'));
 	}
 	
 	public function testShared ()

@@ -157,7 +157,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$container->define('foo')
 		          ->setClass('foodi2')
 		          ->setMethod('setFoo')
-		          ->setConstructorMethod(array('FooDi2Factory', 'getInstance'));
+		          ->setFactory(array('FooDi2Factory', 'getInstance'));
 		$foo = $container->get('foo');
 		
 		$this->assertEquals($foo->getFoo(), 'value of foo');

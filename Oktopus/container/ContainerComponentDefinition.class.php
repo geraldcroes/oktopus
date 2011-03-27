@@ -51,11 +51,11 @@ class ContainerComponentDefinition
     private $_constructorArguments = null;
     
     /**
-     * The constructor method
+     * The factory needed to create an instance of the object
      * 
      * @var array
      */
-    private $_constructorMethod = null;
+    private $_factory = null;
         
     /**
      * If the component is shared or not
@@ -228,20 +228,34 @@ class ContainerComponentDefinition
         return $this->_constructorArguments;
     }
     /**
+     * Defines a factory for the object
      * 
+     * @param Callback $pCallBack the factory callback
+     * @param array $pArgs the factory method parameters
+     * 
+     * @return ContainerComponentDefinition
      */
-    public function setConstructorMethod ($pCallBack, array $pArgs = array())
+    public function setFactory ($pCallBack, array $pArgs = array())
     {
-    	$this->_constructorMethod = array($pCallBack, $pArgs);
+    	$this->_factory = array($pCallBack, $pArgs);
+    	return $this;
     }
-    public function hasConstructorMethod ()
+    /**
+     * Tells if there is a configured factory
+     * @return boolean
+     */
+    public function hasFactory ()
     {
-    	return $this->_constructorMethod !== null;
+    	return $this->_factory !== null;
     }
-    public function getConstructorMethod()
+    /**
+     * Get the object factory
+     * 
+     * @return array
+     */
+    public function getFactory ()
     {
-    	return $this->_constructorMethod;
-    	
+    	return $this->_factory;
     }  
     
     /**

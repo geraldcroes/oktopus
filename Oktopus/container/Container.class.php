@@ -48,9 +48,9 @@ class Container
     public function _create (ContainerComponentDefinition $pDefinition)
     {
         $reflection = new \ReflectionClass($pDefinition->getClass());
-        if ($pDefinition->hasConstructorMethod()) {
+        if ($pDefinition->hasFactory()) {
         	$args = array();
-        	$factory = $pDefinition->getConstructorMethod();
+        	$factory = $pDefinition->getFactory();
         	foreach ($factory[1] as $paramName=>$paramValue) {
                 if ($paramValue instanceof \Closure) {
                     $paramValue = call_user_func($paramValue);
