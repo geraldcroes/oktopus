@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+<component id="ComponentId" class="Oktopus\ClassName" shared="">
+ <constructor-arg value="" />
+ <property name="" value="" />
+ <method name="">
+  <method-arg value="" />
+  <method-arg value="" />
+ </method>
+</component>
+</container>
