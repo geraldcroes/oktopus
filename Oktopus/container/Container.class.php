@@ -57,7 +57,7 @@ class Container
                 }
                 $args[] = $paramValue;
         	}
-        	
+
         	if (count($args)) {
         		$object = call_user_func_array($factory[0], $args);
         	} else {

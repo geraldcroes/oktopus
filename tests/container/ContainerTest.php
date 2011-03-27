@@ -152,16 +152,54 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	
 	public function testExternalFactory ()
 	{
-		//Setting no parameters to the constructor
+		//With no parameters 
 		$container = new Oktopus\Container();
 		$container->define('foo')
 		          ->setClass('foodi2')
 		          ->setMethod('setFoo')
 		          ->setFactory(array('FooDi2Factory', 'getInstance'));
 		$foo = $container->get('foo');
-		
+
 		$this->assertEquals($foo->getFoo(), 'value of foo');
 		$this->assertEquals($foo->getFoo2(), 'value of foo2');
+		
+		//With parameters
+		$container = new Oktopus\Container();
+		$container->define('foo')
+		          ->setClass('foodi')
+		          ->setMethod('setFoo', array('value'))
+		          ->setFactory(array('FooDiFactory', 'getInstance'), array('value1', 'value2'));
+		$foo = $container->get('foo');
+		
+		$this->assertEquals($foo->getFoo(), 'value');
+		$this->assertEquals($foo->getFirstParameter(), 'value1');
+		$this->assertEquals($foo->getSecondParameter(), 'value2');
+		
+		//With lazy parameters
+		$mock = $this->getMock('MockFoo', array('getValue1'));
+		$mock->expects($this->once())
+		        ->method('getValue1');
+
+		$container = new Oktopus\Container();
+		$container->define('foo')
+		          ->setClass('foodi')
+		          ->setMethod('setFoo', array('value'))
+		          ->setFactory(
+		                       array('FooDiFactory', 'getInstance'), 
+		                       array
+		                         (
+                                    function() use($mock){
+		                            	echo $mock->getValue1();
+		                            	return 'value1';
+		          	                }, 
+		          	                'value2'
+		          	             )
+		          	          );
+		$foo = $container->get('foo');
+
+		$this->assertEquals($foo->getFoo(), 'value');
+		$this->assertEquals($foo->getFirstParameter(), 'value1');
+		$this->assertEquals($foo->getSecondParameter(), 'value2');
 	}
 }
 
@@ -246,5 +284,13 @@ class FooDI2Factory
 	public static function getInstance ()
 	{
 		return new FooDI2();
+	}
+}
+
+class FooDIFactory
+{
+	public static function getInstance($pParameter1, $pParameter2)
+	{
+		return new FooDI($pParameter1, $pParameter2);
 	}
 }
