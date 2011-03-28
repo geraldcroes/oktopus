@@ -2,6 +2,24 @@
 namespace Oktopus;
 
 /**
+ * Interface for Oktopus Containers
+ */
+interface IContainer
+{
+    public function get ($pId);
+    public function hasComponent($pId);
+}
+
+/**
+ * Interface for containers where you can add / update definitions
+ */
+interface IMutableContainer extends IContainer
+{
+    public function define ($pId, $pClassName = null);
+    public function getDefinition ($pId);
+}
+
+/**
  * Base Exception class for container operations
  */
 class ContainerException extends \Exception
@@ -11,41 +29,53 @@ class ContainerException extends \Exception
 /**
  * Container
  */
-class Container
+class Container implements IMutableContainer
 {
     private $_componentDefinitions = array();
     
     private $_components = array();
 
-    public function define ($pId)
+    public function define ($pId, $pClassName = null)
     {
-        if (! array_key_exists($pId, $this->_componentDefinitions)) {
-            return $this->_componentDefinitions[$pId] = new ContainerComponentDefinition($pId);
-        } else {
-            return $this->_componentDefinitions[$pId];
+        if (array_key_exists($pId, $this->_componentDefinitions)) {
+            throw new ContainerException("The $pId Component is already defined");
         }
+
+        $this->_componentDefinitions[$pId] = new ComponentDefinition($pId);
+        return $this->_componentDefinitions[$pId]->setClass($pClassName === null ? $pId : $pClassName);
     }
 
-    public function get ($pId)
+    public function getDefinition ($pId)
     {
         if (! array_key_exists($pId, $this->_componentDefinitions)) {
             throw new ContainerException('Unknown component '.$pId);
         }
+        return $this->_componentDefinitions[$pId];
+    }
 
-        if ($this->_componentDefinitions[$pId]->isShared()) {
+    public function get ($pId)
+    {
+        $definition = $this->getDefinition($pId);
+
+        if ($definition->isShared()) {
         	if (isset($this->_components[$pId])) {
         		return $this->_components[$pId];
         	}
         }
 
-        $toReturn = $this->_create($this->_componentDefinitions[$pId]);
-        if ($this->_componentDefinitions[$pId]->isShared()) {
+        $toReturn = $this->_create($definition);
+        if ($definition->isShared()) {
         	$this->_components[$pId] = $toReturn;
         }
         return $toReturn;
     }
+
+    public function hasComponent ($pId) 
+    {
+        return array_key_exists($pId, $this->_componentDefinitions);
+    }
     
-    public function _create (ContainerComponentDefinition $pDefinition)
+    public function _create (ComponentDefinition $pDefinition)
     {
         $reflection = new \ReflectionClass($pDefinition->getClass());
         if ($pDefinition->hasFactory()) {

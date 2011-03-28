@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+ <!--  A simple shared Component with id == className-->
+ <component id="Apple" shared="true">
+ </component>
+
+ <!--  A simple unshared Component with id !== className-->
+ <component id="Fruit" classname="Fruit" shared="false">
+ </component>
+
+ <!--  A simple shared component with arguments in its constructor -->
+ <component id="Juicer" classname="Juicer">
+  <property name="_fruit" ref="Apple" />
+  <property name="_tool" ref="Fruit" />
+  <property name="_foo" value="fooValue" />
+ </component>
+
+</container>

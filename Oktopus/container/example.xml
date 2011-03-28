@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container>
-<component id="ComponentId" class="Oktopus\ClassName" shared="">
- <constructor-arg value="" />
- <property name="" value="" />
- <method name="">
-  <method-arg value="" />
-  <method-arg value="" />
- </method>
+<!--  A simple shared Component with id == className-->
+<component id="Foo" shared="true">
 </component>
+
+<!--  A simple unshared Component with id !== className-->
+<component id="Foo2" classname="Foo" shared="false">
+</component>
+
+<!--  A simple shared component with arguments in its constructor -->
+<component id="Foo3" classname="Foo">
+ <constructor-argument value="premiere valeur" />
+</component>
+
 </container>

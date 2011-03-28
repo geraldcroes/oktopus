@@ -10,8 +10,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	{
 		//Testing nested call in definition
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi')
+		$container->define('foo', 'foodi')
 		          ->setProperty('_fooDirect', '_fooDirect')
 		          ->setMethod('setFoo', array('foo'))
 		          ->setMethod('setFoo2', array('foo2'))		          
@@ -29,10 +28,10 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$container = new Oktopus\Container();
 		$container->define('foo')
 		          ->setClass('foodi');
-		$container->define('foo')          
+		$container->getDefinition('foo')          
 		          ->setProperty('_fooDirect', '_fooDirect')
 		          ->setMethod('setFoo', array('foo'));
-		$container->define('foo')
+		$container->getDefinition('foo')
 		          ->setMethod('setFoo2', array('foo2'))		          
 		          ->setConstructorArguments(array('foo1', 'foo2'));
 		$foo = $container->get('foo');
@@ -42,6 +41,19 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($foo->getFoo2(), 'foo2');
 		$this->assertEquals($foo->getFirstParameter(), 'foo1');
 		$this->assertEquals($foo->getSecondParameter(), 'foo2');
+	}
+	
+	public function testDoubleDefinition ()
+	{
+	    $container = new Oktopus\Container();
+		$container->define('foo')
+		          ->setClass('foodi');
+		try {
+		    $container->define('foo');
+		    $this->fails('Trying to define two objects with the same id should raise an error');
+		} catch (Oktopus\ContainerException $e) {
+		    $this->assertTrue(true);
+		}          
 	}
 	
 	public function testLazyConstruction ()
@@ -59,8 +71,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		        ->method('secondParameter');
 	        
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi')
+		$container->define('foo', 'foodi')
 		          ->setProperty('_fooDirect', function () use($mockFoo) {
 		          	  $mockFoo->fooDirect();  
 		          	  return '_fooDirect';
@@ -107,31 +118,28 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	{
 		//Shared is set to true, container will distribute the same component
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi')
+		$container->define('foodi')
 		          ->setConstructorArguments(array('foo1', 'foo2'))
 		          ->setShared(true);
-		$foo  = $container->get('foo');
-		$foo2 = $container->get('foo');
+		$foo  = $container->get('foodi');
+		$foo2 = $container->get('foodi');
 		$this->assertSame($foo, $foo2);
-		
+
 		//Shared is set to false, container will NOT distribute the same component
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi')
+		$container->define('foo', 'foodi')
 		          ->setConstructorArguments(array('foo1', 'foo2'))
 		          ->setShared(false);
 		$foo  = $container->get('foo');
 		$foo2 = $container->get('foo');
 		$this->assertNotSame($foo, $foo2);
 	}
-	
+
 	public function testEmptyConstructorAndMethodCalls ()
 	{
 		//Setting no parameters to the constructor
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi2')
+		$container->define('foo', 'foodi2')
 		          ->setMethod('setFoo')
 		          ->setConstructorArguments();
 		$foo = $container->get('foo');
@@ -141,10 +149,9 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		
 		//Setting no parameters to the constructor
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi2')
+		$container->define('foodi2')
 		          ->setMethod('setFoo');
-		$foo = $container->get('foo');
+		$foo = $container->get('foodi2');
 
 		$this->assertEquals($foo->getFoo(), 'value of foo');
 		$this->assertEquals($foo->getFoo2(), 'value of foo2');
@@ -154,22 +161,20 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 	{
 		//With no parameters 
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi2')
+		$container->define('foodi2')
 		          ->setMethod('setFoo')
 		          ->setFactory(array('FooDi2Factory', 'getInstance'));
-		$foo = $container->get('foo');
+		$foo = $container->get('foodi2');
 
 		$this->assertEquals($foo->getFoo(), 'value of foo');
 		$this->assertEquals($foo->getFoo2(), 'value of foo2');
 		
 		//With parameters
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi')
+		$container->define('foodi')
 		          ->setMethod('setFoo', array('value'))
 		          ->setFactory(array('FooDiFactory', 'getInstance'), array('value1', 'value2'));
-		$foo = $container->get('foo');
+		$foo = $container->get('foodi');
 		
 		$this->assertEquals($foo->getFoo(), 'value');
 		$this->assertEquals($foo->getFirstParameter(), 'value1');
@@ -181,8 +186,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		        ->method('getValue1');
 
 		$container = new Oktopus\Container();
-		$container->define('foo')
-		          ->setClass('foodi')
+		$container->define('foodi')
 		          ->setMethod('setFoo', array('value'))
 		          ->setFactory(
 		                       array('FooDiFactory', 'getInstance'), 
@@ -195,7 +199,7 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		          	                'value2'
 		          	             )
 		          	          );
-		$foo = $container->get('foo');
+		$foo = $container->get('foodi');
 
 		$this->assertEquals($foo->getFoo(), 'value');
 		$this->assertEquals($foo->getFirstParameter(), 'value1');
@@ -227,7 +231,7 @@ class FooDI
 	public function setFoo2 ($value)
 	{
 		if ($this->getFoo() === null) {
-			throw new Exception('setFoo should have been called before setFoo2');
+			throw new Oktopus\Exception('setFoo should have been called before setFoo2');
 		}
 		$this->_foo2 = $value;
 	}

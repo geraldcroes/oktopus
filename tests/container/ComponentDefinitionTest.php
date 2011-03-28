@@ -1,5 +1,5 @@
 <?php
-class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
+class ComponentDefinitionTest extends PHPUnit_Framework_TestCase
 {
 	public function setUp ()
 	{
@@ -8,7 +8,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 	 
 	public function testProperties ()
 	{
-		$cd = new Oktopus\ContainerComponentDefinition('foo');
+		$cd = new Oktopus\ComponentDefinition('foo');
 		$this->assertFalse($cd->hasProperty('foo'));
 		$return = $cd->setProperty('foo', 'value');
 		$this->assertTrue($cd->hasProperty('foo'));
@@ -18,7 +18,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		try {
 			$cd->getProperty('foo2');
 			$this->fails('Getting an unset property should raise an exception');
-		} catch (Oktopus\ContainerComponentDefinitionException $e) {
+		} catch (Oktopus\ComponentDefinitionException $e) {
 			$this->assertTrue(true);
 		}
 		
@@ -26,7 +26,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		try {
 			$cd->setProperty(array(), 'fooValue');
 			$this->fails('Should not be possible to set a property name that is not a string');
-		} catch (Oktopus\ContainerComponentDefinitionException $e) {
+		} catch (Oktopus\ComponentDefinitionException $e) {
 			$this->assertTrue(true);
 		}
 	}
@@ -34,7 +34,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 	public function testMethod ()
 	{
 		//Testing with a single parameter method name
-		$cd = new Oktopus\ContainerComponentDefinition('foo');
+		$cd = new Oktopus\ComponentDefinition('foo');
 		$this->assertFalse($cd->hasMethod('foo'));
 		$return = $cd->setMethod('foo', array('value'));
 		$this->assertEquals($cd, $return);		
@@ -43,7 +43,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		try {
 			$cd->getMethod('foo2');
 			$this->fails('Getting an unset method should raise an exception');
-		} catch (Oktopus\ContainerComponentDefinitionException $e) {
+		} catch (Oktopus\ComponentDefinitionException $e) {
 			$this->assertTrue(true);
 		}
 		
@@ -56,14 +56,14 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		try {
 			$cd->setMethod(array());
 			$this->fails('Should not be possible to set a method name that is not a string');
-		} catch (Oktopus\ContainerComponentDefinitionException $e) {
+		} catch (Oktopus\ComponentDefinitionException $e) {
 			$this->assertTrue(true);
 		}
 	}
 
 	public function testConstructor ()
 	{
-		$cd = new Oktopus\ContainerComponentDefinition('foo');
+		$cd = new Oktopus\ComponentDefinition('foo');
 		$this->assertFalse($cd->hasConstructorArguments());
 		$return = $cd->setConstructorArguments(array('value'));
 		$this->assertEquals($cd, $return);		
@@ -73,7 +73,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 	
 	public function testShared ()
 	{
-		$cd = new Oktopus\ContainerComponentDefinition('foo');
+		$cd = new Oktopus\ComponentDefinition('foo');
 		$this->assertTrue($cd->isShared());//default shared value is true
 		
 		$return = $cd->setShared(false);
@@ -83,11 +83,11 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 	
 	public function testClass ()
 	{
-		$cd = new Oktopus\ContainerComponentDefinition('foo');
+		$cd = new Oktopus\ComponentDefinition('foo');
 		try {
 			$cd->getClass();
 			$this->fails('Getting the class if not set should raise an exception');
-		} catch (Oktopus\ContainerComponentDefinitionException $e) {
+		} catch (Oktopus\ComponentDefinitionException $e) {
 			$this->assertTrue(true);
 		}
 
@@ -99,7 +99,7 @@ class ContainerComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		try {
 			$cd->setClass(array());
 			$this->fails('Setting a classname that is not a string should raise an exception');
-		} catch (Oktopus\ContainerComponentDefinitionException $e) {
+		} catch (Oktopus\ComponentDefinitionException $e) {
 			$this->assertTrue(true);
 		}
 	}

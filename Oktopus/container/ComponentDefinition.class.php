@@ -4,7 +4,7 @@ namespace Oktopus;
 /**
  * Base exception for container component definition exception
  */
-class ContainerComponentDefinitionException extends \Exception
+class ComponentDefinitionException extends \Exception
 {
 }
 
@@ -13,7 +13,7 @@ class ContainerComponentDefinitionException extends \Exception
  * 
  * @author gcroes
  */
-class ContainerComponentDefinition
+class ComponentDefinition
 {
     /**
      * The component definition id
@@ -79,7 +79,7 @@ class ContainerComponentDefinition
      * 
      * @param string $pClass the class name
      * 
-     * @return ContainerComponentDefinition
+     * @return ComponentDefinition
      */
     public function setClass ($pClass)
     {
@@ -95,7 +95,7 @@ class ContainerComponentDefinition
     public function getClass ()
     {
         if ($this->_class === null) {
-        	throw new ContainerComponentDefinitionException('Class name is not set');
+        	throw new ComponentDefinitionException('Class name is not set');
         }
     	return $this->_class;
     }
@@ -106,7 +106,7 @@ class ContainerComponentDefinition
      * @param string $pName the property name
      * @param mixed $pValuev the property value
      * 
-     * @return ContainerComponentDefinition
+     * @return ComponentDefinition
      */
     public function setProperty ($pName, $pValue)
     {
@@ -137,7 +137,7 @@ class ContainerComponentDefinition
         if ($this->hasProperty($pName)) {
             return $this->_properties[$pName];
         }
-        throw new ContainerComponentDefinitionException("Property $pName is not defined");
+        throw new ComponentDefinitionException("Property $pName is not defined");
     }
     /**
      * Get the configured properties
@@ -154,7 +154,7 @@ class ContainerComponentDefinition
      * @param string $pName the method name
      * @param array $pArgs the method arguments
      * 
-     * @return ContainerComponentDefinition
+     * @return ComponentDefinition
      */
     public function setMethod ($pName, array $pArgs = array())
     {
@@ -186,7 +186,7 @@ class ContainerComponentDefinition
         if ($this->hasMethod($pName)) {
             return $this->_methods[$pName];
         }
-        throw new ContainerComponentDefinitionException("Method $pName is not defined");
+        throw new ComponentDefinitionException("Method $pName is not defined");
     }
     /**
      * Get the configured methods
@@ -202,7 +202,7 @@ class ContainerComponentDefinition
 	 * 
 	 * @param array $pArgs the contructor parameters
 	 * 
-	 * @return ContainerComponentDefinition
+	 * @return ComponentDefinition
 	 */
     public function setConstructorArguments (array $pArgs = array())
     {
@@ -233,7 +233,7 @@ class ContainerComponentDefinition
      * @param Callback $pCallBack the factory callback
      * @param array $pArgs the factory method parameters
      * 
-     * @return ContainerComponentDefinition
+     * @return ComponentDefinition
      */
     public function setFactory ($pCallBack, array $pArgs = array())
     {
@@ -263,7 +263,7 @@ class ContainerComponentDefinition
      * 
      * @param mixed $pShared true - Singleton, false not shared 
      * 
-     * @return ContainerComponentDefinition
+     * @return ComponentDefinition
      */
     public function setShared ($pShared)
     {
@@ -285,12 +285,12 @@ class ContainerComponentDefinition
      * 
      * @param string $pMethodName the method name to check
      * 
-     * @throws ContainerComponentDefinitionException
+     * @throws ComponentDefinitionException
      */
     private function _assertMethodNameIsString ($pMethodName)
     {
         if (!is_string($pMethodName)) {
-            throw new ContainerComponentDefinitionException("Method names can only be Strings");
+            throw new ComponentDefinitionException("Method names can only be Strings");
         }
     }
     
@@ -299,12 +299,12 @@ class ContainerComponentDefinition
      * 
      * @param string $pMethodName the method name to check
      * 
-     * @throws ContainerComponentDefinitionException
+     * @throws ComponentDefinitionException
      */
     private function _assertPropertyNameIsString ($pPropertyName)
     {
         if (!is_string($pPropertyName)) {
-            throw new ContainerComponentDefinitionException("Property names can only be Strings");
+            throw new ComponentDefinitionException("Property names can only be Strings");
         }
     }
 
@@ -313,12 +313,12 @@ class ContainerComponentDefinition
      * 
      * @param string $pMethodName the method name to check
      * 
-     * @throws ContainerComponentDefinitionException
+     * @throws ComponentDefinitionException
      */
     private function _assertClassNameIsString ($pClassName)
     {
         if (!is_string($pClassName)) {
-            throw new ContainerComponentDefinitionException("Class names can only be Strings");
+            throw new ComponentDefinitionException("Class names can only be Strings");
         }
     }
 }
