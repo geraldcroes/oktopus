@@ -233,7 +233,7 @@ class Autoloader
      */
     private function _loadDirectoryClasses ($pDirectoryName, $pRecurse, $pForce = false, $pCheckFiles = true)
     {
-        ///Can we find the directory index ?
+        //Can we find the directory index ?
         $directoryIndex = array();
         $listHasChanged = false;
 
