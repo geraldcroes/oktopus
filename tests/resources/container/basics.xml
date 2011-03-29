@@ -60,4 +60,59 @@ A component with a property using
   <value><null /></value>
  </property>
 </component>
+
+<!--  A component with a constructor with one parameter  -->
+<component id="ConstructedOneParameter">
+ <constructor_argument value="one" />
+</component>
+
+<!--  A component with a constructor with two parameter  -->
+<component id="ConstructedTwoParameter">
+ <constructor_argument value="one" />
+ <constructor_argument value="two" />
+</component>
+
+<!--  A component with a constructor with one parameters, using method call and property direct setting -->
+<component id="ConstructedOneParameter2" classname="ConstructedOneParameter">
+ <constructor_argument value="one" />
+ <property name="_moreNoSetter" value="valueOfMoreNoSetter" />
+ <method name="setMore">
+  <argument value="valueOfMore" />
+ </method>
+</component>
+
+<!--  A component with a constructor with two parameters, using method call and property direct setting -->
+<component id="ConstructedTwoParameter2" classname="ConstructedTwoParameter">
+ <constructor_argument value="one" />
+ <constructor_argument value="two" />
+ <property name="_moreNoSetter" value="valueOfMoreNoSetter" />
+ <method name="setMoreValues">
+  <argument value="valueOfMore" />
+  <argument value="valueOfMore2" />
+ </method>
+</component>
+
+<!-- A component with a factory with no parameters -->
+<component id="FactoryConstructedNoParameter" classname="ConstructedTwoParameter">
+ <factory classname="FactoryConstructedNoParameter" method="create" />
+</component>
+
+<!-- A component with a factory with one parameters -->
+<component id="FactoryConstructedOneParameter" classname="ConstructedTwoParameter">
+ <factory classname="FactoryConstructedOneParameter" method="create">
+  <argument value="one1" />
+ </factory>
+</component>
+
+<!-- A component with a factory with two parameters -->
+<component id="FactoryConstructedTwoParameter" classname="ConstructedTwoParameter">
+ <factory classname="FactoryConstructedTwoParameter" method="create">
+  <argument value="one2" />
+  <argument value="two2" />  
+ </factory>
+
+</component>
+
+<!-- TODO: A factory where the object refers to another component  -->
+
 </container>
