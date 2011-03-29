@@ -15,6 +15,9 @@ class ContainerTest extends PHPUnit_Framework_TestCase
 		          ->setMethod('setFoo', array('foo'))
 		          ->setMethod('setFoo2', array('foo2'))		          
 		          ->setConstructorArguments(array('foo1', 'foo2'));
+        $this->assertTrue($container->hasComponent('foo'));
+        $this->assertFalse($container->hasComponent('foodi'));
+
 		$foo = $container->get('foo');
 		
 		$this->assertEquals($foo->getFooDirect(), '_fooDirect');

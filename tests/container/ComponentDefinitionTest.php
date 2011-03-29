@@ -80,7 +80,7 @@ class ComponentDefinitionTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($cd, $return);		
 		$this->assertFalse($cd->isShared());
 	}
-	
+
 	public function testClass ()
 	{
 		$cd = new Oktopus\ComponentDefinition('foo');

@@ -1,6 +1,9 @@
 <?php
 namespace Oktopus;
 
+use \Closure;
+
+
 /**
  * Interface for Oktopus Containers
  */
@@ -82,8 +85,15 @@ class Container implements IMutableContainer
         	$args = array();
         	$factory = $pDefinition->getFactory();
         	foreach ($factory[1] as $paramName=>$paramValue) {
-                if ($paramValue instanceof \Closure) {
+                if ($paramValue instanceof Closure) {
                     $paramValue = call_user_func($paramValue);
+                } elseif ($paramValue instanceof ComponentReference) {
+                    if ($paramValue->getContainer() !== null) {
+                        $containerConstructor = $paramValue->getContainer();
+                    } else {
+                        $containerConstructor = $this;
+                    }
+                    $paramValue = $containerConstructor->get($paramValue->getId());
                 }
                 $args[] = $paramValue;
         	}
@@ -96,8 +106,15 @@ class Container implements IMutableContainer
         } elseif ($pDefinition->hasConstructorArguments()) {
             $args = array();
             foreach ($pDefinition->getConstructorArguments() as $paramName=>$paramValue) {
-                if ($paramValue instanceof \Closure) {
+                if ($paramValue instanceof Closure) {
                     $paramValue = call_user_func($paramValue);
+                } elseif ($paramValue instanceof ComponentReference) {
+                    if ($paramValue->getContainer() !== null) {
+                        $containerConstructor = $paramValue->getContainer();
+                    } else {
+                        $containerConstructor = $this;
+                    }
+                    $paramValue = $containerConstructor->get($paramValue->getId());
                 }
                 $args[] = $paramValue;
             }
@@ -112,15 +129,33 @@ class Container implements IMutableContainer
             if (! $reflectionProperty->isPublic()){
                 $reflectionProperty->setAccessible(true);
             }
-            $reflectionProperty->setValue($object, $value instanceof \Closure ? call_user_func($value): $value);
+
+            if ($value instanceof Closure) {
+                $value = call_user_func($value);
+            } elseif ($value instanceof ComponentReference) {
+                if ($value->getContainer() !== null) {
+                    $containerConstructor = $value->getContainer();
+                } else {
+                    $containerConstructor = $this;
+                }
+                $value = $containerConstructor->get($value->getId());
+            }
+            $reflectionProperty->setValue($object, $value);
         }
-        
+
         //Calling methods
         foreach ($pDefinition->getMethods() as $methodName=>$parameters) {
         	$args = array();
             foreach ($parameters as $paramName=>$paramValue) {
-                if ($paramValue instanceof \Closure) {
+                if ($paramValue instanceof Closure) {
                     $paramValue = call_user_func($paramValue);
+                } elseif ($paramValue instanceof ComponentReference) {
+                    if ($paramValue->getContainer() !== null) {
+                        $containerConstructor = $paramValue->getContainer();
+                    } else {
+                        $containerConstructor = $this;
+                    }
+                    $paramValue = $containerConstructor->get($paramValue->getId());
                 }
                 $args[] = $paramValue;
             }
