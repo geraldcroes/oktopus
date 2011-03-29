@@ -15,4 +15,11 @@
   <property name="_foo" value="fooValue" />
  </component>
 
+<aop>
+ <classe name="*" method="*" /> 
+</aop>
+
+
+
+ 
 </container>
