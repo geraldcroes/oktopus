@@ -23,7 +23,7 @@ class ContainerXMLLoader implements IContainer
 
         $sXML = simplexml_load_file($pFilePath);
         foreach ($sXML->component as $xmlComponentDefinition) {
-            $this->_addComponentFromXmlNode($xmlComponentDefinition, $this->_container);
+            $this->_addComponentFromXmlNode($xmlComponentDefinition, $this->_container, $pFilePath);
         }
     }
 
@@ -31,16 +31,16 @@ class ContainerXMLLoader implements IContainer
     {
         return $this->_container->get($pId);
     }
-    
+
     public function hasComponent ($pId)
     {
         return $this->_container->hasComponent($pId);
     }    
-    
-    private function _addComponentFromXmlNode (\SimpleXmlElement $pNode, $pContainer)
+
+    private function _addComponentFromXmlNode (\SimpleXmlElement $pNode, $pContainer, $pFilePath)
     {
         if (!isset ($pNode['id'])) {
-            throw new ContainerComponentDefinitionException("Missing required attribute id for component definition in $pFilePath");
+            throw new ComponentDefinitionException("Missing required attribute id for component definition in $pFilePath");
         } elseif (isset($pNode['classname'])) {
             $id = (string) $pNode['id'];
             $className = (string) $pNode['classname'];
@@ -52,6 +52,37 @@ class ContainerXMLLoader implements IContainer
         //Shared
         if (isset ($pNode['shared'])) {
             $component->setShared(filter_var((string) $pNode['shared'], FILTER_VALIDATE_BOOLEAN));
-        }        
+        }
+
+        //Properties
+        foreach ($pNode->property as $propertyDefinition) {
+            if (! isset($propertyDefinition['name'])) {
+                throw new ComponentDefinitionException("Missing required attribute name for property in component $id in $pFilePath");
+            }
+            $propertyName = (string) $propertyDefinition['name']; 
+
+            if (isset($propertyDefinition['value'])) {
+                $propertyValue = (string) $propertyDefinition['value'];
+            } elseif (isset($propertyDefinition['component_reference'])) {
+                $component_reference = (string) $propertyDefinition['component_reference'];
+                $propertyValue = function() use($pContainer, $component_reference){
+                    return $pContainer->get((string) $component_reference); 
+                };
+            } elseif (isset($propertyDefinition->value)) {
+                if (!isset ($propertyDefinition->value->null)) {
+                    $propertyValue = (string) $propertyDefinition->value;    
+                } else {
+                    $propertyValue = null;
+                }
+            } elseif (isset($propertyDefinition->component_reference)) {
+                $component_reference = (string) $propertyDefinition->component_reference;
+                $propertyValue = function() use($pContainer, $component_reference){
+                    return $pContainer->get((string) $component_reference); 
+                };
+            } else {
+                throw new ComponentDefinitionException("Missing required attribute or element for a value / component_reference in property $propertyName of component $id in file $pFilePath");
+            }
+            $component->setProperty($propertyName, $propertyValue);
+        }
     }
 }

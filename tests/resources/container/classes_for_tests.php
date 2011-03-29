@@ -1,6 +1,4 @@
 <?php
-namespace Oktopus\ContainerTest;
-
 class Fruit
 {
 }
@@ -9,22 +7,40 @@ class Apple extends Fruit
 {
 }
 
-interface ITools
+interface ITool
 {
 }
 
-class Tools implements ITools
+class Tool implements ITool
 {
 }
 
-class Peeler extends Tools
+class Peeler extends Tool
 {
 }
 
 class Juicer
 {
-    private $_foo;
-
     private $_fruit;
     private $_tool;
+    
+    public function getFruit ()
+    {
+        return $this->_fruit;
+    }
+    
+    public function getTool ()
+    {
+        return $this->_tool;
+    }
+}
+
+class EasyPrivate
+{
+    private $_property;
+    
+    public function getProperty ()
+    {
+        return $this->_property;
+    }
 }

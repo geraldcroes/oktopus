@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container>
+ <!--  Will fail as id is not set -->
+ <component idi="Apple" class="Apple" shared="true">
+ </component>
+</container>
