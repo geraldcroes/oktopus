@@ -11,8 +11,8 @@ class ContainerXMLLoaderTest extends PHPUnit_Framework_TestCase
     {
         $nakedContainer = new Oktopus\Container();
         $container = new Oktopus\ContainerXMLLoader($nakedContainer);
-        
         $container->addXmlFile(__DIR__.'/../resources/container/basics.xml');
+
         $this->assertFalse($container->hasComponent('notInContainer'));
         $this->assertTrue($container->hasComponent('Fruit'));
         $this->assertTrue($container->hasComponent('Apple'));
@@ -25,11 +25,11 @@ class ContainerXMLLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertSame($apple, $juicer->getFruit());
         $this->assertSame($juicer->getTool(), $tool);
         
-        //craeting unshared components
+        //creating unshared components
         $fruit  = $container->get('Fruit');
         $fruit2 = $container->get('Fruit');
         $this->assertNotSame($fruit, $fruit2);
-        
+
         //creating object with reference configured with attributes and tags
         $juicer1 = $container->get('Juicer1');
         $this->assertNotSame($juicer1, $juicer);
@@ -54,7 +54,42 @@ class ContainerXMLLoaderTest extends PHPUnit_Framework_TestCase
         
         //creating an object with a simple empty value as its property declared in a tag
         $easyPrivate4 = $container->get('EasyPrivate4');
-        $this->assertNull($easyPrivate4->getProperty());        
+        $this->assertNull($easyPrivate4->getProperty());
+
+        //creating an object with a constructor with one argument
+        $constructedOneArguments = $container->get('ConstructedOneParameter');
+        $this->assertEquals('one1', $constructedOneArguments->getFirst());
+
+        //creating an object with a constructor with two argument
+        $constructedTwoArguments = $container->get('ConstructedTwoParameter');
+        $this->assertEquals('one2', $constructedTwoArguments->getFirst());
+        $this->assertEquals('two2', $constructedTwoArguments->getSecond());
+        
+        //creating an object with a constructor with one argument and a method call and a property directly assigned
+        $constructedOneArguments2 = $container->get('ConstructedOneParameter2');
+        $this->assertEquals('one12', $constructedOneArguments2->getFirst());
+        $this->assertEquals('valueOfMore12', $constructedOneArguments2->getMore());
+        $this->assertEquals('valueOfMoreNoSetter12', $constructedOneArguments2->getMoreNoSetter());
+        
+        //creating an object with a constructor with two arguments and a method call and a property directly assigned
+        $constructedTwoArguments2 = $container->get('ConstructedTwoParameter2');
+        $this->assertEquals('one22', $constructedTwoArguments2->getFirst());
+        $this->assertEquals('two22', $constructedTwoArguments2->getSecond());
+        $this->assertEquals('valueOfMore22', $constructedTwoArguments2->getMore());
+        $this->assertEquals('valueOfMore222', $constructedTwoArguments2->getMore2());
+        
+        //creating an object with a factory with no parameters
+        $constructedWithFactoryConstructedNoParameter  = $container->get('FactoryConstructedNoParameter');
+        $this->assertEquals('one', $constructedWithFactoryConstructedNoParameter->getFirst());
+        $this->assertEquals('two', $constructedWithFactoryConstructedNoParameter->getSecond());
+
+        $constructedWithFactoryConstructedOneParameter = $container->get('FactoryConstructedOneParameter');
+        $this->assertEquals('one1', $constructedWithFactoryConstructedOneParameter->getFirst());
+        $this->assertEquals('two1', $constructedWithFactoryConstructedOneParameter->getSecond());
+                
+        $constructedWithFactoryConstructedTwoParameter = $container->get('FactoryConstructedTwoParameter');
+        $this->assertEquals('one2', $constructedWithFactoryConstructedTwoParameter->getFirst());
+        $this->assertEquals('two2', $constructedWithFactoryConstructedTwoParameter->getSecond());
     }
     
     public function testUnreadableFile ()
