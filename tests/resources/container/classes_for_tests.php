@@ -67,10 +67,14 @@ class ConstructedOneParameter
 	{
 		$this->_moreSetter = $pMore;
 	}
-	
 	public function getMore ()
 	{
 		return $this->_moreSetter;
+	}
+	
+	public function getMoreNoSetter ()
+	{
+	    return $this->_moreNoSetter;
 	}
 
 	public function setMore2 ($pMore)
@@ -89,6 +93,7 @@ class ConstructedTwoParameter extends ConstructedOneParameter
 	
 	public function __construct ($pFirst, $pSecond)
 	{
+	    parent::__construct($pFirst, $pSecond);
 		$this->_second = $pSecond;
 	}
 	
@@ -116,7 +121,7 @@ class FactoryConstructedOneParameter
 {
 	public static function create ($pOne)
 	{
-		return new ConstructedTwoParameter($pOne, 'two2');
+		return new ConstructedTwoParameter($pOne, 'two1');
 	}
 }
 
