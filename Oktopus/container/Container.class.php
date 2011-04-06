@@ -80,7 +80,6 @@ class Container implements IMutableContainer
     
     public function _create (ComponentDefinition $pDefinition)
     {
-        $reflection = new \ReflectionClass($pDefinition->getClass());
         if ($pDefinition->hasFactory()) {
         	$args = array();
         	$factory = $pDefinition->getFactory();
@@ -118,20 +117,21 @@ class Container implements IMutableContainer
                 }
                 $args[] = $paramValue;
             }
+            $reflection = new \ReflectionClass($pDefinition->getClass());
             $object = $reflection->newInstanceArgs($args);
         } else {
+            $reflection = new \ReflectionClass($pDefinition->getClass());
             $object = $reflection->newInstance();
         }
-
         //injecting private properties
         foreach ($pDefinition->getProperties() as $name=>$value) {
-            $reflectionProperty = $reflection->getProperty($name);
+            $reflectionProperty = new \ReflectionProperty($pDefinition->getClass(), $name);
             if (! $reflectionProperty->isPublic()){
                 $reflectionProperty->setAccessible(true);
             }
 
             if ($value instanceof Closure) {
-                $value = call_user_func($value);
+                $value = $value();
             } elseif ($value instanceof ComponentReference) {
                 if ($value->getContainer() !== null) {
                     $containerConstructor = $value->getContainer();
@@ -142,7 +142,7 @@ class Container implements IMutableContainer
             }
             $reflectionProperty->setValue($object, $value);
         }
-
+        
         //Calling methods
         foreach ($pDefinition->getMethods() as $methodName=>$parameters) {
         	$args = array();
@@ -159,7 +159,7 @@ class Container implements IMutableContainer
                 }
                 $args[] = $paramValue;
             }
-            $reflectionMethod = $reflection->getMethod($methodName);
+            $reflectionMethod = new \ReflectionMethod($pDefinition->getClass(), $methodName);
             if (count($args) === 0) {
                 $reflectionMethod->invoke($object);
             } else {
