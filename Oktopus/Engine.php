@@ -579,7 +579,7 @@ class Engine
      * @see Oktopus\Engine::MODE_PRODUCTION
      */
     private static $_mode;
-
+    
     /**
      * Includes the base class for Oktopus
      * 
@@ -674,6 +674,26 @@ class Engine
         }
         return self::$_autoloader;
     }
+    
+    /**
+     * The Oktopus Container
+     * 
+     * @var Container
+     */
+    private static $_container = false;
+
+    /**
+     * Gets the Oktopus Container
+     * 
+     * @return Container
+     */
+    public static function container ()
+    {
+        if (self::$_container === false) {
+            self::$_container = new ContainerXMLLoader(new Container());
+        }
+        return self::$_container;
+    } 
 
     /**
      * Gets the configured mode for Oktopus

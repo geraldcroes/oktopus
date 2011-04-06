@@ -1,9 +1,12 @@
 <?php
+use Oktopus\IContainer;
+
 class EngineTest extends PHPUnit_Framework_TestCase {
 	public function setUp (){
 		require (__DIR__.'/../../Oktopus/Engine.php');
 	}
-	public function testCreate (){
+	public function testCreate ()
+	{
 		try {
 			Oktopus\Engine::autoloader();
 			$this->fail('Should have raised an exception');
@@ -15,5 +18,11 @@ class EngineTest extends PHPUnit_Framework_TestCase {
 			$this->fail('Should have raised an exception');
 		}catch(InvalidArgumentException $e){
 		}
+	}
+	
+	public function testContainer ()
+	{
+	    Oktopus\Engine::start('/tmp/');
+	    $this->assertTrue (Oktopus\Engine::container() instanceof IContainer);
 	}
 }
