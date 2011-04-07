@@ -372,7 +372,7 @@ class Autoloader
     {
         if ($this->_cachePath !== null) {
             return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).
-                   substr(realpath($pDirectoryName).'index.php', 1);
+                   substr(realpath($pDirectoryName).'index.php', (strtoupper(substr(php_uname(), 0, 3)) === "WIN") ? 3 : 1);
         }
         return null;
     }
