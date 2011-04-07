@@ -80,6 +80,11 @@ class Container implements IMutableContainer
     
     public function _create (ComponentDefinition $pDefinition)
     {
+        //TODO : We should try / catch the method calls and properties
+        //       to avoid a __destruct call in the constructed object
+        //       destruction that could makes use of the injected 
+        //       properties & elements.
+        
         if ($pDefinition->hasFactory()) {
         	$args = array();
         	$factory = $pDefinition->getFactory();
