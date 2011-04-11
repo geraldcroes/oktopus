@@ -1,7 +1,7 @@
 <?php
 namespace Oktopus;
 
-class DecoratorGenerator
+class ProxyGenerator
 {
     private $_buffer;
     
@@ -23,7 +23,7 @@ class DecoratorGenerator
         $this->_b('<?php');
 
         $this->_b($reflection->getDocComment());
-        $classDeclaration = "class Decorator".$reflection->getName();
+        $classDeclaration = "class Proxy".$reflection->getName();
         if ($pMode === self::DECORATOR) {
             if (count ($interfaces = $reflection->getInterfaceNames()) > 0) {
                 $classDeclaration .= ' implements '.implode(', ', $interfaces);
@@ -34,7 +34,7 @@ class DecoratorGenerator
 
         $this->_b($classDeclaration);
         $this->_b("{");
-        $this->_b('   private $_decorated;');
+        $this->_b('   private $_proxied;');
         
         $this->_bia(3);
         foreach ($reflection->getMethods() as $method) {
@@ -81,7 +81,7 @@ class DecoratorGenerator
         $this->_b('   }');
         $this->_b('   try {');
         if ($pMode === self::DECORATOR) {
-           $this->_b('      $return = $this->_decorated->'.$method->getName().'('.$methodCallParameter.');');
+           $this->_b('      $return = $this->_proxied->'.$method->getName().'('.$methodCallParameter.');');
         } else {
            $this->_b('      $return = parent::'.$method->getName().'('.$methodCallParameter.');'); 
         }

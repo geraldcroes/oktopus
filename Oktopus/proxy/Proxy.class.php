@@ -1,7 +1,7 @@
 <?php
 namespace Oktopus;
 
-class Decorator
+class Proxy
 {
    public function __call ($pName, $pArgs)
    {
