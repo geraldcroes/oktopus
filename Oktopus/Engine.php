@@ -256,10 +256,10 @@ class Autoloader
             $directories = new \RegexIterator(
                 new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator($pDirectoryName)
-                ), '/\\.php$/'
+                ), '/^.*\.php$/i'
             );
         } else {
-            $directories = new \RegexIterator(new \DirectoryIterator($pDirectoryName), '/\\.php$/');
+            $directories = new \RegexIterator(new \DirectoryIterator($pDirectoryName), '/^.*\.php$/i');
         }
 
         //We iterate in the directories to find its files...
