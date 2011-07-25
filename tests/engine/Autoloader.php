@@ -184,4 +184,49 @@ class Autoloader extends atoum\test {
                 ->variable(\Oktopus\Engine::getTemporaryFilesPath ())
                 ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
 	}
+
+    public function testAutoloaderRecursiveAndNonRecursive (){
+        //testing recursive
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3 ());
+        $autoloader->addPath (__DIR__.'/../resources/nowarning/', false);
+
+        //we test that we can find foo, foo2 and foo3 (non recursive call)
+        $this->assert->boolean($autoloader->autoload('foo'))->isTrue();
+        $this->assert->boolean($autoloader->autoload('foo2'))->isTrue();
+        $this->assert->boolean($autoloader->autoload('foo3'))->isTrue();
+
+        //the class foo\foo is in a subdirectory, won't find it
+        $this->assert->boolean($autoloader->autoload ('foo\\foo'))->isFalse();
+
+        //--- Recursive test
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3 ());
+        $autoloader->addPath (__DIR__.'/../resources/nowarning/');
+
+        //we test that we can find foo, foo2 and foo3 (non recursive call)
+        $this->assert->boolean ($autoloader->autoload('foo'))->isTrue();
+        $this->assert->boolean ($autoloader->autoload('foo2'))->isTrue();
+        $this->assert->boolean ($autoloader->autoload('foo3'))->isTrue();
+
+        //the class foo\foo is in a subdirectory, have to find it
+        $this->assert->boolean ($autoloader->autoload ('foo\\foo'))->isTrue();
+    }
+
+    /**
+     * @Todo fixme does not seems to work as intended.
+     */
+    public function testAutoloaderWarningTwoSameClassesSameFile (){
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath(__DIR__.'/../resources/warning/');
+
+        $this->mock ('ErrorHandler');
+        $mock = new mock\ErrorHandler();
+        $mock->getMockController()->error_handler = false;
+
+        set_error_handler (array($error_handler, 'error_handler'));
+        $this->assert()
+                ->boolean($autoloader->autoload ('not_exists'))
+                ->isFalse()
+                ->mock($mock)->call('error_handler');//FIXME : test is ok whatever call parameter we give him
+        restore_error_handler ();
+    }
 }

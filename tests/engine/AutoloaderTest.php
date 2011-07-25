@@ -4,45 +4,6 @@ use Oktopus\ClassParserForPHP5_3;
 use Oktopus\Engine;
 
 class AutoloaderTest extends PHPUnit_Framework_TestCase {
-
-
-	public function testAutoloaderRecursiveAndNonRecursive (){
-		//testing recursive
-		$autoloader = new Autoloader (null, new ClassParserForPHP5_3 ());
-		$autoloader->addPath (__DIR__.'/../resources/nowarning/', false);
-
-		//we test that we can find foo, foo2 and foo3 (non recursive call)
-		$this->assertTrue ($autoloader->autoload('foo'));
-		$this->assertTrue ($autoloader->autoload('foo2'));
-		$this->assertTrue ($autoloader->autoload('foo3'));
-		
-		//the class foo\foo is in a subdirectory, won't find it 
-		$this->assertFalse ($autoloader->autoload ('foo\\foo'));
-		
-		//--- Recursive test
-		$autoloader = new Autoloader (null, new ClassParserForPHP5_3 ());
-		$autoloader->addPath (__DIR__.'/../resources/nowarning/');
-
-		//we test that we can find foo, foo2 and foo3 (non recursive call)
-		$this->assertTrue ($autoloader->autoload('foo'));
-		$this->assertTrue ($autoloader->autoload('foo2'));
-		$this->assertTrue ($autoloader->autoload('foo3'));
-
-		//the class foo\foo is in a subdirectory, have to find it 
-		$this->assertTrue ($autoloader->autoload ('foo\\foo'));
-	}
-	
-	public function testAutoloaderWarningTwoSameClassesSameFile (){
-		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
-		$autoloader->addPath(__DIR__.'/../resources/warning/');
-		
-		$error_handler = $this->getMock ('ErrorHandler', array ('error_handler'));
-		$error_handler->expects ($this->atLeastOnce())->method ('error_handler');
-		set_error_handler (array($error_handler, 'error_handler'));
-		$this->assertFalse ($autoloader->autoload ('not_exists'));
-		restore_error_handler ();
-	}
-	
 	public function testAutoloaderWarningTwoSameClassesTwoFile (){
 		$autoloader = new Autoloader (null, new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/warning2files');
