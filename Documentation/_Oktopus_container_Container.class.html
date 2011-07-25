@@ -1,0 +1,448 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                $(".filetree").treeview({
+                    collapsed: true,
+                    persist: "cookie"
+                });
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    autoHeight:  false,
+                    fillSpace:   true
+                });
+
+                $(".tabs").tabs();
+            });
+        </script></head><body><div xmlns="" id="content">
+<script>
+      $(document).ready(function() {
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().css('cursor', 'pointer');
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().click(function() {
+          if ($(this).next().is(':hidden'))
+          {
+            $(this).children('img')[0].src = 'images/arrow_down.gif';
+          } else
+          {
+            $(this).children('img')[0].src = 'images/arrow_right.gif';
+          }
+          $(this).next().slideToggle();
+        });
+      $('dl.function-info, dl.constant-info, dl.property-info').hide();
+      $('dl.function-info img, dl.constant-info img, dl.property-info img').show();
+      });
+    </script><a name="top"></a><h1 class="file">Oktopus/container/Container.class.php</h1>
+<div class="file_menu">
+<a href="#classes">Classes</a> <a href="#interfaces">Interfaces</a>
+</div>
+<dl class="file-info">
+<dt>Classes</dt>
+<dd><a class="class" href="#%5COktopus%5CContainerException">ContainerException</a></dd>
+<dd><a class="class" href="#%5COktopus%5CContainer">Container</a></dd>
+<dt>Interfaces</dt>
+<dd><a class="interface" href="#%5COktopus%5CIContainer">IContainer</a></dd>
+<dd><a class="interface" href="#%5COktopus%5CIMutableContainer">IMutableContainer</a></dd>
+</dl>
+<a name="classes"></a><a id="\Oktopus\Container"></a><h2 class="class">\Oktopus\Container<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>Implements</dt>
+<dd><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIMutableContainer">\Oktopus\IMutableContainer</a></dd>
+<dt>package</dt>
+<dd>Oktopus</dd>
+<dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
+                Properties
+              </a></dt>
+<dd><a class="property private" href="#%5COktopus%5CContainer::%24_componentDefinitions">$_componentDefinitions</a></dd>
+<dd><a class="property private" href="#%5COktopus%5CContainer::%24_components">$_components</a></dd>
+<dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
+                Methods
+              </a></dt>
+<dd><a class="method public" href="#%5COktopus%5CContainer::_create()">_create</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CContainer::define()">define</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CContainer::get()">get</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CContainer::getDefinition()">getDefinition</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CContainer::hasComponent()">hasComponent</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">Container</p>
+<div class="long-description"></div>
+<h3>Properties</h3>
+<div>
+<a id="\Oktopus\Container::$_componentDefinitions"></a><h4 class="property private">$_componentDefinitions<div class="to-top"><a href="#%5COktopus%5CContainer">jump to class</a></div>
+</h4>
+<div class="property">
+<code> <span class="highlight">$_componentDefinitions</span> = 'array'</code><div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd>array</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Container::$_components"></a><h4 class="property private">$_components<div class="to-top"><a href="#%5COktopus%5CContainer">jump to class</a></div>
+</h4>
+<div class="property">
+<code> <span class="highlight">$_components</span> = 'array'</code><div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd>array</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<h3>Methods</h3>
+<div>
+<a id="\Oktopus\Container::_create()"></a><h4 class="method public">_create<div class="to-top"><a href="#Container">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_create</span><span class="nb-faded-text">(
+           $pDefinition
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pDefinition</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Container::define()"></a><h4 class="method public">define<div class="to-top"><a href="#Container">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">define</span><span class="nb-faded-text">(
+           $pId,  $pClassName
+              =
+              null
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+<dt>$pClassName</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Container::get()"></a><h4 class="method public">get<div class="to-top"><a href="#Container">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">get</span><span class="nb-faded-text">(
+           $pId
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Container::getDefinition()"></a><h4 class="method public">getDefinition<div class="to-top"><a href="#Container">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getDefinition</span><span class="nb-faded-text">(
+           $pId
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Container::hasComponent()"></a><h4 class="method public">hasComponent<div class="to-top"><a href="#Container">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">hasComponent</span><span class="nb-faded-text">(
+           $pId
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+<a id="\Oktopus\ContainerException"></a><h2 class="class">\Oktopus\ContainerException<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>Extends from</dt>
+<dd><a href="http://php.net/manual/en/class.exception.php">\Exception</a></dd>
+<dt>package</dt>
+<dd>Oktopus</dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">Base Exception class for container operations</p>
+<div class="long-description"></div>
+</div>
+<a name="interfaces"></a><a id="\Oktopus\IContainer"></a><h2 class="interface">\Oktopus\IContainer<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>package</dt>
+<dd>Oktopus</dd>
+<dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
+                Methods
+              </a></dt>
+<dd><a class="method public" href="#%5COktopus%5CIContainer::get()">get</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CIContainer::hasComponent()">hasComponent</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">Interface for Oktopus Containers</p>
+<div class="long-description"></div>
+<h3>Methods</h3>
+<div>
+<a id="\Oktopus\IContainer::get()"></a><h4 class="method public">get<div class="to-top"><a href="#IContainer">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">get</span><span class="nb-faded-text">(
+           $pId
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\IContainer::hasComponent()"></a><h4 class="method public">hasComponent<div class="to-top"><a href="#IContainer">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">hasComponent</span><span class="nb-faded-text">(
+           $pId
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+<a id="\Oktopus\IMutableContainer"></a><h2 class="interface">\Oktopus\IMutableContainer<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>Extends from</dt>
+<dd><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIContainer">\Oktopus\IContainer</a></dd>
+<dt>package</dt>
+<dd>Oktopus</dd>
+<dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
+                Methods
+              </a></dt>
+<dd><a class="method public" href="#%5COktopus%5CIMutableContainer::define()">define</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CIMutableContainer::getDefinition()">getDefinition</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">Interface for containers where you can add / update definitions</p>
+<div class="long-description"></div>
+<h3>Methods</h3>
+<div>
+<a id="\Oktopus\IMutableContainer::define()"></a><h4 class="method public">define<div class="to-top"><a href="#IMutableContainer">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">define</span><span class="nb-faded-text">(
+           $pId,  $pClassName
+              =
+              null
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+<dt>$pClassName</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\IMutableContainer::getDefinition()"></a><h4 class="method public">getDefinition<div class="to-top"><a href="#IMutableContainer">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getDefinition</span><span class="nb-faded-text">(
+           $pId
+          )
+        </span>
+        :
+        </code><div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pId</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<small xmlns="" class="footer">Documentation was generated by <a href="http://docblox-project.org">DocBlox 0.12.0</a>.
+    </small></body></html>
