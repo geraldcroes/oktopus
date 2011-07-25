@@ -5,6 +5,7 @@ namespace Oktopus;
  * The component reference.
  * 
  * @author geraldc
+ * @package Oktopus
  */
 class ComponentReference
 {

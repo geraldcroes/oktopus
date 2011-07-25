@@ -3,6 +3,7 @@ namespace Oktopus;
 
 /**
  * Base exception for container component definition exception
+ * @package Oktopus
  */
 class ComponentDefinitionException extends \Exception
 {
@@ -12,6 +13,7 @@ class ComponentDefinitionException extends \Exception
  * Component definition
  * 
  * @author gcroes
+ * @package Oktopus
  */
 class ComponentDefinition
 {

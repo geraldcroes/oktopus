@@ -6,6 +6,7 @@ use \Closure;
 
 /**
  * Interface for Oktopus Containers
+ * @package Oktopus
  */
 interface IContainer
 {
@@ -15,6 +16,7 @@ interface IContainer
 
 /**
  * Interface for containers where you can add / update definitions
+ * @package Oktopus
  */
 interface IMutableContainer extends IContainer
 {
@@ -24,6 +26,7 @@ interface IMutableContainer extends IContainer
 
 /**
  * Base Exception class for container operations
+ * @package Oktopus
  */
 class ContainerException extends \Exception
 {
@@ -31,6 +34,7 @@ class ContainerException extends \Exception
 
 /**
  * Container
+ * @package Oktopus
  */
 class Container implements IMutableContainer
 {

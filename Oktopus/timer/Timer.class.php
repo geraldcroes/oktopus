@@ -10,6 +10,7 @@ namespace Oktopus;
 
 /**
  * A simple timer interface
+ * @package Oktopus
  */
 interface ITimer
 {
@@ -23,8 +24,7 @@ interface ITimer
 
 /**
  * This class is an easy way to measure the elapsed time beetween two operations
- * 
- * @package Oktopus
+ * @example
  * <code>
  *    //Simple timer
  *    $timer = new Oktopus\Timer ();
@@ -34,6 +34,7 @@ interface ITimer
  *    //....The code....
  *    $duration = $timer->stop ();
  * </code>
+ * @package Oktopus
  */
 class Timer implements ITimer
 {
