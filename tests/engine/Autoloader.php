@@ -115,4 +115,73 @@ class Autoloader extends atoum\test {
                 ->boolean($autoloader->autoload('foo', true))
                 ->isTrue();
 	}
+
+    /**
+     * Test register / unregister.
+     */
+    public function testRegister (){
+        $autoloader = new \Oktopus\Autoloader('/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $this->assert
+                ->boolean($autoloader->isRegistered())
+                ->isFalse();
+
+        $autoloader->register();
+        $this->assert
+                ->boolean($autoloader->isRegistered())
+                ->isTrue();
+
+        $autoloader2 = new \Oktopus\Autoloader('/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $this->assert
+                ->boolean($autoloader2->isRegistered())
+                ->isFalse();
+
+        $autoloader2->register();
+        $this->assert
+                ->boolean($autoloader2->isRegistered())
+                ->isTrue();
+
+        $autoloader2->unregister ();
+        $this->assert
+                ->boolean($autoloader2->isRegistered())
+                ->isFalse();
+        $this->assert
+                ->boolean($autoloader->isRegistered())
+                ->isTrue();
+
+        //Cannot register the same autoloader twice
+        $this->assert
+                ->exception(function () use($autoloader){$autoloader->register ();})
+                ->IsInstanceOf('\Oktopus\AutoloaderException');
+    }
+
+    /**
+     * Testing if giving the autoloader a path to a cache without writable permissions launch an exception
+     */
+    public function testNotWritablePath (){
+        //The path is not writable
+        $this->assert
+                ->exception(function(){new \Oktopus\Autoloader('/etc/', new ClassParserForPHP5_3());})
+                ->isInstanceOf('\Oktopus\AutoloaderException');
+
+		//The path is not writable (we will asks Oktopus to try to create a subdirectory)
+        $this->assert
+                ->exception(function(){new \Oktopus\Autoloader('/etc/OKTOPUS/', new ClassParserForPHP5_3());})
+                ->isInstanceOf('\Oktopus\AutoloaderException');
+    }
+
+	/**
+     * Test the engine autoloader (maybe we should move this test into the Engine test class)
+     */
+    public function testEngineAutoloader (){
+		//Check that the engine autoloader has the Oktopus temporary files path configured
+		$this->assert
+                   ->string(\Oktopus\Engine::getTemporaryFilesPath ())
+                   ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
+
+		//check that the engine reports changes to the temporary path...
+		\Oktopus\Engine::setTemporaryFilesPath(null);
+		$this->assert
+                ->variable(\Oktopus\Engine::getTemporaryFilesPath ())
+                ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
+	}
 }
