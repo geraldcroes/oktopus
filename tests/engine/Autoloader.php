@@ -220,11 +220,13 @@ class Autoloader extends atoum\test {
         $mock = new mock\ErrorHandler();
         $mock->getMockController()->error_handler = false;
 
-        set_error_handler (array($error_handler, 'error_handler'));
+        set_error_handler (array($mock, 'error_handler'));
         $this->assert()
                 ->boolean($autoloader->autoload ('not_exists'))
                 ->isFalse()
-                ->mock($mock)->call('error_handler');//FIXME : test is ok whatever call parameter we give him
+                ->mock($mock)->call('error_handler2');//FIXME : test is ok whatever call parameter we give him
+
+        var_dump($mock->getMockController()->getCalls());
         restore_error_handler ();
     }
 
