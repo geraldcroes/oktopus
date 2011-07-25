@@ -229,4 +229,186 @@ class Autoloader extends atoum\test {
                 ->mock($mock)->call('error_handler');//FIXME : test is ok whatever call parameter we give him
         restore_error_handler ();
     }
+
+    public function testUpdatedFileTimeLoader (){
+        //Simple autoload with no cache
+        $autoloader = new \Oktopus\Autoloader ('/tmp/UpdatedFileTimeLoader/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath(__DIR__.'/../resources/nowarning/');
+        $this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
+
+        usleep (100);
+        touch (__DIR__.'/../resources/nowarning/foo.php');
+
+        $autoloader = new \Oktopus\Autoloader ('/tmp/UpdatedFileTimeLoader/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath(__DIR__.'/../resources/nowarning/');
+        $this->assert->boolean($autoloader->autoload ('foo', true))->isTrue();//asking to check files
+    }
+
+    public function testCannotWriteInCacheFile (){
+		//Makes sure the temporary files are writable
+		$directory = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+		foreach ($directory as $element){
+			if (! in_array ($element->getFileName (), array ('.', '..'), true)){
+				chmod($element->getPathName(), 0700);
+			}
+		}
+
+		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
+		$autoloader->includesAll ();
+
+		//now trying to raise the exception
+		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
+		//cache should have been writen, going to make it read only
+		$directory = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+		foreach ($directory as $element){
+			if (! in_array ($element->getFileName (), array ('.', '..'), true)){
+				chmod($element->getPathName(), 0400);
+			}
+		}
+
+        $this->assert
+                ->exception(function() use($autoloader){$autoloader->includesAll ();})
+                ->isInstanceOf('\Oktopus\AutoloaderException');
+
+		//Back to writable
+		$directory = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+		foreach ($directory as $element){
+			if (! in_array ($element->getFileName (), array ('.', '..'), true)){
+				chmod($element->getPathName(), 0700);
+			}
+		}
+	}
+
+	public function testCannotWriteInCache (){
+		if (is_dir($dir = '/tmp/nowriteincache/')) {
+			chmod('/tmp/nowriteincache/', 0700);
+     		$objects = scandir($dir);
+     		foreach ($objects as $object) {
+       			if ($object != "." && $object != "..") {
+         			if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+       			}
+     		}
+		}
+
+		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
+		chmod('/tmp/nowriteincache/', 0400);
+		$this->assert
+                ->exception(function () use($autoloader){$autoloader->includesAll ();})
+                ->isInstanceOf('\Oktopus\AutoloaderException');
+	}
+
+    public function testKnownClasses (){
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
+
+        //No class has been loaded.
+        $this->assert
+                ->phpArray($autoloader->getKnownClasses())
+                ->isEqualTo(array())
+                ->isEmpty();
+
+        $this->assert
+                ->boolean($autoloader->autoload('foo'))
+                ->isTrue();
+
+        $knownClasses = $autoloader->getKnownClasses();
+        list(, $values) = each($knownClasses);
+
+        $this->assert
+                ->phpArray($values)
+                ->contain('foo')
+                ->contain('foo2')
+                ->contain('foo3')
+                ->hasSize(3);
+    }
+
+	public function testIncludesAll (){
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
+
+		//No class has been loaded.
+		$this->assert
+                ->phpArray($autoloader->getKnownClasses())
+                ->isEmpty();
+		$autoloader->includesAll();
+
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+		$this->assert
+                    ->phpArray($values)
+                    ->contain('foo')
+                    ->contain('foo2')
+                    ->contain('foo3')
+                    ->hasSize(3);
+
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/namespaces', false);
+
+		//Still not known, adding a path does not trigger the autoload
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+        $this->assert
+                    ->phpArray($values)
+                    ->contain('foo')
+                    ->contain('foo2')
+                    ->contain('foo3')
+                    ->hasSize(3);
+
+		$autoloader->autoload('foo');
+		//Still not known, adding the cache should be enougth
+		$knownClasses = $autoloader->getKnownClasses();
+		list(, $values) = each($knownClasses);
+        $this->assert
+                    ->phpArray($values)
+                    ->contain('foo')
+                    ->contain('foo2')
+                    ->contain('foo3')
+                    ->hasSize(3);
+
+		$autoloader->includesAll ();
+		$knownClasses = $autoloader->getKnownClasses();
+        list(, $values) = each($knownClasses);
+        $this->assert
+                    ->phpArray($values)
+                    ->contain('foo')
+                    ->contain('foo2')
+                    ->contain('foo3')
+                    ->hasSize(3);
+
+		list(, $values) = each($knownClasses);
+        $this->assert
+                    ->phpArray($values)
+                    ->contain('foo\\foo')
+                    ->contain('foofoo')
+                    ->contain('foo2\\foo')
+                    ->contain('foo2\\foo2')
+                    ->contain('foo3\\foo')
+                    ->hasSize(5);
+    }
+
+	public function testAutoloaderCacheAndNoCache (){
+		//Simple autoload with no cache
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
+		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
+
+		//Testing several cases, forcing or not the loading of the class
+		$autoloader = new \Oktopus\Autoloader ('/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
+		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
+		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
+		$this->assert->boolean($autoloader->autoload ('FOONOTEXISTS___'))->isFalse();
+
+		//Testing to generate a cache file (tmp/somethingnew)
+		$autoloader = new \Oktopus\Autoloader ('/tmp/'.uniqid (), new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
+		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
+
+		//Sees if the exception is raised while adding a path to look into that must exists
+		$this->assert
+                ->exception(function()use($autoloader){$autoloader->addPath ('AZERTYQWERTY/this/does/not/exists/or/this/is/very/very/bad_luck/'.uniqid (), true);})
+                ->isInstanceOf('Oktopus\\AutoloaderException');
+	}
 }
