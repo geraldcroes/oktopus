@@ -28,5 +28,10 @@ class Engine extends atoum\test {
         $this->assert
                 ->object(\Oktopus\Engine::container())
                 ->isInstanceOf('\Oktopus\IContainer');
+
+        \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_PRODUCTION);
+        $this->assert
+                ->string(ini_get('display_errors'))
+                ->isEqualTo('0');
 	}
 }
