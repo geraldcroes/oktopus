@@ -8,8 +8,15 @@
 
 namespace Oktopus;
 
+/**
+ * A simple timer interface
+ */
 interface ITimer
 {
+    /**
+     * @abstract
+     * @return void
+     */
     public function start();
     public function stop();
 }
@@ -74,9 +81,9 @@ class Timer implements ITimer
 	}
 
 	/**
-     * Retourne le temps actuel de la machine
+     * Gets the current time
      * 
-     * @return int Temps courant en millisecondes
+     * @return int Current time
      */
 	private function _getMicroTime ()
 	{
@@ -84,35 +91,14 @@ class Timer implements ITimer
 	}
    
 	/**
-	 * Retourne le temps passé (en secondes) entre deux chiffres en microsecondes
+	 * Gets the elapsed time between two microtime
 	 * 
-	 * @param int $pStartTime Temps de début en microsecondes
-	 * @param int $pStopTime Temps d'arrêt en microsecondes
+	 * @param int $pStartTime
+	 * @param int $pStopTime
 	 * @return float
 	 */
 	private function _elapsedTime ($pStartTime, $pStopTime)
 	{
 		return max (0, intval (($pStopTime - $pStartTime) * 1000) / 1000);
 	}
-}
-
-class ExecutionTimer
-{
-    private $_timer;
-
-    public function __construct (\Oktopus\ITimer $pTimer)
-    {
-        $this->_timer = $pTimer;
-    }
-
-    public function getElapsedTimeFor ($pCallable, array $pParameters = array())
-    {
-        if (!is_callable($pCallable)) {
-            throw new BadMethodCallException('The given parameter is not a valid callback');
-        }
-
-        $this->_timer->start();
-        call_user_func_array($pCallable, $pParameters);
-        return $this->_timer->stop();
-    }
 }
