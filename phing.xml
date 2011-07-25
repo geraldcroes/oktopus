@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Oktopus" default="doc">
+    <!-- ============================================  -->
+    <!-- Target: PHPUnit                               -->
+    <!-- ============================================  -->
+    <target name="phpunit">
+        <echo msg="Launching tests" />
+        <exec command="phpunit" outputProperty="phpunitResult" />
+        <echo msg="${phpunitResult}" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: DocBlox                               -->
+    <!-- ============================================  -->
+    <target name="doc">
+        <docblox title="API Documentation" destdir="./Documentation">
+            <fileset dir="./Oktopus">
+                <include name="**/*.php" />
+            </fileset>
+        </docblox>
+    </target>
+</project>
