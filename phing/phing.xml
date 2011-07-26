@@ -13,8 +13,6 @@
     <!-- ============================================  -->
     <target name="test">
         <echo msg="Launching tests" />
-        <exec command="phpunit" outputProperty="phpunitResult" />
-        <echo msg="${phpunitResult}" />
     </target>
 
     <!-- ============================================  -->
