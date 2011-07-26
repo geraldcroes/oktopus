@@ -2,16 +2,16 @@
 
 <project name="Oktopus" default="doc">
     <!-- ============================================  -->
-    <!-- Target: PHPUnit                               -->
+    <!-- Target: Test                                  -->
     <!-- ============================================  -->
-    <target name="phpunit">
+    <target name="test">
         <echo msg="Launching tests" />
         <exec command="phpunit" outputProperty="phpunitResult" />
         <echo msg="${phpunitResult}" />
     </target>
 
     <!-- ============================================  -->
-    <!-- Target: DocBlox                               -->
+    <!-- Target: Doc                               -->
     <!-- ============================================  -->
     <target name="doc">
         <docblox title="API Documentation" destdir="./Documentation">
@@ -19,5 +19,30 @@
                 <include name="**/*.php" />
             </fileset>
         </docblox>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Phar                               -->
+    <!-- ============================================  -->
+    <target name="phar">
+        <pharpackage
+          destfile="./build/oktopus.phar"
+          basedir="./">
+          <fileset dir="./Oktopus">
+            <include name="**/**" />
+          </fileset>
+          <fileset dir="./tests">
+             <include name="**/**" />
+          </fileset>
+
+          <metadata>
+            <element name="version" value="0.1"/>
+            <element name="authors">
+              <element name="Gérald Croës">
+                <element name="e-mail" value="gerald@croes.org" />
+              </element>
+            </element>
+          </metadata>
+        </pharpackage>
     </target>
 </project>
