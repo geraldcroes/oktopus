@@ -4,8 +4,16 @@ At its very core, the Oktopus Engine is a flexible Autoloader BUT there's a LOT 
 
 For now, if you want the Oktopus to Autoload every classes in your application (whatever framework or library you're using), just do
 
+Using Oktopus sources :
 <?php
 include ('Oktopus/Engine.class.php');
 Oktopus\Engine::start ('/tmp/');//gives the temporary path with write permissions
+Oktopus\Engine::autoloader()->addPath('path to autoload');//you can chain addPath
+
+Using Oktopus phar
+<?php
+include ('oktopus.phar');
+Oktopus\Engine::start ('/tmp/');//gives the temporary path with write permissions
+Oktopus\Engine::autoloader()->addPath('path to autoload');//you can chain addPath
 
 //That's all folks
