@@ -2,6 +2,13 @@
 
 <project name="Oktopus" default="doc">
     <!-- ============================================  -->
+    <!-- Target: preparebuild                          -->
+    <!-- ============================================  -->
+    <target name="preparebuild">
+        <mkdir dir="../build" />
+    </target>
+
+    <!-- ============================================  -->
     <!-- Target: Test                                  -->
     <!-- ============================================  -->
     <target name="test">
@@ -31,7 +38,7 @@
     <!-- ============================================  -->
     <!-- Target: Phar                               -->
     <!-- ============================================  -->
-    <target name="phar">
+    <target name="phar" depends="preparebuild">
         <pharpackage
           destfile="../build/oktopus.phar"
           basedir="../"
@@ -40,7 +47,6 @@
           <fileset dir="../Oktopus">
             <include name="**/**" />
           </fileset>
-
           <metadata>
             <element name="version" value="0.1"/>
             <element name="authors">
