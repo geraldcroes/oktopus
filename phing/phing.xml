@@ -38,11 +38,12 @@
     <!-- ============================================  -->
     <!-- Target: Phar                               -->
     <!-- ============================================  -->
-    <target name="phar" depends="preparebuild">
+    <target name="phar" depends="test,preparebuild">
         <pharpackage
           destfile="../build/oktopus.phar"
           basedir="../"
           stub="stub.php"
+          compression="bzip2"
           >
           <fileset dir="../Oktopus">
             <include name="**/**" />
