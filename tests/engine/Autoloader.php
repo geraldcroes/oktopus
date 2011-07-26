@@ -217,12 +217,13 @@ class Autoloader extends atoum\test {
     public function testAutoloaderWarningTwoSameClassesSameFile (){
         $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/warning/');
-
         $this->assert
                 ->boolean($autoloader->autoload ('not_exists'))
                 ->isFalse();
-
-        $this->assert->error()->exists();
+        $this->assert
+		->error()
+		->exists()//first error
+		->exists();//second error
     }
 
     public function testUpdatedFileTimeLoader (){
