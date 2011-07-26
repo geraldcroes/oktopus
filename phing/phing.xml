@@ -10,7 +10,7 @@
                 haltonfailure="true" haltonincomplete="true"
                 haltonskipped="true">
             <batchtest>
-                <fileset dir="tests">
+                <fileset dir="../tests">
                   <include name="**/*Test*.php"/>
                 </fileset>
             </batchtest>
@@ -21,8 +21,8 @@
     <!-- Target: Doc                               -->
     <!-- ============================================  -->
     <target name="doc">
-        <docblox title="API Documentation" destdir="./Documentation">
-            <fileset dir="./Oktopus">
+        <docblox title="API Documentation" destdir="../Documentation">
+            <fileset dir="../Oktopus">
                 <include name="**/*.php" />
             </fileset>
         </docblox>
@@ -33,13 +33,12 @@
     <!-- ============================================  -->
     <target name="phar">
         <pharpackage
-          destfile="./build/oktopus.phar"
-          basedir="./">
-          <fileset dir="./Oktopus">
+          destfile="../build/oktopus.phar"
+          basedir="../"
+          stub="stub.php"
+          >
+          <fileset dir="../Oktopus">
             <include name="**/**" />
-          </fileset>
-          <fileset dir="./tests">
-             <include name="**/**" />
           </fileset>
 
           <metadata>
