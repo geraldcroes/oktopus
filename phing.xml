@@ -6,8 +6,15 @@
     <!-- ============================================  -->
     <target name="phpunit">
         <echo msg="Launching tests" />
-        <exec command="phpunit" outputProperty="phpunitResult" />
-        <echo msg="${phpunitResult}" />
+        <phpunit processisolation="true" haltonerror="true"
+                haltonfailure="true" haltonincomplete="true"
+                haltonskipped="true">
+            <batchtest>
+                <fileset dir="tests">
+                  <include name="**/*Test*.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
     </target>
 
     <!-- ============================================  -->
