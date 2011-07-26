@@ -120,7 +120,7 @@ class AutoloaderTest extends PHPUnit_Framework_TestCase {
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assertTrue ($autoloader->autoload ('foo'));
 		
-		sleep (1);
+		usleep (100);
 		touch (__DIR__.'/../resources/nowarning/foo.php');
 		$autoloader = new Autoloader ('/tmp/UpdatedFileTimeLoader/', new ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
