@@ -248,12 +248,14 @@ class Autoloader extends atoum\test {
 
     public function testCannotWriteInCacheFile (){
 		//Makes sure the temporary files are writable
-		$directory = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
-		foreach ($directory as $element){
-			if (! in_array ($element->getFileName (), array ('.', '..'), true)){
-				chmod($element->getPathName(), 0700);
-			}
-		}
+        if (file_exists('/tmp/nowriteincache2/')){
+            $directory = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
+            foreach ($directory as $element){
+                if (! in_array ($element->getFileName (), array ('.', '..'), true)){
+                    chmod($element->getPathName(), 0700);
+                }
+            }
+        }
 
 		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
