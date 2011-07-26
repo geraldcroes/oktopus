@@ -218,18 +218,11 @@ class Autoloader extends atoum\test {
         $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/warning/');
 
-        $this->mock ('ErrorHandler');
-        $mock = new \mock\ErrorHandler();
-        $mock->getMockController()->error_handler = function(){};
-
-        \set_error_handler (array($mock, 'error_handler'));
-        $this->assert()
+        $this->assert
                 ->boolean($autoloader->autoload ('not_exists'))
-                ->isFalse()
-                ->mock($mock)->call('error_handler2');//FIXME : test is ok whatever call parameter we give him
+                ->isFalse();
 
-        \var_dump($mock->getMockController()->getCalls());
-        \restore_error_handler ();
+        $this->assert->error()->exists();
     }
 
     public function testUpdatedFileTimeLoader (){
