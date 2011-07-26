@@ -2,4 +2,5 @@
 .project
 .buildpath
 .settings
+.idea
 coverage

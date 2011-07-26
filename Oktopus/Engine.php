@@ -11,6 +11,7 @@ namespace Oktopus;
 
 /**
  * Base Oktopus Exception
+ * @package Oktopus
  */
 class Exception extends \Exception
 {
@@ -18,6 +19,7 @@ class Exception extends \Exception
 
 /**
  * Interface for class parsing
+ * @package Oktopus
  */
 interface IClassParser
 {
@@ -41,6 +43,7 @@ interface IClassParser
  * </code>
  *
  * @see IClassParser
+ * @package Oktopus
  */
 class ClassParserForPHP5_3 implements IClassParser
 {
@@ -99,6 +102,7 @@ class ClassParserForPHP5_3 implements IClassParser
 
 /**
  * Base exception for Autolaoding errors
+ * @package Oktopus
  */
 class AutoloaderException extends Exception
 {
@@ -106,6 +110,7 @@ class AutoloaderException extends Exception
 
 /**
  * Main Oktopus Autoloader
+ * @package Oktopus
  */
 class Autoloader
 {

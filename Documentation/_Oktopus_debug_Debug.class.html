@@ -1,0 +1,614 @@
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+            $(document).ready(function() {
+                $(".filetree").treeview({
+                    collapsed: true,
+                    persist: "cookie"
+                });
+
+                $("#accordion").accordion({
+                    collapsible: true,
+                    autoHeight:  false,
+                    fillSpace:   true
+                });
+
+                $(".tabs").tabs();
+            });
+        </script></head><body><div xmlns="" id="content">
+<script>
+      $(document).ready(function() {
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().css('cursor', 'pointer');
+        $('dl.function-info, dl.constant-info, dl.property-info').prev().click(function() {
+          if ($(this).next().is(':hidden'))
+          {
+            $(this).children('img')[0].src = 'images/arrow_down.gif';
+          } else
+          {
+            $(this).children('img')[0].src = 'images/arrow_right.gif';
+          }
+          $(this).next().slideToggle();
+        });
+      $('dl.function-info, dl.constant-info, dl.property-info').hide();
+      $('dl.function-info img, dl.constant-info img, dl.property-info img').show();
+      });
+    </script><a name="top"></a><h1 class="file">Oktopus/debug/Debug.class.php</h1>
+<div class="file_menu">
+<a href="#classes">Classes</a> </div>
+<dl class="file-info">
+<dt>author</dt>
+<dd>Gérald Croës &lt;gerald@croes.org&gt;</dd>
+<dt>copyright</dt>
+<dd>(c) 2011 Oktopus Team</dd>
+<dt>copyright</dt>
+<dd>(c) 2008-2010 Kohana Team</dd>
+<dt>package</dt>
+<dd>Oktopus</dd>
+<dt>Classes</dt>
+<dd><a class="class" href="#%5COktopus%5CDebug">Debug</a></dd>
+</dl>
+<h2>Description</h2>
+<p class="short-description">This file is a HEAVY port of Kohana_core, the license is under the kohana_license.</p>
+<div class="long-description"></div>
+<a name="classes"></a><a id="\Oktopus\Debug"></a><h2 class="class">\Oktopus\Debug<div class="to-top"><a href="#top">jump to top</a></div>
+</h2>
+<div class="class">
+<dl class="class-info">
+<dt>author</dt>
+<dd>Gérald Croës &lt;gerald@croes.org&gt;</dd>
+<dt>package</dt>
+<dd>Oktopus</dd>
+<dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
+                Properties
+              </a></dt>
+<dd><a class="property private" href="#%5COktopus%5CDebug::%24_oldErrorHandler">$_oldErrorHandler</a></dd>
+<dd><a class="property private" href="#%5COktopus%5CDebug::%24_oldExceptionHandler">$_oldExceptionHandler</a></dd>
+<dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
+                Methods
+              </a></dt>
+<dd><a class="method protected" href="#%5COktopus%5CDebug::_dump()">_dump</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::debug_path()">debug_path</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::debug_source()">debug_source</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::dump()">dump</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::errorHandler()">errorHandler</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::exceptionHandler()">exceptionHandler</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::exception_text()">exception_text</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::registerErrorHandler()">registerErrorHandler</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::registerExceptionHandler()">registerExceptionHandler</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::trace()">trace</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::unregisterErrorHandler()">unregisterErrorHandler</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::unregisterExceptionHandler()">unregisterExceptionHandler</a></dd>
+</dl>
+<h3>Description</h3>
+<p class="short-description">Class that gives services to format errors messages / data / ...</p>
+<div class="long-description"></div>
+<h3>Properties</h3>
+<div>
+<a id="\Oktopus\Debug::$_oldErrorHandler"></a><h4 class="property private">$_oldErrorHandler<div class="to-top"><a href="#%5COktopus%5CDebug">jump to class</a></div>
+</h4>
+<div class="property">
+<code>callback <span class="highlight">$_oldErrorHandler</span> = ''</code><p class="short-description">The old error handler</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt></dt>
+<dd>callback<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd></dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::$_oldExceptionHandler"></a><h4 class="property private">$_oldExceptionHandler<div class="to-top"><a href="#%5COktopus%5CDebug">jump to class</a></div>
+</h4>
+<div class="property">
+<code>callback <span class="highlight">$_oldExceptionHandler</span> = ''</code><p class="short-description">The old exception handler</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt></dt>
+<dd>callback<br><em></em>
+</dd>
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd></dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+<h3>Methods</h3>
+<div>
+<a id="\Oktopus\Debug::_dump()"></a><h4 class="method protected">_dump<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">_dump</span><span class="nb-faded-text">(
+          mixed $var, integer $length
+              =
+              128, integer $level
+              =
+              0
+          )
+        </span>
+        :
+        string</code><p class="short-description">Helper for Oktopus\Debug::dump(), handles recursion in arrays and objects.</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$var</dt>
+<dd>mixed<br><em>variable to dump</em>
+</dd>
+<dt>$length</dt>
+<dd>integer<br><em>maximum length of strings</em>
+</dd>
+<dt>$level</dt>
+<dd>integer<br><em>recursion level (internal)</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>protected</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::debug_path()"></a><h4 class="method public">debug_path<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">debug_path</span><span class="nb-faded-text">(
+          string $file
+          )
+        </span>
+        :
+        string</code><p class="short-description">Removes application, system, modpath, or docroot from a filename,
+replacing them with the plain text equivalents. Useful for debugging
+when you want to display a shorter path.</p>
+<div class="long-description">// Displays SYSPATH/classes/Debug.php
+    echo Debug::debug_path($path);</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$file</dt>
+<dd>string<br><em>path to debug</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::debug_source()"></a><h4 class="method public">debug_source<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">debug_source</span><span class="nb-faded-text">(
+          string $file, integer $lineNumber, integer $padding
+              =
+              5
+          )
+        </span>
+        :
+        boolean|string</code><p class="short-description">Returns an HTML string, highlighting a specific line of a file, with some
+number of lines padded above and below.</p>
+<div class="long-description">// Highlights the current line of the current file
+    echo Oktopus\Debug::debug_source(__FILE__, __LINE__);</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$file</dt>
+<dd>string<br><em>file to open</em>
+</dd>
+<dt>$lineNumber</dt>
+<dd>integer<br><em>line number to highlight</em>
+</dd>
+<dt>$padding</dt>
+<dd>integer<br><em>number of padding lines</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>boolean|string</dt>
+<dd><em>false if file is unreadable, or source of file</em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::dump()"></a><h4 class="method public">dump<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">dump</span><span class="nb-faded-text">(
+          mixed $value, integer $length
+              =
+              128
+          )
+        </span>
+        :
+        string</code><p class="short-description">Returns an HTML string of information about a single variable.</p>
+<div class="long-description">Borrows heavily on concepts from the Debug class of [Nette](http://nettephp.com/).</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$value</dt>
+<dd>mixed<br><em>variable to dump</em>
+</dd>
+<dt>$length</dt>
+<dd>integer<br><em>maximum length of strings</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::errorHandler()"></a><h4 class="method public">errorHandler<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">errorHandler</span><span class="nb-faded-text">(
+           $code,  $error,  $file
+              =
+              null,  $line
+              =
+              null,  $context
+              =
+              null
+          )
+        </span>
+        :
+        \Oktopus\true</code><p class="short-description">PHP error handler, converts all errors into ErrorExceptions. This handler
+respects error_reporting settings.</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$code</dt>
+<dd><em></em></dd>
+<dt>$error</dt>
+<dd><em></em></dd>
+<dt>$file</dt>
+<dd><em></em></dd>
+<dt>$line</dt>
+<dd><em></em></dd>
+<dt>$context</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>\Oktopus\true</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+<dt>throws</dt>
+<dd></dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::exceptionHandler()"></a><h4 class="method public">exceptionHandler<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">exceptionHandler</span><span class="nb-faded-text">(
+          <a href="_Oktopus_Engine.html#%5COktopus%5CException">\Oktopus\Exception</a> $e
+          )
+        </span>
+        :
+        boolean</code><p class="short-description">Inline exception handler, displays the error message, source of the
+exception, and the stack trace of the error.</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$e</dt>
+<dd>\Oktopus\Exception<br><em>the exception that was not caugth</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>boolean</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+<dt>uses</dt>
+<dd>Debug::exception_text</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::exception_text()"></a><h4 class="method public">exception_text<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">exception_text</span><span class="nb-faded-text">(
+          <a href="_Oktopus_Engine.html#%5COktopus%5CException">\Oktopus\Exception</a> $e
+          )
+        </span>
+        :
+        string</code><p class="short-description">Get a single line of text representing the exception:</p>
+<div class="long-description">Error [ Code ]: Message ~ File [ Line ]</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$e</dt>
+<dd>\Oktopus\Exception<br><em>the Exception</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::registerErrorHandler()"></a><h4 class="method public">registerErrorHandler<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">registerErrorHandler</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        </code><p class="short-description">Sets the Oktopus\Debug::errorHandler as the error_handler</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::registerExceptionHandler()"></a><h4 class="method public">registerExceptionHandler<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">registerExceptionHandler</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        </code><p class="short-description">Sets the Oktopus\Debug::exceptionHandler as the exception_handler</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::trace()"></a><h4 class="method public">trace<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">trace</span><span class="nb-faded-text">(
+          array $trace
+              =
+              null
+          )
+        </span>
+        :
+        string</code><p class="short-description">Returns an array of HTML strings that represent each step in the backtrace.</p>
+<div class="long-description">// Displays the entire current backtrace
+    echo implode('<br/>', Oktopus\Debug::trace());</div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$trace</dt>
+<dd>array<br><em>the stacktrace</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::unregisterErrorHandler()"></a><h4 class="method public">unregisterErrorHandler<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">unregisterErrorHandler</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        </code><p class="short-description">Restores the old error_handler before registerErrorHandler was called</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::unregisterExceptionHandler()"></a><h4 class="method public">unregisterExceptionHandler<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">unregisterExceptionHandler</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        </code><p class="short-description">Restores the old exception_handler before registerExceptionHandler was called</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<small xmlns="" class="footer">Documentation was generated by <a href="http://docblox-project.org">DocBlox 0.12.0</a>.
+    </small></body></html>

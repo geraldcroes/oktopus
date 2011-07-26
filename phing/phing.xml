@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Oktopus" default="doc">
+    <!-- ============================================  -->
+    <!-- Target: preparebuild                          -->
+    <!-- ============================================  -->
+    <target name="preparebuild">
+        <mkdir dir="../build" />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Test                                  -->
+    <!-- ============================================  -->
+    <target name="test">
+        <echo msg="Launching tests" />
+        <phpunit processisolation="true" haltonerror="true"
+                haltonfailure="true" haltonincomplete="true"
+                haltonskipped="true">
+            <batchtest>
+                <fileset dir="../tests">
+                  <include name="**/*Test*.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Doc                               -->
+    <!-- ============================================  -->
+    <target name="doc">
+        <docblox title="API Documentation" destdir="../Documentation">
+            <fileset dir="../Oktopus">
+                <include name="**/*.php" />
+            </fileset>
+        </docblox>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Phar                               -->
+    <!-- ============================================  -->
+    <target name="phar" depends="test,preparebuild">
+        <pharpackage
+          destfile="../build/oktopus.phar"
+          basedir="../"
+          stub="stub.php"
+          compression="bzip2"
+          >
+          <fileset dir="../Oktopus">
+            <include name="**/**" />
+          </fileset>
+          <metadata>
+            <element name="version" value="0.1"/>
+            <element name="authors">
+              <element name="Gérald Croës">
+                <element name="e-mail" value="gerald@croes.org" />
+              </element>
+            </element>
+          </metadata>
+        </pharpackage>
+    </target>
+</project>

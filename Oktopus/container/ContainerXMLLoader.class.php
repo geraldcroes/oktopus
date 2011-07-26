@@ -1,6 +1,9 @@
 <?php
 namespace Oktopus;
 
+/**
+ * @package Oktopus
+ */
 class ContainerXMLLoader implements IContainer
 {
 	/**

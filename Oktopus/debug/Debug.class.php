@@ -13,6 +13,7 @@ namespace Oktopus;
  * Class that gives services to format errors messages / data / ...
  *
  * @author Gérald Croës <gerald@croes.org>
+ * @package Oktopus
  */
 class Debug
 {
