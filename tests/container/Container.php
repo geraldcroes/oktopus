@@ -5,6 +5,15 @@ namespace Oktopus\tests\units {
     use \mageekguy\atoum;
     use \Oktopus;
 
+    interface MockFoo
+    {
+        public function fooDirect();
+        public function setFoo();
+        public function setFoo2();
+        public function firstParameter();
+        public function secondParameter();
+    }
+
     class Container extends atoum\test
     {
         public function testBasicConstruction ()
@@ -58,19 +67,9 @@ namespace Oktopus\tests\units {
 
         public function testLazyConstruction ()
         {
-            /*
-//TODO lazy
-            $mockFoo = $this->getMock('MockFoo', array('fooDirect', 'setFoo', 'setFoo2', 'firstParameter', 'secondParameter'));
-            $mockFoo->expects($this->once())
-                    ->method('fooDirect');
-            $mockFoo->expects($this->once())
-                    ->method('setFoo');
-            $mockFoo->expects($this->once())
-                    ->method('setFoo2');
-            $mockFoo->expects($this->once())
-                    ->method('firstParameter');
-            $mockFoo->expects($this->once())
-                    ->method('secondParameter');
+            $this->mockGenerator->generate('\Oktopus\tests\units\MockFoo');
+            $mockFoo = new \mock\Oktopus\tests\units\MockFoo;
+            $ref = new \ReflectionObject($mockFoo);
 
             $container = new Oktopus\Container();
             $container->define('foo', 'foodi')
@@ -97,13 +96,18 @@ namespace Oktopus\tests\units {
                          }));
 
             $foo = $container->get('foo');
+            $this->assert->mock($mockFoo)
+                            ->call('fooDirect')->once()
+                            ->call('setFoo')->once()
+                            ->call('setFoo2')->once()
+                            ->call('firstParameter')->once()
+                            ->call('secondParameter')->once();
 
-            $this->assertEquals($foo->getFooDirect(), '_fooDirect');
-            $this->assertEquals($foo->getFoo(), 'foo');
-            $this->assertEquals($foo->getFoo2(), 'foo2');
-            $this->assertEquals($foo->getFirstParameter(), 'foo1');
-            $this->assertEquals($foo->getSecondParameter(), 'foo2');
-*/
+            $this->assert->string($foo->getFooDirect())->isEqualTo('_fooDirect');
+            $this->assert->string($foo->getFoo())->isEqualTo('foo');
+            $this->assert->string($foo->getFoo2())->isEqualTo('foo2');
+            $this->assert->string($foo->getFirstParameter())->isEqualTo('foo1');
+            $this->assert->string($foo->getSecondParameter())->isEqualTo('foo2');
         }
 
         public function testGettingNotSet ()
