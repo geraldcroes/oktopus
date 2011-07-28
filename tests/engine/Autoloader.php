@@ -211,9 +211,6 @@ class Autoloader extends atoum\test {
         $this->assert->boolean ($autoloader->autoload ('foo\\foo'))->isTrue();
     }
 
-    /**
-     * @Todo fixme does not seems to work as intended.
-     */
     public function testAutoloaderWarningTwoSameClassesSameFile (){
         $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/warning/');
@@ -225,6 +222,33 @@ class Autoloader extends atoum\test {
 		->exists()//first error
 		->exists();//second error
     }
+
+	public function testAutoloaderWarningTwoSameClassesTwoFile (){
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/warning2files');
+
+		$this->assert
+                ->boolean($autoloader->autoload ('Afoo'))
+                ->isTrue();
+        $this->assert
+                ->error
+                ->exists()
+                ->exists()
+                ->exists();
+	}
+
+	public function testAutoloaderWarningTwoSameNamespaceClassesTwoFile (){
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/warningnamespace2files');
+
+		$this->assert
+                ->boolean($autoloader->autoload ('not_exists'))
+                ->isFalse();
+        $this->assert
+                ->error
+                ->exists();
+	}
+
 
     public function testUpdatedFileTimeLoader (){
         //Simple autoload with no cache
