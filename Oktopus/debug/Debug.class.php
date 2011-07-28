@@ -17,6 +17,34 @@ namespace Oktopus;
  */
 class Debug
 {
+	/**
+	 * Returns an HTML string of debugging information about any number of
+	 * variables, each wrapped in a "pre" tag:
+	 *
+	 *     // Displays the type and value of each variable
+	 *     echo Debug::vars($foo, $bar, $baz);
+	 *
+	 * @param   mixed   variable to debug
+	 * @param   ...
+	 * @return  string
+	 */
+	public static function vars()
+	{
+		if (func_num_args() === 0)
+			return;
+
+		// Get all passed variables
+		$variables = func_get_args();
+
+		$output = array();
+		foreach ($variables as $var)
+		{
+			$output[] = Debug::_dump($var, 1024);
+		}
+
+		return '<pre class="debug">'.implode("\n", $output).'</pre>';
+	}
+
     /**
      * Returns an HTML string, highlighting a specific line of a file, with some
      * number of lines padded above and below.
