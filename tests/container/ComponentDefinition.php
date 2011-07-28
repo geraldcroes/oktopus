@@ -1,0 +1,96 @@
+<?php
+namespace Oktopus\tests\units;
+
+require __DIR__.'/../bootstrap.php';
+
+use \mageekguy\atoum;
+use \Oktopus;
+
+class ComponentDefinition extends atoum\test
+{
+	public function testProperties ()
+	{
+		$cd = new Oktopus\ComponentDefinition('foo');
+
+		$this->assert->boolean($cd->hasProperty('foo'))->isFalse();
+		$return = $cd->setProperty('foo', 'value');
+
+		$this->assert->boolean($cd->hasProperty('foo'))->isTrue();
+		$this->assert->boolean($cd->getProperty('foo'), 'value')->isTrue();
+		$this->assert->object($cd)->isIdenticalTo($return);
+
+        //Trying to get an unset property should fail
+        $this->assert->exception(function () use ($cd) {$cd->getProperty('foo2');})->isInstanceOf('\Oktopus\ComponentDefinitionException');
+
+		//Trying to set a wrong property name should raise an eception
+		$this->assert->exception(function () use ($cd) {$cd->setProperty(array(), 'fooValue');})->isInstanceOf('\Oktopus\ComponentDefinitionException');
+	}
+	
+	public function testMethod ()
+	{
+		//Testing with a single parameter method name
+		$cd = new Oktopus\ComponentDefinition('foo');
+
+		$this->assert->boolean($cd->hasMethod('foo'))->isFalse();
+		$return = $cd->setMethod('foo', array('value'));
+
+		$this->assert->object($cd)->isIdenticalTo($return);
+		$this->assert->boolean($cd->hasMethod('foo'))->isTrue();
+		$this->assert->phpArray($cd->getMethod('foo'))->isEqualTo(array('value'));
+
+        $this->assert->exception(function () use ($cd) {$cd->getMethod('foo2');})->isInstanceOf('\Oktopus\ComponentDefinitionException');
+
+		//Testing with no parameters
+		$cd->setMethod('foo2');
+		$this->assert->boolean($cd->hasMethod('foo2'))->isTrue();
+		$this->assert->phpArray($cd->getMethod('foo2'))->isEqualTo(array());
+
+		//Trying to set a wrong method name
+        $this->assert->exception(function () use($cd){$cd->setMethod(array());})->isInstanceOf('\Oktopus\ComponentDefinitionException')
+	}
+
+	public function testConstructor ()
+	{
+		$cd = new Oktopus\ComponentDefinition('foo');
+		$this->assert->boolean($cd->hasConstructorArguments())->isFalse();
+		$return = $cd->setConstructorArguments(array('value'));
+
+        $this->assert->object($cd)->isIdenticalTo($return);
+		$this->assert->boolean($cd->hasConstructorArguments())->isTrue();
+		$this->assert->phpArray($cd->getConstructorArguments())->isEqualTo(array('value'));
+	}
+	
+	public function testShared ()
+	{
+		$cd = new Oktopus\ComponentDefinition('foo');
+		//default shared value is true
+        $this->assert->boolean($cd->isShared())->isTrue();
+
+		$return = $cd->setShared(false);
+		$this->assert->object($cd)->isIdenticalTo($return);
+		$this->assert->boolean($cd->isShared())->isFalse();
+	}
+
+	public function testClass ()
+	{
+		$cd = new Oktopus\ComponentDefinition('foo');
+		try {
+			$cd->getClass();
+			$this->fails('Getting the class if not set should raise an exception');
+		} catch (Oktopus\ComponentDefinitionException $e) {
+			$this->assertTrue(true);
+		}
+
+		$return = $cd->setClass('UneClass');
+		$this->assertEquals($cd, $return);
+		$this->assertEquals('UneClass', $cd->getClass());
+		
+		//trying to set a incorrect classname
+		try {
+			$cd->setClass(array());
+			$this->fails('Setting a classname that is not a string should raise an exception');
+		} catch (Oktopus\ComponentDefinitionException $e) {
+			$this->assertTrue(true);
+		}
+	}
+}
