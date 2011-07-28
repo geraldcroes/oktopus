@@ -16,7 +16,7 @@ class ComponentDefinition extends atoum\test
 		$return = $cd->setProperty('foo', 'value');
 
 		$this->assert->boolean($cd->hasProperty('foo'))->isTrue();
-		$this->assert->boolean($cd->getProperty('foo'), 'value')->isTrue();
+		$this->assert->string($cd->getProperty('foo'))->isEqualTo('value');
 		$this->assert->object($cd)->isIdenticalTo($return);
 
         //Trying to get an unset property should fail
@@ -46,7 +46,7 @@ class ComponentDefinition extends atoum\test
 		$this->assert->phpArray($cd->getMethod('foo2'))->isEqualTo(array());
 
 		//Trying to set a wrong method name
-        $this->assert->exception(function () use($cd){$cd->setMethod(array());})->isInstanceOf('\Oktopus\ComponentDefinitionException')
+        $this->assert->exception(function () use($cd){$cd->setMethod(array());})->isInstanceOf('\Oktopus\ComponentDefinitionException');
 	}
 
 	public function testConstructor ()
@@ -74,23 +74,15 @@ class ComponentDefinition extends atoum\test
 	public function testClass ()
 	{
 		$cd = new Oktopus\ComponentDefinition('foo');
-		try {
-			$cd->getClass();
-			$this->fails('Getting the class if not set should raise an exception');
-		} catch (Oktopus\ComponentDefinitionException $e) {
-			$this->assertTrue(true);
-		}
+        //Getting the class if not set should raise an exception
+        $this->assert->exception(function()use($cd){$cd->getClass();})->isInstanceOf('\Oktopus\ComponentDefinitionException');
 
 		$return = $cd->setClass('UneClass');
-		$this->assertEquals($cd, $return);
-		$this->assertEquals('UneClass', $cd->getClass());
+		$this->assert->object($cd)->isIdenticalTo($return);
+
+        $this->assert->string($cd->getClass())->isEqualTo('UneClass');
 		
 		//trying to set a incorrect classname
-		try {
-			$cd->setClass(array());
-			$this->fails('Setting a classname that is not a string should raise an exception');
-		} catch (Oktopus\ComponentDefinitionException $e) {
-			$this->assertTrue(true);
-		}
+        $this->assert->exception(function()use($cd){$cd->setClass(array());})->isInstanceOf('Oktopus\ComponentDefinitionException');
 	}
 }
