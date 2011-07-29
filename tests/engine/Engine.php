@@ -1,8 +1,8 @@
 <?php
 namespace Oktopus\tests\units;
 
-require __DIR__ . '/../mageekguy.atoum.phar';
-require (__DIR__.'/../../Oktopus/Engine.php');
+require_once __DIR__ . '/../mageekguy.atoum.phar';
+require_once __DIR__.'/../../Oktopus/Engine.php';
 
 use \mageekguy\atoum;
 
