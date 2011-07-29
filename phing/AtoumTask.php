@@ -1,6 +1,7 @@
 <?php
 require_once "phing/Task.php";
 
+
 class AtoumTask extends Task
 {
     private $filesets = array();
@@ -42,7 +43,6 @@ class AtoumTask extends Task
             }
         }
 
-        $this->log("Will test " . count($files) . " file(s)");
         return $files;
     }
 
@@ -86,6 +86,11 @@ class AtoumTask extends Task
             }
         }
 
+        require_once "./AtoumPhingReport.php";
+        require_once "./atoum/report/fields/test/event/phing.php";
+        require_once "./atoum/report/fields/test/memory/phing.php";
+        require_once "./atoum/report/fields/test/duration/phing.php";
+
         foreach ($this->parseFiles() as $file) {
            include($file);
         }
@@ -95,19 +100,8 @@ class AtoumTask extends Task
     public function execute()
     {
         if ($this->runner === false){
-            /*
-            Write all on stdout.
-            */
-            $stdOutWriter = new mageekguy\atoum\writers\std\out();
-
-            /*
-            Generate a CLI report.
-            */
-            $vimReport = new mageekguy\atoum\reports\asynchronous\vim();
-            $vimReport->addWriter($stdOutWriter);
-
             $this->runner = new \mageekguy\atoum\runner();
-            $report = new \mageekguy\atoum\reports\realtime\cli();
+            $report = new \mageekguy\atoum\reports\realtime\phing();
             $writer = new \mageekguy\atoum\writers\std\out();
 
             $report->addWriter($writer);
