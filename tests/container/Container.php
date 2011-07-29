@@ -69,7 +69,6 @@ namespace Oktopus\tests\units {
         {
             $this->mockGenerator->generate('\Oktopus\tests\units\MockFoo');
             $mockFoo = new \mock\Oktopus\tests\units\MockFoo;
-            $ref = new \ReflectionObject($mockFoo);
 
             $container = new Oktopus\Container();
             $container->define('foo', 'foodi')
@@ -95,8 +94,21 @@ namespace Oktopus\tests\units {
                             return 'foo2';
                          }));
 
-            $foo = $container->get('foo');
             $this->assert->mock($mockFoo)
+                            ->call('fooDirect')->never()
+                            ->call('setFoo')->never()
+                            ->call('setFoo2')->never()
+                            ->call('firstParameter')->never()
+                            ->call('secondParameter')->never()
+                         ->object($foo = $container->get('foo'))
+                            ->mock($mockFoo)
+                            ->call('fooDirect')->once()
+                            ->call('setFoo')->once()
+                            ->call('setFoo2')->once()
+                            ->call('firstParameter')->once()
+                            ->call('secondParameter')->once()
+                         ->object($foo2 = $container->get('foo'))
+                            ->mock($mockFoo)
                             ->call('fooDirect')->once()
                             ->call('setFoo')->once()
                             ->call('setFoo2')->once()
@@ -108,6 +120,78 @@ namespace Oktopus\tests\units {
             $this->assert->string($foo->getFoo2())->isEqualTo('foo2');
             $this->assert->string($foo->getFirstParameter())->isEqualTo('foo1');
             $this->assert->string($foo->getSecondParameter())->isEqualTo('foo2');
+
+            $this->assert->string($foo2->getFooDirect())->isEqualTo('_fooDirect');
+            $this->assert->string($foo2->getFoo())->isEqualTo('foo');
+            $this->assert->string($foo2->getFoo2())->isEqualTo('foo2');
+            $this->assert->string($foo2->getFirstParameter())->isEqualTo('foo1');
+            $this->assert->string($foo2->getSecondParameter())->isEqualTo('foo2');
+
+            $this->assert->object($foo)->isIdenticalTo($foo);
+
+
+            //Now testing with an unshared component
+            $mockFoo2 = new \mock\Oktopus\tests\units\MockFoo;
+
+            $container = new Oktopus\Container();
+            $container->define('foo2', 'foodi')
+                      ->setProperty('_fooDirect', function () use($mockFoo2) {
+                          $mockFoo2->fooDirect();
+                          return '_fooDirect';
+                      })
+                      ->setMethod('setFoo', array(function() use($mockFoo2){
+                        $mockFoo2->setFoo();
+                        return 'foo';
+                      }))
+                      ->setMethod('setFoo2', array(function() use($mockFoo2){
+                        $mockFoo2->setFoo2();
+                        return 'foo2';
+                      }))
+                      ->setConstructorArguments(array(
+                         function() use($mockFoo2){
+                            $mockFoo2->firstParameter();
+                            return 'foo1';
+                         },
+                         function() use($mockFoo2){
+                            $mockFoo2->secondParameter();
+                            return 'foo2';
+                         }))
+                      ->setShared(false);
+
+            $this->assert->mock($mockFoo2)
+                            ->call('fooDirect')->never()
+                            ->call('setFoo')->never()
+                            ->call('setFoo2')->never()
+                            ->call('firstParameter')->never()
+                            ->call('secondParameter')->never()
+                         ->object($foo = $container->get('foo2'))
+                            ->mock($mockFoo2)
+                            ->call('fooDirect')->once()
+                            ->call('setFoo')->once()
+                            ->call('setFoo2')->once()
+                            ->call('firstParameter')->once()
+                            ->call('secondParameter')->once()
+                         ->object($foo2 = $container->get('foo2'))
+                            ->mock($mockFoo2)
+                            ->call('fooDirect')->exactly(2)
+                            ->call('setFoo')->exactly(2)
+                            ->call('setFoo2')->exactly(2)
+                            ->call('firstParameter')->exactly(2)
+                            ->call('secondParameter')->exactly(2);
+
+            $this->assert->string($foo->getFooDirect())->isEqualTo('_fooDirect');
+            $this->assert->string($foo->getFoo())->isEqualTo('foo');
+            $this->assert->string($foo->getFoo2())->isEqualTo('foo2');
+            $this->assert->string($foo->getFirstParameter())->isEqualTo('foo1');
+            $this->assert->string($foo->getSecondParameter())->isEqualTo('foo2');
+
+            $this->assert->string($foo2->getFooDirect())->isEqualTo('_fooDirect');
+            $this->assert->string($foo2->getFoo())->isEqualTo('foo');
+            $this->assert->string($foo2->getFoo2())->isEqualTo('foo2');
+            $this->assert->string($foo2->getFirstParameter())->isEqualTo('foo1');
+            $this->assert->string($foo2->getSecondParameter())->isEqualTo('foo2');
+
+            $this->assert->object($foo)->isIdenticalTo($foo);
         }
 
         public function testGettingNotSet ()
