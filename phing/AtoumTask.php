@@ -77,8 +77,10 @@ class AtoumTask extends Task
             require_once $this->bootstrap;
         }
 
+        define('mageekguy\\atoum\\scripts\\runner\\autorun', true);
+
         if (!empty($this->atoumpharpath)) {
-            require_once($this->atoumpharpath);
+            require_once('phar://'.$this->atoumpharpath.'/classes/autoloader.php');
         } else {
             if (!class_exists('mageekguy\atoum\scripts\runner', false)){
                 throw new Exception("Unknown class mageekguy\\atoum\\scripts\\runner.\n\rConsider setting atoumpharpath parameter or adding a bootstrap that includes Atoum");
@@ -86,39 +88,43 @@ class AtoumTask extends Task
         }
 
         foreach ($this->parseFiles() as $file) {
-            if (! $this->execute($file)){
-                return false;
-            }
+           include($file);
         }
-        return true;
+        $this->execute();
     }
 
-    public function execute($file)
+    public function execute()
     {
         if ($this->runner === false){
+            /*
+            Write all on stdout.
+            */
+            $stdOutWriter = new mageekguy\atoum\writers\std\out();
+
+            /*
+            Generate a CLI report.
+            */
+            $vimReport = new mageekguy\atoum\reports\asynchronous\vim();
+            $vimReport->addWriter($stdOutWriter);
+
             $this->runner = new \mageekguy\atoum\runner();
+            $report = new \mageekguy\atoum\reports\realtime\cli();
+            $writer = new \mageekguy\atoum\writers\std\out();
+
+            $report->addWriter($writer);
+            $this->runner->addReport($report);
+
             $this->runner->setDefaultReportTitle($this->getReporttitle());
             if ($this->codecoverage){
                 $this->runner->enableCodeCoverage();
             } else {
                 $this->runner->disableCodeCoverage();
             }
-            //$this->runner->setPhpPath('/usr/bin/php');
+            $this->runner->setPhpPath('/usr/bin/php');
             $this->log ($this->runner->getPhpPath('php'));
         }
 
-        include_once($file);
-        $this->log("Running tests on $file");
-        $this->runner->run(array(), array(), true);
-        $score = $this->runner->getScore();
-        if ($score->getFailNumber() > 0){
-            throw new Exception('Failures on '.serialize($score->getFailAssertions()));
-        } elseif($score->getErrorNumber() > 0) {
-            throw new Exception('Failures on '.serialize($score->getErrors()));
-        } elseif ($score->getExceptionNumber() > 0){
-            throw new Exception('Failures on '.serialize($score->getExceptions()));
-        }
-        return true;
+        $this->runner->run();
     }
 
     public function setBootstrap($bootstrap)
