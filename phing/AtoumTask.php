@@ -78,12 +78,11 @@ class AtoumTask extends Task
         }
 
         define('mageekguy\\atoum\\scripts\\runner\\autorun', true);
-
         if (!empty($this->atoumpharpath)) {
             require_once('phar://'.$this->atoumpharpath.'/classes/autoloader.php');
         } else {
             if (!class_exists('mageekguy\atoum\scripts\runner', false)){
-                throw new Exception("Unknown class mageekguy\\atoum\\scripts\\runner.\n\rConsider setting atoumpharpath parameter or adding a bootstrap that includes Atoum");
+                throw new Exception("Unknown class mageekguy\\atoum\\scripts\\runner.\n\rConsider setting atoumpharpath parameter");
             }
         }
 
