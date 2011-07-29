@@ -14,6 +14,11 @@ namespace Oktopus\tests\units {
         public function secondParameter();
     }
 
+    interface MockFooForTest
+    {
+        public function getValue1();
+    }
+
     class Container extends atoum\test
     {
         public function testBasicConstruction ()
@@ -269,12 +274,10 @@ namespace Oktopus\tests\units {
             $this->assert->string($foo->getFirstParameter())->isEqualTo('value1');
             $this->assert->string($foo->getSecondParameter())->isEqualTo('value2');
 
-//TODO LazyParameters
-/*
             //With lazy parameters
-            $mock = $this->getMock('MockFoo', array('getValue1'));
-            $mock->expects($this->once())
-                    ->method('getValue1');
+            $this->mockGenerator->generate('MockFooForTest');
+            $mock = new \mock\MockFooForTest();
+            $mock->getMockController()->getValue1 = 'value1';
 
             $container = new Oktopus\Container();
             $container->define('foodi')
@@ -284,18 +287,21 @@ namespace Oktopus\tests\units {
                                    array
                                      (
                                         function() use($mock){
-                                            echo $mock->getValue1();
-                                            return 'value1';
+                                            return $mock->getValue1();
                                         },
                                         'value2'
                                      )
                                   );
-            $foo = $container->get('foodi');
 
-            $this->assertEquals($foo->getFoo(), 'value');
-            $this->assertEquals($foo->getFirstParameter(), 'value1');
-            $this->assertEquals($foo->getSecondParameter(), 'value2');
-*/
+            $this->assert->mock($mock)
+                            ->call('getValue1')->never()
+                         ->object($foo = $container->get('foodi'))
+                            ->mock($mock)
+                            ->call('getValue1')->once();
+
+            $this->assert->string($foo->getFoo())->isEqualTo('value');
+            $this->assert->string($foo->getFirstParameter())->isEqualTo('value1');
+            $this->assert->string($foo->getSecondParameter())->isEqualTo('value2');
         }
     }
 }
