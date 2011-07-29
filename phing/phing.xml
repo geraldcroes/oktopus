@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Oktopus" default="doc">
+    <taskdef name="atoum" classpath="./" classname="AtoumTask"/>
+
     <!-- ============================================  -->
     <!-- Target: preparebuild                          -->
     <!-- ============================================  -->
@@ -41,7 +43,15 @@
     <!-- ============================================  -->
     <target name="test">
         <echo msg="Launching tests" />
-        <atoum />
+        <atoum
+                atoumpharpath="../tests/mageekguy.atoum.phar">
+            <fileset dir="../tests/container">
+                <include name="**/*.php" />
+            </fileset>
+            <fileset dir="../tests/engine">
+                <include name="**/*.php" />
+            </fileset>
+        </atoum>
     </target>
 
     <!-- ============================================  -->
