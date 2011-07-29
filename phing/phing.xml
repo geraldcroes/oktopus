@@ -11,8 +11,37 @@
     <!-- ============================================  -->
     <!-- Target: Test                                  -->
     <!-- ============================================  -->
+    <target name="update_atoum">
+        <echo msg="Updating Atoum" />
+        <exec command="php -n ../tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_before" />
+        <httpget url="http://downloads.atoum.org/nightly/mageekguy.atoum.phar" dir="../tests" />
+        <exec command="php -n ../tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_after" />
+        <if>
+            <or>
+                <equals arg1="${atoum_version_before}" arg2="${atoum_version_after}" />
+            </or>
+            <then>
+                <echo message="No need to update ATOUM, versions are equals" />
+                <echo message="${atoum_version_before}" />
+            </then>
+            <else>
+                <echo message="Updating ATOUM" />
+                <echo message="From ${atoum_version_before}" />
+                <echo message="TO   ${atoum_version_after}" />
+                <!--
+                <exec command="git add ../tests/mageekguy.atoum.phar" />
+                <exec command='git commit -m "${atoum_version_after}" '/>
+                -->
+            </else>
+        </if>
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: Test                                  -->
+    <!-- ============================================  -->
     <target name="test">
         <echo msg="Launching tests" />
+        <atoum />
     </target>
 
     <!-- ============================================  -->
