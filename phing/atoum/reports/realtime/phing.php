@@ -90,7 +90,7 @@ class phing extends realtime
                 );
         }
         if ($this->showMemory){
-            $this->addRunnerField(new runner\tests\memory\cli(
+            $this->addRunnerField(new runner\tests\memory\phing(
                             $firstLevelPrompt,
                             $firstLevelColorizer
                         ),
@@ -99,7 +99,7 @@ class phing extends realtime
         }
         $this
 			->addRunnerField(new runner\result\cli(
-						null,
+						$firstLevelPrompt,
 						new colorizer('0;37', '42'),
 						new colorizer('0;37', '41')
 					),
