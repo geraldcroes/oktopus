@@ -35,7 +35,7 @@ class phing extends realtime
 		$exceptionPrompt->setColorizer($exceptionColorizer);
 
 		$this
-			->addRunnerField(new runner\atoum\cli(
+			->addRunnerField(new runner\atoum\phing(
 						$firstLevelPrompt,
 						$firstLevelColorizer
 					),
