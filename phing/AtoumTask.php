@@ -25,10 +25,10 @@ class AtoumTask extends Task
     }
 
     /**
-     * Build a list of files (from the fileset elements) and call the DocBlox parser
-     * @return string
+     * Build a list of files from the fileset elements
+     * @return array
      */
-    private function parseFiles()
+    private function getFiles()
     {
         $files = array();
 
@@ -91,7 +91,8 @@ class AtoumTask extends Task
         require_once "./atoum/report/fields/test/memory/phing.php";
         require_once "./atoum/report/fields/test/duration/phing.php";
 
-        foreach ($this->parseFiles() as $file) {
+        //including files to test
+        foreach ($this->getFiles() as $file) {
            include($file);
         }
         $this->execute();
