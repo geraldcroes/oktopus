@@ -44,7 +44,13 @@
     <target name="test">
         <atoum
                 atoumpharpath="../tests/mageekguy.atoum.phar"
-                phppath="/usr/bin/php">
+                phppath="/usr/bin/php"
+                codecoverage="true"
+                showmissingcodecoverage="true"
+                showprogress="true"
+                showmemory="true"
+                showduration="true"
+                >
             <fileset dir="../tests/container">
                 <include name="**/*.php" />
             </fileset>

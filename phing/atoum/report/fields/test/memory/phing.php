@@ -78,7 +78,7 @@ class phing extends report\fields\test\memory
 						$this->value / 1048576
 					)
 				)
-			) . PHP_EOL;
+			);
 	}
 }
 

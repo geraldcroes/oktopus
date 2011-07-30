@@ -13,11 +13,23 @@ use
 
 class phing extends realtime
 {
-	public function __construct()
-	{
-		parent::__construct();
+    protected $showProgress;
+    protected $showMissingCodeCoverage;
+    protected $showDuration;
+    protected $showMemory;
+    protected $showCodeCoverage;
 
-		$firstLevelPrompt = new prompt('');
+	public function __construct($showProgress, $showCodeCoverage, $showMissingCodeCoverage, $showDuration, $showMemory)
+	{
+		parent::__construct(null, null);
+
+        $this->showProgress = $showProgress;
+        $this->showCodeCoverage = $showCodeCoverage;
+        $this->showMissingCodeCoverage = $showMissingCodeCoverage;
+        $this->showDuration = $showDuration;
+        $this->showMemory = $showMemory;
+
+		$firstLevelPrompt = new prompt(PHP_EOL);
 		$firstLevelColorizer = new colorizer('1;36');
 
 		$secondLevelPrompt = new prompt(' ', $firstLevelColorizer);
@@ -53,28 +65,39 @@ class phing extends realtime
 						$secondLevelPrompt
 					),
 					array(atoum\runner::runStart)
-				)
-			->addRunnerField(new runner\tests\coverage\phing(
-						$firstLevelPrompt,
-						$secondLevelPrompt,
-						new prompt('  ', $firstLevelColorizer),
-						$firstLevelColorizer
-					),
-					array(atoum\runner::runStop)
-				)
-			->addRunnerField(new runner\duration\cli(
-						$firstLevelPrompt,
-						$firstLevelColorizer
-					),
-					array(atoum\runner::runStop)
-				)
-            ->addRunnerField(new runner\tests\memory\cli(
+				);
+        if ($this->showCodeCoverage)
+        {
+            $this->addRunnerField(new runner\tests\coverage\phing(
+                    $firstLevelPrompt,
+                    $secondLevelPrompt,
+                    new prompt('  ', $firstLevelColorizer),
+                    $firstLevelColorizer,
+                    null,
+                    null,
+                    $this->showMissingCodeCoverage
+                ),
+                array(atoum\runner::runStop)
+            );
+        }
+        if ($this->showDuration)
+        {
+            $this->addRunnerField(new runner\duration\cli(
                         $firstLevelPrompt,
                         $firstLevelColorizer
                     ),
                     array(atoum\runner::runStop)
-                )
-
+                );
+        }
+        if ($this->showMemory){
+            $this->addRunnerField(new runner\tests\memory\cli(
+                            $firstLevelPrompt,
+                            $firstLevelColorizer
+                        ),
+                        array(atoum\runner::runStop)
+                    );
+        }
+        $this
 			->addRunnerField(new runner\result\cli(
 						null,
 						new colorizer('0;37', '42'),
@@ -110,24 +133,58 @@ class phing extends realtime
 						$exceptionPrompt
 					),
 					array(atoum\runner::runStop)
-				)
-			->addTestField(new test\run\phing(
+				);
+        if ($this->showProgress)
+        {
+			$this->addTestField(new test\run\phing(
 						$firstLevelPrompt,
 						$firstLevelColorizer
 					),
 					array(atoum\test::runStart)
 				)
-			->addTestField(new test\event\phing())
-			->addTestField(new test\duration\phing(
-						$secondLevelPrompt
-					),
-					array(atoum\test::runStop)
-				)
-			->addTestField(new test\memory\phing(
-						$secondLevelPrompt
-					),
-					array(atoum\test::runStop)
-				)
-		;
+			->addTestField(new test\event\phing());
+            if ($this->showDuration)
+            {
+                $this->
+                    addTestField(new test\duration\phing(
+                                $secondLevelPrompt
+                            ),
+                            array(atoum\test::runStop)
+                        );
+            }
+            if ($this->showMemory)
+            {
+                $this->addTestField(new test\memory\phing(
+                            $secondLevelPrompt
+                        ),
+                        array(atoum\test::runStop)
+                    );
+            }
+        }
 	}
+
+    public function getShowCodeCoverage()
+    {
+        return $this->showCodeCoverage;
+    }
+
+    public function getShowDuration()
+    {
+        return $this->showDuration;
+    }
+
+    public function getShowMemory()
+    {
+        return $this->showMemory;
+    }
+
+    public function getShowMissingCodeCoverage()
+    {
+        return $this->showMissingCodeCoverage;
+    }
+
+    public function getShowProgress()
+    {
+        return $this->showProgress;
+    }
 }

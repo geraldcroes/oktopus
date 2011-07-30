@@ -4,15 +4,21 @@ require_once "phing/Task.php";
 
 class AtoumTask extends Task
 {
-    private $filesets = array();
-    private $scorefile = array();
-    private $configurationfiles = array();
-    private $reporttitle = "Test de rapport";
-    private $bootstrap = null;
-    private $codecoverage = true;
-    private $atoumpharpath = null;
     private $runner = false;
+
+    private $filesets = array();
+    private $configurationfiles = array();
+    private $bootstrap = null;
+
+    private $codecoverage = false;
+    private $atoumpharpath = null;
     private $phppath = null;
+
+    private $showprogress = true;
+    private $showduration = true;
+    private $showmemory = true;
+    private $showcodecoverage = true;
+    private $showmissingcodecoverage = true;
 
     /**
      * Nested creator, adds a set of files (nested fileset attribute).
@@ -106,13 +112,18 @@ class AtoumTask extends Task
     {
         if ($this->runner === false){
             $this->runner = new \mageekguy\atoum\runner();
-            $report = new \mageekguy\atoum\reports\realtime\phing();
+            $report = new \mageekguy\atoum\reports\realtime\phing(
+                                                                    $this->getShowProgress(),
+                                                                    $this->getShowCodeCoverage(),
+                                                                    $this->getShowMissingCodeCoverage(),
+                                                                    $this->getShowDuration(),
+                                                                    $this->getShowMemory()
+                                                                 );
             $writer = new \mageekguy\atoum\writers\std\out();
 
             $report->addWriter($writer);
             $this->runner->addReport($report);
 
-            $this->runner->setDefaultReportTitle($this->getReporttitle());
             if ($this->codecoverage){
                 $this->runner->enableCodeCoverage();
             } else {
@@ -124,6 +135,7 @@ class AtoumTask extends Task
         }
 
         $this->runner->run();
+
         $score = $this->runner->getScore();
         if (count($score->getErrors()) > 0
             || count($score->getFailAssertions()) > 0
@@ -135,6 +147,7 @@ class AtoumTask extends Task
     public function setBootstrap($bootstrap)
     {
         $this->bootstrap = (string) $bootstrap;
+        return $this;
     }
 
     public function getBootstrap()
@@ -145,6 +158,7 @@ class AtoumTask extends Task
     public function setCodecoverage($codecoverage)
     {
         $this->codecoverage = (boolean) $codecoverage;
+        return $this;
     }
 
     public function getCodecoverage()
@@ -155,6 +169,7 @@ class AtoumTask extends Task
     public function setConfigurationfiles($configurationfiles)
     {
         $this->configurationfiles = $configurationfiles;
+        return $this;
     }
 
     public function getConfigurationfiles()
@@ -162,29 +177,10 @@ class AtoumTask extends Task
         return $this->configurationfiles;
     }
 
-    public function setReporttitle($reporttitle)
-    {
-        $this->reporttitle = (string) $reporttitle;
-    }
-
-    public function getReporttitle()
-    {
-        return $this->reporttitle;
-    }
-
-    public function setScorefile($scorefile)
-    {
-        $this->scorefile = (string) $scorefile;
-    }
-
-    public function getScorefile()
-    {
-        return $this->scorefile;
-    }
-
     public function setAtoumpharpath($atoumpharpath)
     {
         $this->atoumpharpath = (string) $atoumpharpath;
+        return $this;
     }
 
     public function getAtoumpharpath()
@@ -195,10 +191,66 @@ class AtoumTask extends Task
     public function setPhppath($phppath)
     {
         $this->phppath = (string) $phppath;
+        return $this;
     }
 
     public function getPhppath()
     {
         return $this->phppath;
+    }
+
+    public function setshowcodecoverage($showcodecoverage)
+    {
+        $this->showcodecoverage = (boolean) $showcodecoverage;
+        return $this;
+    }
+
+    public function getshowcodecoverage()
+    {
+        return $this->showcodecoverage;
+    }
+
+    public function setshowduration($showdurationReport)
+    {
+        $this->showduration = (boolean) $showdurationReport;
+        return $this;
+    }
+
+    public function getshowduration()
+    {
+        return $this->showduration;
+    }
+
+    public function setshowmemory($showmemoryReport)
+    {
+        $this->showmemory = (boolean) $showmemoryReport;
+        return $this;
+    }
+
+    public function getshowmemory()
+    {
+        return $this->showmemory;
+    }
+
+    public function setshowmissingcodecoverage($showmissingcodecoverage)
+    {
+        $this->showmissingcodecoverage = (boolean) $showmissingcodecoverage;
+        return $this;
+    }
+
+    public function getshowmissingcodecoverage()
+    {
+        return $this->showmissingcodecoverage;
+    }
+
+    public function setshowprogress($showprogress)
+    {
+        $this->showprogress = (boolean) $showprogress;
+        return $this;
+    }
+
+    public function getshowprogress()
+    {
+        return $this->showprogress;
     }
 }
