@@ -120,10 +120,15 @@ class AtoumTask extends Task
             if ($this->phppath !== null){
                 $this->runner->setPhpPath($this->phppath);
             }
-            $this->log ($this->runner->getPhpPath('php'));
         }
 
         $this->runner->run();
+        $score = $this->runner->getScore();
+        if (count($score->getErrors()) > 0
+            || count($score->getFailAssertions()) > 0
+            || count($score->getExceptions()) > 0){
+            throw new BuildException("Tests did not pass");
+        }
     }
 
     public function setBootstrap($bootstrap)
