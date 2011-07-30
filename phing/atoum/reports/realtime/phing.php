@@ -116,7 +116,7 @@ class phing extends realtime
 					),
 					array(atoum\runner::runStop)
 				)
-			->addTestField(new test\run\cli(
+			->addTestField(new test\run\phing(
 						$firstLevelPrompt,
 						$firstLevelColorizer
 					),
