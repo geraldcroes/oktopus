@@ -66,10 +66,10 @@ class phing extends realtime
 					),
 					array(atoum\runner::runStop)
 				)
-			->addRunnerField(new runner\tests\coverage\cli(
+			->addRunnerField(new runner\tests\coverage\phing(
 						$firstLevelPrompt,
 						$secondLevelPrompt,
-						new prompt('==> ', $firstLevelColorizer),
+						new prompt('  ', $firstLevelColorizer),
 						$firstLevelColorizer
 					),
 					array(atoum\runner::runStop)
@@ -136,5 +136,3 @@ class phing extends realtime
 		;
 	}
 }
-
-?>
