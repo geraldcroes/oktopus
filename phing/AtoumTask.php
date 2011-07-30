@@ -12,6 +12,7 @@ class AtoumTask extends Task
     private $codecoverage = true;
     private $atoumpharpath = null;
     private $runner = false;
+    private $phppath = null;
 
     /**
      * Nested creator, adds a set of files (nested fileset attribute).
@@ -114,7 +115,9 @@ class AtoumTask extends Task
             } else {
                 $this->runner->disableCodeCoverage();
             }
-            $this->runner->setPhpPath('/usr/bin/php');
+            if ($this->phppath !== null){
+                $this->runner->setPhpPath($this->phppath);
+            }
             $this->log ($this->runner->getPhpPath('php'));
         }
 
@@ -179,5 +182,15 @@ class AtoumTask extends Task
     public function getAtoumpharpath()
     {
         return $this->atoumpharpath;
+    }
+
+    public function setPhppath($phppath)
+    {
+        $this->phppath = (string) $phppath;
+    }
+
+    public function getPhppath()
+    {
+        return $this->phppath;
     }
 }
