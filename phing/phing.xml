@@ -42,7 +42,6 @@
     <!-- Target: Test                                  -->
     <!-- ============================================  -->
     <target name="test">
-        <echo msg="Launching tests" />
         <atoum
                 atoumpharpath="../tests/mageekguy.atoum.phar"
                 phppath="/usr/bin/php">
