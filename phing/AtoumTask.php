@@ -12,6 +12,7 @@ class AtoumTask extends Task
 
     private $codecoverage = false;
     private $atoumpharpath = null;
+    private $atoumautoloaderpath = null;
     private $phppath = null;
 
     private $showprogress = true;
@@ -87,6 +88,8 @@ class AtoumTask extends Task
         define('mageekguy\\atoum\\scripts\\runner\\autorun', true);
         if (!empty($this->atoumpharpath)) {
             require_once('phar://'.$this->atoumpharpath.'/classes/autoloader.php');
+        } elseif (!empty($this->atoumautoloaderpath)){
+            require_once($this->atoumautoloaderpath);
         } else {
             if (!class_exists('mageekguy\atoum\scripts\runner', false)){
                 throw new Exception("Unknown class mageekguy\\atoum\\scripts\\runner.\n\rConsider setting atoumpharpath parameter");
@@ -254,5 +257,15 @@ class AtoumTask extends Task
     public function getshowprogress()
     {
         return $this->showprogress;
+    }
+
+    public function setAtoumautoloaderpath($atoumautoloaderpath)
+    {
+        $this->atoumautoloaderpath = $atoumautoloaderpath;
+    }
+
+    public function getAtoumautoloaderpath()
+    {
+        return $this->atoumautoloaderpath;
     }
 }
