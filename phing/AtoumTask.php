@@ -86,7 +86,7 @@ class AtoumTask extends Task
             }
         }
 
-        require_once "./AtoumPhingReport.php";
+        require_once "./atoum/reports/realtime/phing.php";
         require_once "./atoum/report/fields/test/event/phing.php";
         require_once "./atoum/report/fields/test/memory/phing.php";
         require_once "./atoum/report/fields/test/duration/phing.php";
