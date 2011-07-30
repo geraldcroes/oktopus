@@ -1,16 +1,16 @@
 <?php
 
-namespace mageekguy\atoum\report\fields\test\duration;
+namespace mageekguy\atoum\report\fields\runner\duration;
 
 use
 	mageekguy\atoum,
 	mageekguy\atoum\locale,
 	mageekguy\atoum\cli\prompt,
 	mageekguy\atoum\cli\colorizer,
-	mageekguy\atoum\report
+	mageekguy\atoum\report\fields\runner\duration
 ;
 
-class phing extends report\fields\test\duration
+class phing extends duration
 {
 	protected $prompt = null;
 	protected $titleColorizer = null;
@@ -67,17 +67,10 @@ class phing extends report\fields\test\duration
 	{
 		return $this->prompt .
 			sprintf(
-				$this->locale->_('%1$s'),
-				$this->durationColorizer->colorize(
-					$this->value === null
-					?
-					$this->locale->_('unknown')
-					:
-					sprintf(
-						$this->locale->__('%4.2f s', '%4.2f s', $this->value),
-						$this->value
-					)
-				)
-			);
+				$this->locale->_('%1$s: %2$s.'),
+				$this->titleColorizer->colorize($this->locale->_('Running duration')),
+				$this->durationColorizer->colorize($this->value === null ? $this->locale->_('unknown') : sprintf($this->locale->__('%4.2f second', '%4.2f seconds', $this->value), $this->value))
+			)
+		;
 	}
 }

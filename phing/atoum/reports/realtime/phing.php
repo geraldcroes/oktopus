@@ -82,7 +82,7 @@ class phing extends realtime
         }
         if ($this->showDuration)
         {
-            $this->addRunnerField(new runner\duration\cli(
+            $this->addRunnerField(new runner\duration\phing(
                         $firstLevelPrompt,
                         $firstLevelColorizer
                     ),
