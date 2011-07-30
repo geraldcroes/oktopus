@@ -46,6 +46,7 @@
                 atoumpharpath="../tests/mageekguy.atoum.phar"
                 phppath="/usr/bin/php"
                 codecoverage="true"
+                codecoveragereportpath="../coverage/"
                 showcodecoverage="true"
                 showmissingcodecoverage="true"
                 showprogress="true"

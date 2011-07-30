@@ -11,6 +11,7 @@ class AtoumTask extends Task
     private $bootstrap = null;
 
     private $codecoverage = false;
+    private $codecoveragereportpath = null;
     private $atoumpharpath = null;
     private $atoumautoloaderpath = null;
     private $phppath = null;
@@ -122,7 +123,8 @@ class AtoumTask extends Task
                                                                     $this->getShowCodeCoverage(),
                                                                     $this->getShowMissingCodeCoverage(),
                                                                     $this->getShowDuration(),
-                                                                    $this->getShowMemory()
+                                                                    $this->getShowMemory(),
+                                                                    $this->getCodecoveragereportpath()
                                                                  );
             $writer = new \mageekguy\atoum\writers\std\out();
 
@@ -267,5 +269,16 @@ class AtoumTask extends Task
     public function getAtoumautoloaderpath()
     {
         return $this->atoumautoloaderpath;
+    }
+
+    public function setCodecoveragereportpath($codecoveragereportpath)
+    {
+        $this->codecoveragereportpath = (string) $codecoveragereportpath;
+        return $this;
+    }
+
+    public function getCodecoveragereportpath()
+    {
+        return $this->codecoveragereportpath;
     }
 }

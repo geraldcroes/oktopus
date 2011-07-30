@@ -18,8 +18,9 @@ class phing extends realtime
     protected $showDuration;
     protected $showMemory;
     protected $showCodeCoverage;
+    protected $codecoveragereportpath;
 
-	public function __construct($showProgress, $showCodeCoverage, $showMissingCodeCoverage, $showDuration, $showMemory)
+	public function __construct($showProgress, $showCodeCoverage, $showMissingCodeCoverage, $showDuration, $showMemory, $codecoveragereportpath)
 	{
 		parent::__construct(null, null);
 
@@ -28,6 +29,7 @@ class phing extends realtime
         $this->showMissingCodeCoverage = $showMissingCodeCoverage;
         $this->showDuration = $showDuration;
         $this->showMemory = $showMemory;
+        $this->codecoveragereportpath = $codecoveragereportpath;
 
 		$firstLevelPrompt = new prompt(PHP_EOL);
 		$firstLevelColorizer = new colorizer('1;36');
@@ -161,6 +163,12 @@ class phing extends realtime
                     );
             }
         }
+
+        if ($this->getCodecoveragereportpath())
+        {
+            $coverageField = new atoum\report\fields\runner\coverage\html('', $this->getCodecoveragereportpath());
+            $this->addRunnerField($coverageField, array(atoum\runner::runStop));
+        }
 	}
 
     public function getShowCodeCoverage()
@@ -186,5 +194,10 @@ class phing extends realtime
     public function getShowProgress()
     {
         return $this->showProgress;
+    }
+
+    public function getCodecoveragereportpath()
+    {
+        return $this->codecoveragereportpath;
     }
 }
