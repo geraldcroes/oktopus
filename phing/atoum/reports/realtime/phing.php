@@ -54,12 +54,6 @@ class phing extends realtime
 					),
 					array(atoum\runner::runStart)
 				)
-			->addRunnerField(new runner\tests\duration\cli(
-						$firstLevelPrompt,
-						$firstLevelColorizer
-					),
-					array(atoum\runner::runStop)
-				)
 			->addRunnerField(new runner\tests\memory\cli(
 						$firstLevelPrompt,
 						$firstLevelColorizer
