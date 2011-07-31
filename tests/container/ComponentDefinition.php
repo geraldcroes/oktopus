@@ -24,6 +24,11 @@ class ComponentDefinition extends atoum\test
 
 		//Trying to set a wrong property name should raise an eception
 		$this->assert->exception(function () use ($cd) {$cd->setProperty(array(), 'fooValue');})->isInstanceOf('\Oktopus\ComponentDefinitionException');
+
+        //testing getProperties
+        $this->assert->phpArray($cd->getProperties())->isEqualTo(array('foo'=>'value'));
+        $cd->setProperty('otherFoo', 'otherValue');
+        $this->assert->phpArray($cd->getProperties())->isEqualTo(array('foo'=>'value', 'otherFoo'=>'otherValue'));
 	}
 	
 	public function testMethod ()
@@ -47,6 +52,9 @@ class ComponentDefinition extends atoum\test
 
 		//Trying to set a wrong method name
         $this->assert->exception(function () use($cd){$cd->setMethod(array());})->isInstanceOf('\Oktopus\ComponentDefinitionException');
+
+        //testing getMethods
+        $this->assert->phpArray($cd->getMethods())->sizeOf(2);
 	}
 
 	public function testConstructor ()
@@ -85,4 +93,13 @@ class ComponentDefinition extends atoum\test
 		//trying to set a incorrect classname
         $this->assert->exception(function()use($cd){$cd->setClass(array());})->isInstanceOf('Oktopus\ComponentDefinitionException');
 	}
+
+    public function testFactories()
+    {
+        $cd = new Oktopus\ComponentDefinition('foo');
+        $this->assert->boolean($cd->hasFactory())->isFalse();
+        $cd->setFactory(array('FooDi2Factory', 'getInstance'));
+        $this->assert->boolean($cd->hasFactory())->isTrue();
+        $this->assert->phpArray($cd->getFactory())->sizeOf(2);
+    }
 }
