@@ -10,59 +10,8 @@ use
 	mageekguy\atoum\report
 ;
 
-class phing extends report\fields\test\memory
+class phing extends report\fields\test\memory\cli
 {
-	protected $prompt = null;
-	protected $titleColorizer = null;
-	protected $memoryColorizer = null;
-
-	public function __construct(prompt $prompt = null, colorizer $titleColorizer = null, colorizer $memoryColorizer = null, locale $locale = null)
-	{
-		parent::__construct($locale);
-
-		$this
-			->setPrompt($prompt ?: new prompt())
-			->setTitleColorizer($titleColorizer ?: new colorizer())
-			->setMemoryColorizer($memoryColorizer ?: new colorizer())
-		;
-	}
-
-	public function setPrompt(prompt $prompt)
-	{
-		$this->prompt = $prompt;
-
-		return $this;
-	}
-
-	public function getPrompt()
-	{
-		return $this->prompt;
-	}
-
-	public function setTitleColorizer(colorizer $colorizer)
-	{
-		$this->titleColorizer = $colorizer;
-
-		return $this;
-	}
-
-	public function getTitleColorizer()
-	{
-		return $this->titleColorizer;
-	}
-
-	public function setMemoryColorizer(colorizer $colorizer)
-	{
-		$this->memoryColorizer = $colorizer;
-
-		return $this;
-	}
-
-	public function getMemoryColorizer()
-	{
-		return $this->memoryColorizer;
-	}
-
 	public function __toString()
 	{
 			return $this->prompt .

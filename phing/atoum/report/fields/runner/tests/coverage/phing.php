@@ -10,13 +10,8 @@ use
 	mageekguy\atoum\report
 ;
 
-class phing extends report\fields\runner\tests\coverage
+class phing extends report\fields\runner\tests\coverage\cli
 {
-	protected $titlePrompt = null;
-	protected $classPrompt = null;
-	protected $methodPrompt = null;
-	protected $titleColorizer = null;
-	protected $coverageColorizer = null;
     protected $showMissingCodeCoverage = true;
 
 	public function __construct(prompt $titlePrompt = null,
@@ -27,76 +22,9 @@ class phing extends report\fields\runner\tests\coverage
         locale $locale = null,
         $showMissingCodeCoverage = true)
 	{
-		parent::__construct($locale);
-
-		$this
-			->setTitlePrompt($titlePrompt ?: new prompt())
-			->setClassPrompt($classPrompt ?: new prompt())
-			->setMethodPrompt($methodPrompt ?: new prompt())
-			->setTitleColorizer($titleColorizer ?: new colorizer())
-			->setCoverageColorizer($coverageColorizer ?: new colorizer())
-            ->setShowMissingCodeCoverage($showMissingCodeCoverage)
-		;
-	}
-
-	public function setTitlePrompt(prompt $prompt)
-	{
-		$this->titlePrompt = $prompt;
-
-		return $this;
-	}
-
-	public function getTitlePrompt()
-	{
-		return $this->titlePrompt;
-	}
-
-	public function setClassPrompt($prompt)
-	{
-		$this->classPrompt = $prompt;
-
-		return $this;
-	}
-
-	public function getClassPrompt()
-	{
-		return $this->classPrompt;
-	}
-
-	public function setMethodPrompt($prompt)
-	{
-		$this->methodPrompt = $prompt;
-
-		return $this;
-	}
-
-	public function getMethodPrompt()
-	{
-		return $this->methodPrompt;
-	}
-
-	public function setTitleColorizer(colorizer $colorizer)
-	{
-		$this->titleColorizer = $colorizer;
-
-		return $this;
-	}
-
-	public function getTitleColorizer()
-	{
-		return $this->titleColorizer;
-	}
-
-	public function setCoverageColorizer(colorizer $colorizer)
-	{
-		$this->coverageColorizer = $colorizer;
-
-		return $this;
-	}
-
-	public function getCoverageColorizer()
-	{
-		return $this->coverageColorizer;
+		parent::__construct($titlePrompt, $classPrompt, $methodPrompt, $titleColorizer,
+                            $coverageColorizer, $locale);
+		$this->setShowMissingCodeCoverage($showMissingCodeCoverage);
 	}
 
 	public function __toString()

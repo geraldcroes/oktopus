@@ -8,7 +8,7 @@ use
 	mageekguy\atoum\exceptions
 ;
 
-class phing extends report\fields\test\event
+class phing extends report\fields\test\event\cli
 {
 	public function __toString()
 	{
