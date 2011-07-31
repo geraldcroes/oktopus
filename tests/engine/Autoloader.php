@@ -169,22 +169,6 @@ class Autoloader extends atoum\test {
                 ->isInstanceOf('\Oktopus\AutoloaderException');
     }
 
-	/**
-     * Test the engine autoloader (maybe we should move this test into the Engine test class)
-     */
-    public function testEngineAutoloader (){
-		//Check that the engine autoloader has the Oktopus temporary files path configured
-		$this->assert
-                   ->string(\Oktopus\Engine::getTemporaryFilesPath ())
-                   ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
-
-		//check that the engine reports changes to the temporary path...
-		\Oktopus\Engine::setTemporaryFilesPath(null);
-		$this->assert
-                ->variable(\Oktopus\Engine::getTemporaryFilesPath ())
-                ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
-	}
-
     public function testAutoloaderRecursiveAndNonRecursive (){
         //testing recursive
         $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3 ());

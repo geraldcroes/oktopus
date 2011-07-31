@@ -6,7 +6,6 @@ require_once __DIR__.'/../../Oktopus/Engine.php';
 
 use \mageekguy\atoum;
 
-
 class Engine extends atoum\test {
 	public function testCreate ()
 	{
@@ -56,5 +55,22 @@ class Engine extends atoum\test {
                 ->isInstanceOf('\Oktopus\Autoloader')
                 ->string(\Oktopus\Engine::autoloader()->getCachePath())
                 ->isEqualTo(\Oktopus\Engine::getTemporaryFilesPath());
+    }
+
+    /**
+     * Test the engine autoloader (maybe we should move this test into the Engine test class)
+     */
+    public function testEngineAutoloader (){
+        \Oktopus\Engine::start('/tmp/');
+        //Check that the engine autoloader has the Oktopus temporary files path configured
+        $this->assert
+                   ->string(\Oktopus\Engine::getTemporaryFilesPath ())
+                   ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
+
+        //check that the engine reports changes to the temporary path...
+        \Oktopus\Engine::setTemporaryFilesPath(null);
+        $this->assert
+                ->variable(\Oktopus\Engine::getTemporaryFilesPath ())
+                ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
     }
 }

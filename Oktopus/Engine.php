@@ -649,7 +649,7 @@ class Engine
 
     /**
      * Sets the temporary files path
-     * 
+     *
      * @param string $pTmpPath the path to set
      */
     public static function setTemporaryFilesPath ($pTmpPath)
