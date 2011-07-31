@@ -120,13 +120,13 @@ class AtoumTask extends Task
         if ($this->runner === false){
             $this->runner = new \mageekguy\atoum\runner();
             $report = new \mageekguy\atoum\reports\realtime\phing(
-                                                                    $this->getShowProgress(),
-                                                                    $this->getShowCodeCoverage(),
-                                                                    $this->getShowMissingCodeCoverage(),
-                                                                    $this->getShowDuration(),
-                                                                    $this->getShowMemory(),
-                                                                    $this->getCodecoveragereportpath(),
-                                                                    $this->getCodecoveragereporturl()
+                                                                    $this->showprogress,
+                                                                    $this->showcodecoverage,
+                                                                    $this->showmissingcodecoverage,
+                                                                    $this->showduration,
+                                                                    $this->showmemory,
+                                                                    $this->codecoveragereportpath,
+                                                                    $this->codecoveragereporturl
                                                                  );
             $writer = new \mageekguy\atoum\writers\std\out();
 
@@ -159,20 +159,10 @@ class AtoumTask extends Task
         return $this;
     }
 
-    public function getBootstrap()
-    {
-        return $this->bootstrap;
-    }
-
     public function setCodecoverage($codecoverage)
     {
         $this->codecoverage = (boolean) $codecoverage;
         return $this;
-    }
-
-    public function getCodecoverage()
-    {
-        return $this->codecoverage;
     }
 
     public function setConfigurationfiles($configurationfiles)
@@ -192,20 +182,10 @@ class AtoumTask extends Task
         return $this;
     }
 
-    public function getAtoumpharpath()
-    {
-        return $this->atoumpharpath;
-    }
-
     public function setPhppath($phppath)
     {
         $this->phppath = (string) $phppath;
         return $this;
-    }
-
-    public function getPhppath()
-    {
-        return $this->phppath;
     }
 
     public function setshowcodecoverage($showcodecoverage)
@@ -214,20 +194,10 @@ class AtoumTask extends Task
         return $this;
     }
 
-    public function getshowcodecoverage()
-    {
-        return $this->showcodecoverage;
-    }
-
     public function setshowduration($showdurationReport)
     {
         $this->showduration = (boolean) $showdurationReport;
         return $this;
-    }
-
-    public function getshowduration()
-    {
-        return $this->showduration;
     }
 
     public function setshowmemory($showmemoryReport)
@@ -236,20 +206,10 @@ class AtoumTask extends Task
         return $this;
     }
 
-    public function getshowmemory()
-    {
-        return $this->showmemory;
-    }
-
     public function setshowmissingcodecoverage($showmissingcodecoverage)
     {
         $this->showmissingcodecoverage = (boolean) $showmissingcodecoverage;
         return $this;
-    }
-
-    public function getshowmissingcodecoverage()
-    {
-        return $this->showmissingcodecoverage;
     }
 
     public function setshowprogress($showprogress)
@@ -258,19 +218,9 @@ class AtoumTask extends Task
         return $this;
     }
 
-    public function getshowprogress()
-    {
-        return $this->showprogress;
-    }
-
     public function setAtoumautoloaderpath($atoumautoloaderpath)
     {
         $this->atoumautoloaderpath = $atoumautoloaderpath;
-    }
-
-    public function getAtoumautoloaderpath()
-    {
-        return $this->atoumautoloaderpath;
     }
 
     public function setCodecoveragereportpath($codecoveragereportpath)
@@ -279,19 +229,9 @@ class AtoumTask extends Task
         return $this;
     }
 
-    public function getCodecoveragereportpath()
-    {
-        return $this->codecoveragereportpath;
-    }
-
     public function setCodecoveragereporturl($codecoveragereporturl)
     {
         $this->codecoveragereporturl = (string) $codecoveragereporturl;
         return $this;
-    }
-
-    public function getCodecoveragereporturl()
-    {
-        return $this->codecoveragereporturl;
     }
 }
