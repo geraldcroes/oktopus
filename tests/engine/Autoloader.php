@@ -417,4 +417,12 @@ class Autoloader extends atoum\test {
                 ->exception(function()use($autoloader){$autoloader->addPath ('AZERTYQWERTY/this/does/not/exists/or/this/is/very/very/bad_luck/'.uniqid (), true);})
                 ->isInstanceOf('Oktopus\\AutoloaderException');
 	}
+
+    public function testAutoloaderSetGetCachePath()
+    {
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $this->assert->variable($autoloader->getCachePath())->isNull();
+        $autoloader->setCachePath('/tmp/');
+        $this->assert->string($autoloader->getCachePath())->isEqualTo('/tmp/');
+    }
 }
