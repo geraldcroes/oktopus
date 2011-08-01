@@ -116,6 +116,25 @@ class Autoloader extends atoum\test {
                 ->isTrue();
 	}
 
+    public function testAUtoloadMovedJustCheck ()
+    {
+
+		//Remove old cache file if it exists and copy sources to test
+		exec('rm -Rf /tmp/OktopusTest');
+		mkdir('/tmp/OktopusTest/testDeleteFile/sources/', 0775, true);
+		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest/testDeleteFile/sources/');
+
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        $this->assert->boolean($autoloader->autoload ('foo2'))
+                ->isTrue();//wil generate cachefile for every classes.
+
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.php /tmp/OktopusTest/testDeleteFile/sources/foomoved.php');
+        $this->assert->boolean($autoloader->autoload('foo', true))->isTrue();
+    }
+
     /**
      * Test register / unregister.
      */
