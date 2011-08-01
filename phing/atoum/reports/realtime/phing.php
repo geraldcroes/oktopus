@@ -18,10 +18,10 @@ class phing extends realtime
     protected $showDuration;
     protected $showMemory;
     protected $showCodeCoverage;
-    protected $codecoveragereportpath;
-    protected $codecoveragereporturl;
+    protected $codeCoverageReportPath;
+    protected $codeCoverageReportUrl;
 
-	public function __construct($showProgress, $showCodeCoverage, $showMissingCodeCoverage, $showDuration, $showMemory, $codecoveragereportpath, $codecoveragereporturl)
+	public function __construct($showProgress, $showCodeCoverage, $showMissingCodeCoverage, $showDuration, $showMemory, $codeCoverageReportPath, $codeCoverageReportUrl)
 	{
 		parent::__construct(null, null);
 
@@ -30,8 +30,8 @@ class phing extends realtime
         $this->showMissingCodeCoverage = $showMissingCodeCoverage;
         $this->showDuration = $showDuration;
         $this->showMemory = $showMemory;
-        $this->codecoveragereportpath = $codecoveragereportpath;
-        $this->codecoveragereporturl = $codecoveragereporturl;
+        $this->codeCoverageReportPath = $codeCoverageReportPath;
+        $this->codeCoverageReportUrl = $codeCoverageReportUrl;
 
 		$firstLevelPrompt = new prompt(PHP_EOL);
 		$firstLevelColorizer = new colorizer('1;36');
@@ -169,7 +169,7 @@ class phing extends realtime
         if ($this->getCodecoveragereportpath())
         {
             $coverageField = new atoum\report\fields\runner\coverage\html('', $this->getCodecoveragereportpath());
-            if ($this->codecoveragereporturl === null){
+            if ($this->codeCoverageReportUrl === null){
                 $coverageField->setRootUrl("file:////".realpath($this->getCodecoveragereportpath()));
             } else {
                 $coverageField->setRootUrl($this->getCodecoveragereporturl());
@@ -205,10 +205,10 @@ class phing extends realtime
 
     public function getCodecoveragereportpath()
     {
-        return $this->codecoveragereportpath;
+        return $this->codeCoverageReportPath;
     }
    public function getCodecoveragereporturl()
     {
-        return $this->codecoveragereporturl;
+        return $this->codeCoverageReportUrl;
     }
 }
