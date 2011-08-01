@@ -205,6 +205,14 @@ class Autoloader extends atoum\test {
 		->error()
 		->exists()//first error
 		->exists();//second error
+
+        //Silent mode
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath(__DIR__.'/../resources/warning/')
+                    ->setSilentDuplicatesInSameFile(true);
+        $this->assert
+                ->boolean($autoloader->autoload ('not_exists'))
+                ->isFalse();
     }
 
 	public function testAutoloaderWarningTwoSameClassesTwoFile (){
@@ -219,6 +227,46 @@ class Autoloader extends atoum\test {
                 ->exists()
                 ->exists()
                 ->exists();
+
+        //Silent mode (different files)
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/warning2files')
+                    ->setSilentDuplicatesInDifferentFiles(true);
+
+        $this->assert
+                ->boolean($autoloader->autoload ('Afoo'))
+                ->isTrue();
+
+        $this->assert
+                ->error
+                ->exists();//Just one error a AFoo is declared twice in the same file
+                //other errors won't show up
+
+        //Silent mode (same files)
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/warning2files')
+                    ->setSilentDuplicatesInSameFile(true);
+
+        $this->assert
+                ->boolean($autoloader->autoload ('Afoo'))
+                ->isTrue();
+
+        $this->assert
+                ->error
+                ->exists()
+                ->exists();//Two errors as the AFoo declared in the same file won't show up
+
+        //Silent mode
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath(__DIR__.'/../resources/warning2files')
+                    ->setSilentDuplicatesInDifferentFiles(true)
+                    ->setSilentDuplicatesInSameFile(true);
+
+        $this->assert
+                ->boolean($autoloader->autoload ('Afoo'))
+                ->isTrue();
+
+
 	}
 
 	public function testAutoloaderWarningTwoSameNamespaceClassesTwoFile (){
@@ -231,8 +279,16 @@ class Autoloader extends atoum\test {
         $this->assert
                 ->error
                 ->exists();
-	}
 
+        //Silent won't raise warnings
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath(__DIR__.'/../resources/warningnamespace2files')
+                    ->setSilentDuplicatesInDifferentFiles(true);
+
+        $this->assert
+                ->boolean($autoloader->autoload ('not_exists'))
+                ->isFalse();
+	}
 
     public function testUpdatedFileTimeLoader (){
         //Simple autoload with no cache

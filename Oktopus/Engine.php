@@ -594,7 +594,7 @@ class Autoloader
      */
     public function setSilentDuplicatesInDifferentFiles ($pSilent)
     {
-        $this->_silentDuplicatesInDifferentFile = $pSilent;
+        $this->_silentDuplicatesInDifferentFile = (boolean) $pSilent;
         return $this;
     }
 
