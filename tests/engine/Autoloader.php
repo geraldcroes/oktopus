@@ -79,6 +79,7 @@ class Autoloader extends atoum\test {
      */
 	public function testAutoloadKnownClassThatHasBeenMovedNotProductionMode (){
         //Restarting the engine in debug mode
+        \Oktopus\Engine::autoloader()->unregister();
         \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_DEBUG);
         \Oktopus\Debug::unregisterErrorHandler();
         \Oktopus\Debug::unregisterExceptionHandler();

@@ -22,12 +22,13 @@ class Engine extends atoum\test {
 
 	public function testContainer ()
 	{
-	    \Oktopus\Engine::start('/tmp/');
+        \Oktopus\Engine::start('/tmp/');
 
         $this->assert
                 ->object(\Oktopus\Engine::container())
                 ->isInstanceOf('\Oktopus\IContainer');
 
+        \Oktopus\Engine::autoloader()->unregister();
         \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_PRODUCTION);
         $this->assert
                 ->string(ini_get('display_errors'))
