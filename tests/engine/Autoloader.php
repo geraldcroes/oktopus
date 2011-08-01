@@ -425,4 +425,41 @@ class Autoloader extends atoum\test {
         $autoloader->setCachePath('/tmp/');
         $this->assert->string($autoloader->getCachePath())->isEqualTo('/tmp/');
     }
+
+    public function testAutoloaderSetGetSilentSameFile()
+    {
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $this->assert
+                    ->object($autoloader->setSilentDuplicatesInSameFile(false))
+                        ->isIdenticalTo($autoloader)
+                    ->boolean($autoloader->getSilentDuplicatesInSameFile())
+                        ->isFalse()
+                    ->object($autoloader->setSilentDuplicatesInSameFile(true))
+                        ->isIdenticalTo($autoloader)
+                    ->boolean($autoloader->getSilentDuplicatesInSameFile())
+                        ->isTrue();
+    }
+
+    public function testAutoloaderSetGetSilentDifferentFiles ()
+    {
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $this->assert
+                    ->object($autoloader->setSilentDuplicatesInDifferentFiles(false))
+                        ->isIdenticalTo($autoloader)
+                    ->boolean($autoloader->getSilentDuplicatesInDifferentFiles())
+                        ->isFalse()
+                    ->object($autoloader->setSilentDuplicatesInDifferentFiles(true))
+                        ->isIdenticalTo($autoloader)
+                    ->boolean($autoloader->getSilentDuplicatesInDifferentFiles())
+                        ->isTrue();
+    }
+
+    public function testAutoloaderSilentDefaultValues ()
+    {
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $this->assert->boolean($autoloader->getSilentDuplicatesInSameFile())
+            ->isFalse();
+        $this->assert->boolean($autoloader->getSilentDuplicatesInDifferentFiles())
+            ->isFalse();
+    }
 }

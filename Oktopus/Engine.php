@@ -540,6 +540,67 @@ class Autoloader
      * @var array
      */
     private $_directories = array ();
+
+
+    /**
+     * If the Oktopus's Autoloader will waise a warning while founding twice or more the same class in the same file
+     *
+     * @var bool true will raise warnings, false won't raise any error
+     */
+    private $_silentDuplicatesInSameFile = false;
+
+    /**
+     * Tells if the Oktopus's Autoloader should generate a warning while founding twice or more the same class in the same file
+     *
+     * @param bool $pSilent
+     *
+     * @return Autoloader
+     */
+    public function setSilentDuplicatesInSameFile ($pSilent)
+    {
+        $this->_silentDuplicatesInSameFile = (boolean) $pSilent;
+        return $this;
+    }
+
+    /**
+     * Tells if the Oktopus's Autoloader will generate a warning while founding twice or more the same class in the same file
+     *
+     * @return bool
+     */
+    public function getSilentDuplicatesInSameFile()
+    {
+        return $this->_silentDuplicatesInSameFile;
+    }
+
+    /**
+     * If the Oktopus's Autoloader will raise a warning while founding twice or more the same class in different files
+     *
+     * @var bool true will raise warnings, false won't raise any error
+     */
+    private $_silentDuplicatesInDifferentFile = false;
+
+    /**
+     * Tells if the Oktopus's Autoloader should generate a warning while founding twice or more the same class in different files
+     *
+     * @var bool true will generate warnings, false won't generate any error
+     *
+     * @return Autoloader
+     */
+    public function setSilentDuplicatesInDifferentFiles ($pSilent)
+    {
+        $this->_silentDuplicatesInDifferentFile = $pSilent;
+        return $this;
+    }
+
+    /**
+     * Tells if the Oktopus's Autoloader will generate a warning while founding twice or more the same class in the same file
+     *
+     * @return bool
+     */
+    public function getSilentDuplicatesInDifferentFiles ()
+    {
+        return $this->_silentDuplicatesInDifferentFile;
+    }
 }
 
 /**
@@ -623,6 +684,11 @@ class Engine
 
         self::$_autoloader = new Autoloader($pTmpPath, new ClassParserForPHP5_3());
         self::$_autoloader->addPath(__DIR__, true)->register();
+
+        if ($pMode === self::MODE_PRODUCTION){
+            self::$_autoloader->setSilentDuplicatesInSameFile(true)
+                              ->setSilentDuplicatesInSameFile(true);
+        }
 
         if ($pMode === self::MODE_DEBUG && self::$_autoloader->autoload('Oktopus\\Debug')) {
             Debug::registerErrorHandler();
