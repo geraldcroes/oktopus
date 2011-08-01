@@ -89,7 +89,7 @@ class Engine extends atoum\test {
                     ->isTrue();
 
         $this->assert
-                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInSameFile())
+                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInDifferentFile())
                     ->isTrue();
 
         //Silent should be false by default in debug mode
@@ -103,7 +103,7 @@ class Engine extends atoum\test {
                     ->isFalse();
 
         $this->assert
-                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInSameFile())
+                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInDifferentFile())
                     ->isFalse();
     }
 }
