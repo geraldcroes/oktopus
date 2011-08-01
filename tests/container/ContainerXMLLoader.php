@@ -137,4 +137,37 @@ class ContainerXMLLoader extends atoum\test
                  ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../resources/container/fail_unset_property_value.xml');})
                  ->isInstanceOf('Oktopus\ComponentDefinitionException');
     }
+
+    public function testUnsetMethodName ()
+    {
+        $nakedContainer = new Oktopus\Container();
+        $container = new Oktopus\ContainerXMLLoader($nakedContainer);
+
+        //Trying to load an XML file with a component that have a component with a missing method name should raise an exception
+        $this->assert
+                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../resources/container/fail_unset_method_name.xml');})
+                 ->isInstanceOf('Oktopus\ComponentDefinitionException');
+    }
+
+    public function testUnsetFactoryClassname ()
+    {
+        $nakedContainer = new Oktopus\Container();
+        $container = new Oktopus\ContainerXMLLoader($nakedContainer);
+
+        //Trying to load an XML file with a component that have a component with a missing factory classname attribute should raise an exception
+        $this->assert
+                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../resources/container/fail_unset_factory_classname.xml');})
+                 ->isInstanceOf('Oktopus\ComponentDefinitionException');
+    }
+
+    public function testUnsetFactoryMethod ()
+    {
+        $nakedContainer = new Oktopus\Container();
+        $container = new Oktopus\ContainerXMLLoader($nakedContainer);
+
+        //Trying to load an XML file with a component that have a component with a missing factory method attribute should raise an exception
+        $this->assert
+                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../resources/container/fail_unset_factory_method.xml');})
+                 ->isInstanceOf('Oktopus\ComponentDefinitionException');
+    }
 }
