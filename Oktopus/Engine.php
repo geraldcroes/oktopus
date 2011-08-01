@@ -328,19 +328,23 @@ class Autoloader
                         if (!in_array($fileName, $allClasses[$className], true)) {
                             $allClasses[$className][] = $fileName;
                         } else {
-                            trigger_error(
-                                "The class $className was found twice or more in the file ".
-                                "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
-                            );
+                            if ($this->getSilentDuplicatesInSameFile() === false){
+                                trigger_error(
+                                    "The class $className was found twice or more in the file ".
+                                    "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
+                                );
+                            }
                         }
                     } else {
                         if ($allClasses[$className] !== $fileName) {
                             $allClasses[$className] = array($allClasses[$className], $fileName);
                         } else {
-                            trigger_error(
-                                "The class $className was found twice or more in the file ".
-                                "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
-                            );
+                            if ($this->getSilentDuplicatesInSameFile() === false){
+                                trigger_error(
+                                    "The class $className was found twice or more in the file ".
+                                    "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
+                                );
+                            }
                         }
                     }
                 } else {
@@ -350,14 +354,16 @@ class Autoloader
         }
 
         //Will adress warnings if a class was found in multiple files.
-        foreach ($allClasses as $className=>$files) {
-            if (is_array($files)) {
-                $countFiles = count($files);
-                trigger_error(
-                    "The class $className was found in $countFiles different files ".
-                    implode(', ', $files) .", the Oktopus Autoloader will use the ".
-                    "first file while autoloading the Object", E_USER_WARNING
-                );
+        if ($this->getSilentDuplicatesInDifferentFiles() === false){
+            foreach ($allClasses as $className=>$files) {
+                if (is_array($files)) {
+                    $countFiles = count($files);
+                    trigger_error(
+                        "The class $className was found in $countFiles different files ".
+                        implode(', ', $files) .", the Oktopus Autoloader will use the ".
+                        "first file while autoloading the Object", E_USER_WARNING
+                    );
+                }
             }
         }
 
