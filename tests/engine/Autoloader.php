@@ -429,9 +429,9 @@ class Autoloader extends atoum\test {
 
         $this->assert
                 ->phpArray($values)
-                ->contain('foo')
-                ->contain('foo2')
-                ->contain('foo3')
+                ->contains('foo')
+                ->contains('foo2')
+                ->contains('foo3')
                 ->hasSize(3);
     }
 
@@ -449,9 +449,9 @@ class Autoloader extends atoum\test {
 		list(, $values) = each($knownClasses);
 		$this->assert
                     ->phpArray($values)
-                    ->contain('foo')
-                    ->contain('foo2')
-                    ->contain('foo3')
+                    ->contains('foo')
+                    ->contains('foo2')
+                    ->contains('foo3')
                     ->hasSize(3);
 
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/namespaces', false);
@@ -461,9 +461,9 @@ class Autoloader extends atoum\test {
 		list(, $values) = each($knownClasses);
         $this->assert
                     ->phpArray($values)
-                    ->contain('foo')
-                    ->contain('foo2')
-                    ->contain('foo3')
+                    ->contains('foo')
+                    ->contains('foo2')
+                    ->contains('foo3')
                     ->hasSize(3);
 
 		$autoloader->autoload('foo');
@@ -472,9 +472,9 @@ class Autoloader extends atoum\test {
 		list(, $values) = each($knownClasses);
         $this->assert
                     ->phpArray($values)
-                    ->contain('foo')
-                    ->contain('foo2')
-                    ->contain('foo3')
+                    ->contains('foo')
+                    ->contains('foo2')
+                    ->contains('foo3')
                     ->hasSize(3);
 
 		$autoloader->includesAll ();
@@ -482,19 +482,19 @@ class Autoloader extends atoum\test {
         list(, $values) = each($knownClasses);
         $this->assert
                     ->phpArray($values)
-                    ->contain('foo')
-                    ->contain('foo2')
-                    ->contain('foo3')
+                    ->contains('foo')
+                    ->contains('foo2')
+                    ->contains('foo3')
                     ->hasSize(3);
 
 		list(, $values) = each($knownClasses);
         $this->assert
                     ->phpArray($values)
-                    ->contain('foo\\foo')
-                    ->contain('foofoo')
-                    ->contain('foo2\\foo')
-                    ->contain('foo2\\foo2')
-                    ->contain('foo3\\foo')
+                    ->contains('foo\\foo')
+                    ->contains('foofoo')
+                    ->contains('foo2\\foo')
+                    ->contains('foo2\\foo2')
+                    ->contains('foo3\\foo')
                     ->hasSize(5);
     }
 
