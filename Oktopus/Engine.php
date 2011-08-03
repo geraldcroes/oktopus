@@ -271,17 +271,17 @@ class Autoloader
         foreach ($directories as $fileName) {
             if (!array_key_exists($fileName->getPathName(), $directoryIndex)) {
                 //The file is not registered in the directory index, we have to analyze the new file
-                $haveToAnalizeFile = true;
+                $haveToAnalyzeFile = true;
             } elseif ($directoryIndex[$fileName->getPathName()] < $fileName->getMTime()) {
                 //The file is not up to date, we have to analyze.
-                $haveToAnalizeFile = true;
+                $haveToAnalyzeFile = true;
             } else {
                 //The file is up to date and is in the directoryIndex
-                $haveToAnalizeFile = false;
+                $haveToAnalyzeFile = false;
             }
 
             //So we have to analyze the file ?
-            if ($haveToAnalizeFile) {
+            if ($haveToAnalyzeFile) {
                 $directoryIndex[$fileName->getPathName()] = $fileName->getMTime();
                 $classes[$fileName->getPathName()]= $this->_classHunter->find($fileName->getPathName());
                 $analyzedFiles[$fileName->getPathName()] = true;
