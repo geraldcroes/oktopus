@@ -26,13 +26,10 @@
                 <echo message="${atoum_version_before}" />
             </then>
             <else>
-                <echo message="Updating ATOUM" />
+                <echo message="Updating ATOUM"/>
                 <echo message="From ${atoum_version_before}" />
                 <echo message="TO   ${atoum_version_after}" />
-                <!--
-                <exec command="git add ../tests/mageekguy.atoum.phar" />
-                <exec command='git commit -m "${atoum_version_after}" '/>
-                -->
+                <exec command='git commit -m "${atoum_version_after}" ../tests/mageekguy.atoum.phar' logoutput="true"/>
             </else>
         </if>
     </target>
@@ -40,7 +37,7 @@
     <!-- ============================================  -->
     <!-- Target: Test                                  -->
     <!-- ============================================  -->
-    <target name="test">
+    <target name="test" depends="update_atoum">
         <atoum
                 atoumpharpath="../tests/mageekguy.atoum.phar"
                 phppath="/usr/bin/php"
