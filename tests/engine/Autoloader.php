@@ -13,23 +13,23 @@ class Autoloader extends atoum\test {
      */
     public function testAutoloadKnownClassThatHasBeenDeleted (){
 		//Remove old cache file if it exists and copy sources to test
-		exec('rm -Rf /tmp/OktopusTest');
-		mkdir('/tmp/OktopusTest/testDeleteFile/sources', 0775, true);
-		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest/testDeleteFile/sources/');
+		exec('rm -Rf /tmp/OktopusTest1');
+		mkdir('/tmp/OktopusTest1/testDeleteFile/sources', 0775, true);
+		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest1/testDeleteFile/sources/');
 		//will generate cache file for every classes (including foo)
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest1/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest1/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 		
 		//will try to load foo after deleting the autoloader cache
-	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest1/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest1/testDeleteFile/sources/');
 		$autoloader->autoload('foo2');//to include the cache and tells where foo should also be founded.
 
 	    //removing the class foo from the autoload (by changing it's extension)
-        exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.php /tmp/OktopusTest/testDeleteFile/sources/foo.txt');
+        exec('mv /tmp/OktopusTest1/testDeleteFile/sources/foo.php /tmp/OktopusTest1/testDeleteFile/sources/foo.txt');
 
 		//Now trying to load foo that does not exists anymore
         $this->assert
@@ -44,23 +44,23 @@ class Autoloader extends atoum\test {
         \Oktopus\Debug::unregisterExceptionHandler();
 
 		//Remove old cache file if it exists and copy sources to test
-		exec('rm -Rf /tmp/OktopusTest');
-		mkdir('/tmp/OktopusTest/testDeleteFile/sources', 0775, true);
-		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest/testDeleteFile/sources/');
+		exec('rm -Rf /tmp/OktopusTest2');
+		mkdir('/tmp/OktopusTest2/testDeleteFile/sources', 0775, true);
+		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest2/testDeleteFile/sources/');
 		//will generate cache file for every classes (including foo)
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest2/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 
 		//will try to load foo after deleting the autoloader cache
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest2/testDeleteFile/sources/');
 		$autoloader->autoload('foo2');//to include the cache and tells where foo should also be founded.
 
 	    //removing the class foo from the autoload (by changing it's extension)
-        exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.php /tmp/OktopusTest/testDeleteFile/sources/foo.txt');
+        exec('mv /tmp/OktopusTest2/testDeleteFile/sources/foo.php /tmp/OktopusTest2/testDeleteFile/sources/foo.txt');
 
 		//Now trying to load foo that does not exists anymore
         $this->assert
@@ -69,9 +69,9 @@ class Autoloader extends atoum\test {
 
 	    //moving the class foo back to the autoload (by changing it's extension)
         //to check that Oktopus will notice it reapears and autoload it
-        exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.txt /tmp/OktopusTest/testDeleteFile/sources/foo.php');
-	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        exec('mv /tmp/OktopusTest2/testDeleteFile/sources/foo.txt /tmp/OktopusTest2/testDeleteFile/sources/foo.php');
+	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest2/testDeleteFile/sources/');
 		$autoloader->autoload('foo2');//to include the cache and tells where foo should also be founded.
 		//Now trying to load foo that should be back
         $this->assert
@@ -84,21 +84,21 @@ class Autoloader extends atoum\test {
      */
 	public function testAutoloadKnownClassThatHasBeenMovedProductionMode (){
 		//Remove old cache file if it exists and copy sources to test
-		exec('rm -Rf /tmp/OktopusTest/');
-		mkdir('/tmp/OktopusTest/testDeleteFile/sources/', 0775, true);
-		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest/testDeleteFile/sources/');
+		exec('rm -Rf /tmp/OktopusTest3/');
+		mkdir('/tmp/OktopusTest3/testDeleteFile/sources/', 0775, true);
+		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest3/testDeleteFile/sources/');
 
 		//will generate cache file for every classes (including foo)
-	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest3/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest3/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 
-		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest3/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest3/testDeleteFile/sources/');
 
-		exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.php /tmp/OktopusTest/testDeleteFile/sources/foomoved.php');
+		exec('mv /tmp/OktopusTest3/testDeleteFile/sources/foo.php /tmp/OktopusTest3/testDeleteFile/sources/foomoved.php');
 
 		//This test should be run considering Oktopus is in PRODUCTION_MODE
         $this->assert
@@ -127,21 +127,21 @@ class Autoloader extends atoum\test {
         \Oktopus\Debug::unregisterExceptionHandler();
 
 		//Remove old cache file if it exists and copy sources to test
-		exec('rm -Rf /tmp/OktopusTest');
-		mkdir('/tmp/OktopusTest/testDeleteFile/sources/', 0775, true);
-		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest/testDeleteFile/sources/');
+		exec('rm -Rf /tmp/OktopusTest4');
+		mkdir('/tmp/OktopusTest4/testDeleteFile/sources/', 0775, true);
+		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest4/testDeleteFile/sources/');
 
 		//will generate cache file for every classes (including foo)
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest4/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest4/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 
-		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-		$autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest4/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader->addPath('/tmp/OktopusTest4/testDeleteFile/sources/');
 
-		exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.php /tmp/OktopusTest/testDeleteFile/sources/foomoved.php');
+		exec('mv /tmp/OktopusTest4/testDeleteFile/sources/foo.php /tmp/OktopusTest4/testDeleteFile/sources/foomoved.php');
 
 		//This test should be run considering Oktopus is in PRODUCTION_MODE
         $this->assert
@@ -162,18 +162,18 @@ class Autoloader extends atoum\test {
     public function testAUtoloadMovedJustCheck ()
     {
 		//Remove old cache file if it exists and copy sources to test
-		exec('rm -Rf /tmp/OktopusTest');
-		mkdir('/tmp/OktopusTest/testDeleteFile/sources/', 0775, true);
-		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest/testDeleteFile/sources/');
+		exec('rm -Rf /tmp/OktopusTest5');
+		mkdir('/tmp/OktopusTest5/testDeleteFile/sources/', 0775, true);
+		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest5/testDeleteFile/sources/');
 
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-        $autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest5/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath('/tmp/OktopusTest5/testDeleteFile/sources/');
         $this->assert->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();//wil generate cachefile for every classes.
 
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
-        $autoloader->addPath('/tmp/OktopusTest/testDeleteFile/sources/');
-        exec('mv /tmp/OktopusTest/testDeleteFile/sources/foo.php /tmp/OktopusTest/testDeleteFile/sources/foomoved.php');
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest5/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader->addPath('/tmp/OktopusTest5/testDeleteFile/sources/');
+        exec('mv /tmp/OktopusTest5/testDeleteFile/sources/foo.php /tmp/OktopusTest5/testDeleteFile/sources/foomoved.php');
         $this->assert->boolean($autoloader->autoload('foo', true))->isTrue();
     }
 
