@@ -77,7 +77,6 @@
           destfile="../build/oktopus.phar"
           basedir="../"
           stub="stub.php"
-          compression="bzip2"
           >
           <fileset dir="../Oktopus">
             <include name="**/**" />
