@@ -306,10 +306,13 @@ class Autoloader
         }
 
         //We're gonna remove old files from classes.
-        foreach ($toRemoveFiles as $fileName) {
-            if (isset ($classes[$fileName])) {
-                $listHasChanged = true;
-                unset ($classes[$fileName]);
+        if (count($toRemoveFiles)){
+            $listHasChanged = true;
+            foreach ($toRemoveFiles as $fileName) {
+                if (isset($classes[$fileName])) {
+                    unset($classes[$fileName]);
+                }
+                unset($directoryIndex[$fileName]);
             }
         }
 
