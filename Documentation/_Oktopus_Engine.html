@@ -57,6 +57,8 @@
 <dd><a class="property private" href="#%5COktopus%5CAutoloader::%24_directories">$_directories</a></dd>
 <dd><a class="property private" href="#%5COktopus%5CAutoloader::%24_directoryClasses">$_directoryClasses</a></dd>
 <dd><a class="property private" href="#%5COktopus%5CAutoloader::%24_pClassParser">$_pClassParser</a></dd>
+<dd><a class="property private" href="#%5COktopus%5CAutoloader::%24_silentDuplicatesInDifferentFile">$_silentDuplicatesInDifferentFile</a></dd>
+<dd><a class="property private" href="#%5COktopus%5CAutoloader::%24_silentDuplicatesInSameFile">$_silentDuplicatesInSameFile</a></dd>
 <dt><a href="#" onclick="$(this).children('img').toggle().parents('dt').nextUntil('dt').slideToggle(); return false;"><img src="images/arrow_down.gif"><img src="images/arrow_right.gif" style="display: none">
                 Methods
               </a></dt>
@@ -69,10 +71,14 @@
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::autoload()">autoload</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::getCachePath()">getCachePath</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::getKnownClasses()">getKnownClasses</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CAutoloader::getSilentDuplicatesInDifferentFiles()">getSilentDuplicatesInDifferentFiles</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CAutoloader::getSilentDuplicatesInSameFile()">getSilentDuplicatesInSameFile</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::includesAll()">includesAll</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::isRegistered()">isRegistered</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::register()">register</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::setCachePath()">setCachePath</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CAutoloader::setSilentDuplicatesInDifferentFiles()">setSilentDuplicatesInDifferentFiles</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CAutoloader::setSilentDuplicatesInSameFile()">setSilentDuplicatesInSameFile</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CAutoloader::unregister()">unregister</a></dd>
 </dl>
 <h3>Description</h3>
@@ -171,6 +177,54 @@
 <dd>private</dd>
 <dt>default</dt>
 <dd></dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Autoloader::$_silentDuplicatesInDifferentFile"></a><h4 class="property private">$_silentDuplicatesInDifferentFile<div class="to-top"><a href="#%5COktopus%5CAutoloader">jump to class</a></div>
+</h4>
+<div class="property">
+<code>bool <span class="highlight">$_silentDuplicatesInDifferentFile</span> = 'false'</code><p class="short-description">If the Oktopus's Autoloader will raise a warning while founding twice or more the same class in different files</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt></dt>
+<dd>bool<br><em>true will raise warnings, false won&amp;#039;t raise any error</em>
+</dd>
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd>false</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Autoloader::$_silentDuplicatesInSameFile"></a><h4 class="property private">$_silentDuplicatesInSameFile<div class="to-top"><a href="#%5COktopus%5CAutoloader">jump to class</a></div>
+</h4>
+<div class="property">
+<code>bool <span class="highlight">$_silentDuplicatesInSameFile</span> = 'false'</code><p class="short-description">If the Oktopus's Autoloader will waise a warning while founding twice or more the same class in the same file</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h4 class="info">
+<img src="images/arrow_right.gif"> Details</h4>
+<dl class="property-info">
+<dt></dt>
+<dd>bool<br><em>true will raise warnings, false won&amp;#039;t raise any error</em>
+</dd>
+<dt>visibility</dt>
+<dd>private</dd>
+<dt>default</dt>
+<dd>false</dd>
 <dt>final</dt>
 <dd>false</dd>
 <dt>static</dt>
@@ -558,6 +612,70 @@
 <div class="clear"></div>
 </div>
 </div>
+<a id="\Oktopus\Autoloader::getSilentDuplicatesInDifferentFiles()"></a><h4 class="method public">getSilentDuplicatesInDifferentFiles<div class="to-top"><a href="#Autoloader">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getSilentDuplicatesInDifferentFiles</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        bool</code><p class="short-description">Tells if the Oktopus's Autoloader will generate a warning while founding twice or more the same class in the same file</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>bool</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Autoloader::getSilentDuplicatesInSameFile()"></a><h4 class="method public">getSilentDuplicatesInSameFile<div class="to-top"><a href="#Autoloader">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">getSilentDuplicatesInSameFile</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        bool</code><p class="short-description">Tells if the Oktopus's Autoloader will generate a warning while founding twice or more the same class in the same file</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>bool</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
 <a id="\Oktopus\Autoloader::includesAll()"></a><h4 class="method public">includesAll<div class="to-top"><a href="#Autoloader">jump to class</a></div>
 </h4>
 <div class="method">
@@ -687,6 +805,90 @@
 <dd>false</dd>
 <dt>throws</dt>
 <dd><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloaderException">if the given path is not writable</a></dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Autoloader::setSilentDuplicatesInDifferentFiles()"></a><h4 class="method public">setSilentDuplicatesInDifferentFiles<div class="to-top"><a href="#Autoloader">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setSilentDuplicatesInDifferentFiles</span><span class="nb-faded-text">(
+           $pSilent
+          )
+        </span>
+        :
+        <a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader">\Oktopus\Autoloader</a></code><p class="short-description">Tells if the Oktopus's Autoloader should generate a warning while founding twice or more the same class in different files</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pSilent</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader">\Oktopus\Autoloader</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
+<dt></dt>
+<dd>bool<br><em>true will generate warnings, false won&amp;#039;t generate any error</em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Autoloader::setSilentDuplicatesInSameFile()"></a><h4 class="method public">setSilentDuplicatesInSameFile<div class="to-top"><a href="#Autoloader">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">setSilentDuplicatesInSameFile</span><span class="nb-faded-text">(
+          bool $pSilent
+          )
+        </span>
+        :
+        <a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader">\Oktopus\Autoloader</a></code><p class="short-description">Tells if the Oktopus's Autoloader should generate a warning while founding twice or more the same class in the same file</p>
+<div class="long-description"></div>
+<div class="api-section">
+<h5 class="arguments">Arguments</h5>
+<dl class="argument-info">
+<dt>$pSilent</dt>
+<dd>bool<br><em></em>
+</dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader">\Oktopus\Autoloader</a></dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>false</dd>
 </dl>
 <div class="clear"></div>
 </div>

@@ -30,8 +30,8 @@
 <!-- _Oktopus_Exception -->
 <g id="node3" class="node"><title>_Oktopus_Exception</title>
 <a xlink:href="_Oktopus_Engine.html" xlink:title="Exception" target="_parent">
-<polygon style="fill:none;stroke:black;" points="301,-393 225,-393 225,-357 301,-357 301,-393"/>
-<text text-anchor="middle" x="263" y="-372.1" style="font-family:Courier New;font-size:11.00;">Exception</text>
+<polygon style="fill:none;stroke:black;" points="301,-420 225,-420 225,-384 301,-384 301,-420"/>
+<text text-anchor="middle" x="263" y="-399.1" style="font-family:Courier New;font-size:11.00;">Exception</text>
 </a>
 </g>
 <!-- _Exception -->
@@ -41,7 +41,7 @@
 </g>
 <!-- _Oktopus_Exception&#45;&gt;_Exception -->
 <g id="edge3" class="edge"><title>_Oktopus_Exception-&gt;_Exception</title>
-<path style="fill:none;stroke:black;" d="M232,-357C218,-348 203,-335 194,-321 124,-217 206,-141 122,-48 120,-46 119,-45 117,-43"/>
+<path style="fill:none;stroke:black;" d="M243,-384C228,-368 206,-345 194,-321 135,-210 206,-141 122,-48 120,-46 119,-45 117,-43"/>
 <polygon style="fill:none;stroke:black;" points="118.441,-39.7969 108,-38 115.042,-45.916 118.441,-39.7969"/>
 </g>
 <!-- _Oktopus_ClassParserForPHP5_3 -->
@@ -59,14 +59,14 @@
 <!-- _Oktopus_AutoloaderException -->
 <g id="node5" class="node"><title>_Oktopus_AutoloaderException</title>
 <a xlink:href="_Oktopus_Engine.html" xlink:title="AutoloaderException" target="_parent">
-<polygon style="fill:none;stroke:black;" points="579,-420 435,-420 435,-384 579,-384 579,-420"/>
-<text text-anchor="middle" x="507" y="-399.1" style="font-family:Courier New;font-size:11.00;">AutoloaderException</text>
+<polygon style="fill:none;stroke:black;" points="579,-474 435,-474 435,-438 579,-438 579,-474"/>
+<text text-anchor="middle" x="507" y="-453.1" style="font-family:Courier New;font-size:11.00;">AutoloaderException</text>
 </a>
 </g>
 <!-- _Oktopus_AutoloaderException&#45;&gt;_Oktopus_Exception -->
 <g id="edge5" class="edge"><title>_Oktopus_AutoloaderException-&gt;_Oktopus_Exception</title>
-<path style="fill:none;stroke:black;" d="M435,-394C395,-389 347,-384 312,-380"/>
-<polygon style="fill:none;stroke:black;" points="312.299,-376.512 302,-379 311.602,-383.478 312.299,-376.512"/>
+<path style="fill:none;stroke:black;" d="M435,-440C395,-431 347,-420 312,-413"/>
+<polygon style="fill:none;stroke:black;" points="312.492,-409.529 302,-411 311.119,-416.393 312.492,-409.529"/>
 </g>
 <!-- _Oktopus_Autoloader -->
 <g id="node6" class="node"><title>_Oktopus_Autoloader</title>
@@ -82,15 +82,8 @@
 <text text-anchor="middle" x="507" y="-507.1" style="font-family:Courier New;font-size:11.00;">Engine</text>
 </a>
 </g>
-<!-- _Oktopus_UTF8 -->
-<g id="node8" class="node"><title>_Oktopus_UTF8</title>
-<a xlink:href="_Oktopus_utf8_utf8.html" xlink:title="UTF8" target="_parent">
-<polygon style="fill:none;stroke:black;" points="534,-474 480,-474 480,-438 534,-438 534,-474"/>
-<text text-anchor="middle" x="507" y="-453.1" style="font-family:Courier New;font-size:11.00;">UTF8</text>
-</a>
-</g>
 <!-- _Oktopus_ComponentDefinitionException -->
-<g id="node9" class="node"><title>_Oktopus_ComponentDefinitionException</title>
+<g id="node8" class="node"><title>_Oktopus_ComponentDefinitionException</title>
 <a xlink:href="_Oktopus_container_ComponentDefinition.class.html" xlink:title="ComponentDefinitionException" target="_parent">
 <polygon style="fill:none;stroke:black;" points="609,-258 405,-258 405,-222 609,-222 609,-258"/>
 <text text-anchor="middle" x="507" y="-237.1" style="font-family:Courier New;font-size:11.00;">ComponentDefinitionException</text>
@@ -101,45 +94,40 @@
 <path style="fill:none;stroke:black;" d="M404,-223C360,-214 308,-202 263,-186"/>
 </g>
 <!-- _Oktopus_ComponentDefinition -->
-<g id="node10" class="node"><title>_Oktopus_ComponentDefinition</title>
+<g id="node9" class="node"><title>_Oktopus_ComponentDefinition</title>
 <a xlink:href="_Oktopus_container_ComponentDefinition.class.html" xlink:title="ComponentDefinition" target="_parent">
-<polygon style="fill:none;stroke:black;" points="579,-366 435,-366 435,-330 579,-330 579,-366"/>
-<text text-anchor="middle" x="507" y="-345.1" style="font-family:Courier New;font-size:11.00;">ComponentDefinition</text>
+<polygon style="fill:none;stroke:black;" points="579,-420 435,-420 435,-384 579,-384 579,-420"/>
+<text text-anchor="middle" x="507" y="-399.1" style="font-family:Courier New;font-size:11.00;">ComponentDefinition</text>
 </a>
 </g>
-<!-- _Oktopus_ContainerXMLLoader -->
-<g id="node11" class="node"><title>_Oktopus_ContainerXMLLoader</title>
-<a xlink:href="_Oktopus_container_ContainerXMLLoader.class.html" xlink:title="ContainerXMLLoader" target="_parent">
-<polygon style="fill:none;stroke:black;" points="332,-582 194,-582 194,-546 332,-546 332,-582"/>
-<text text-anchor="middle" x="263" y="-561.1" style="font-family:Courier New;font-size:11.00;">ContainerXMLLoader</text>
+<!-- _Oktopus_ComponentReference -->
+<g id="node10" class="node"><title>_Oktopus_ComponentReference</title>
+<a xlink:href="_Oktopus_container_ComponentReference.class.html" xlink:title="ComponentReference" target="_parent">
+<polygon style="fill:none;stroke:black;" points="576,-366 438,-366 438,-330 576,-330 576,-366"/>
+<text text-anchor="middle" x="507" y="-345.1" style="font-family:Courier New;font-size:11.00;">ComponentReference</text>
 </a>
 </g>
 <!-- _Oktopus_IContainer -->
-<g id="node12" class="node"><title>_Oktopus_IContainer</title>
+<g id="node11" class="node"><title>_Oktopus_IContainer</title>
 <a xlink:href="_Oktopus_container_Container.class.html" xlink:title="IContainer" target="_parent">
 <polygon style="fill:none;stroke:black;" points="103,-609 19,-609 19,-573 103,-573 103,-609"/>
 <text text-anchor="middle" x="61" y="-588.1" style="font-family:Courier New;font-size:11.00;">IContainer</text>
 </a>
 </g>
-<!-- _Oktopus_ContainerXMLLoader&#45;&gt;_Oktopus_IContainer -->
-<g id="edge15" class="edge"><title>_Oktopus_ContainerXMLLoader-&gt;_Oktopus_IContainer</title>
-<path style="fill:none;stroke:black;stroke-dasharray:1,5;" d="M194,-573C168,-577 138,-581 113,-584"/>
-<polygon style="fill:none;stroke:black;" points="112.602,-580.522 103,-585 113.299,-587.488 112.602,-580.522"/>
-</g>
 <!-- _Oktopus_IMutableContainer -->
-<g id="node13" class="node"><title>_Oktopus_IMutableContainer</title>
+<g id="node12" class="node"><title>_Oktopus_IMutableContainer</title>
 <a xlink:href="_Oktopus_container_Container.class.html" xlink:title="IMutableContainer" target="_parent">
-<polygon style="fill:none;stroke:black;" points="328,-636 198,-636 198,-600 328,-600 328,-636"/>
-<text text-anchor="middle" x="263" y="-615.1" style="font-family:Courier New;font-size:11.00;">IMutableContainer</text>
+<polygon style="fill:none;stroke:black;" points="328,-582 198,-582 198,-546 328,-546 328,-582"/>
+<text text-anchor="middle" x="263" y="-561.1" style="font-family:Courier New;font-size:11.00;">IMutableContainer</text>
 </a>
 </g>
 <!-- _Oktopus_IMutableContainer&#45;&gt;_Oktopus_IContainer -->
 <g id="edge9" class="edge"><title>_Oktopus_IMutableContainer-&gt;_Oktopus_IContainer</title>
-<path style="fill:none;stroke:black;" d="M197,-609C170,-605 139,-601 113,-598"/>
-<polygon style="fill:none;stroke:black;" points="113.299,-594.512 103,-597 112.602,-601.478 113.299,-594.512"/>
+<path style="fill:none;stroke:black;" d="M197,-573C170,-577 139,-581 113,-584"/>
+<polygon style="fill:none;stroke:black;" points="112.602,-580.522 103,-585 113.299,-587.488 112.602,-580.522"/>
 </g>
 <!-- _Oktopus_ContainerException -->
-<g id="node14" class="node"><title>_Oktopus_ContainerException</title>
+<g id="node13" class="node"><title>_Oktopus_ContainerException</title>
 <a xlink:href="_Oktopus_container_Container.class.html" xlink:title="ContainerException" target="_parent">
 <polygon style="fill:none;stroke:black;" points="576,-150 438,-150 438,-114 576,-114 576,-150"/>
 <text text-anchor="middle" x="507" y="-129.1" style="font-family:Courier New;font-size:11.00;">ContainerException</text>
@@ -152,22 +140,34 @@
 <polygon style="fill:none;stroke:black;" points="114.56,-39.8631 104,-39 111.717,-46.2598 114.56,-39.8631"/>
 </g>
 <!-- _Oktopus_Container -->
-<g id="node15" class="node"><title>_Oktopus_Container</title>
+<g id="node14" class="node"><title>_Oktopus_Container</title>
 <a xlink:href="_Oktopus_container_Container.class.html" xlink:title="Container" target="_parent">
 <polygon style="fill:none;stroke:black;" points="545,-636 469,-636 469,-600 545,-600 545,-636"/>
 <text text-anchor="middle" x="507" y="-615.1" style="font-family:Courier New;font-size:11.00;">Container</text>
 </a>
 </g>
 <!-- _Oktopus_Container&#45;&gt;_Oktopus_IMutableContainer -->
-<g id="edge17" class="edge"><title>_Oktopus_Container-&gt;_Oktopus_IMutableContainer</title>
-<path style="fill:none;stroke:black;stroke-dasharray:1,5;" d="M468,-618C434,-618 381,-618 339,-618"/>
-<polygon style="fill:none;stroke:black;" points="339,-614.5 329,-618 339,-621.5 339,-614.5"/>
+<g id="edge15" class="edge"><title>_Oktopus_Container-&gt;_Oktopus_IMutableContainer</title>
+<path style="fill:none;stroke:black;stroke-dasharray:1,5;" d="M468,-609C434,-602 381,-590 339,-580"/>
+<polygon style="fill:none;stroke:black;" points="339.492,-576.529 329,-578 338.119,-583.393 339.492,-576.529"/>
 </g>
-<!-- _Oktopus_ComponentReference -->
-<g id="node16" class="node"><title>_Oktopus_ComponentReference</title>
-<a xlink:href="_Oktopus_container_ComponentReference.class.html" xlink:title="ComponentReference" target="_parent">
-<polygon style="fill:none;stroke:black;" points="576,-204 438,-204 438,-168 576,-168 576,-204"/>
-<text text-anchor="middle" x="507" y="-183.1" style="font-family:Courier New;font-size:11.00;">ComponentReference</text>
+<!-- _Oktopus_ContainerXMLLoader -->
+<g id="node15" class="node"><title>_Oktopus_ContainerXMLLoader</title>
+<a xlink:href="_Oktopus_container_ContainerXMLLoader.class.html" xlink:title="ContainerXMLLoader" target="_parent">
+<polygon style="fill:none;stroke:black;" points="332,-636 194,-636 194,-600 332,-600 332,-636"/>
+<text text-anchor="middle" x="263" y="-615.1" style="font-family:Courier New;font-size:11.00;">ContainerXMLLoader</text>
+</a>
+</g>
+<!-- _Oktopus_ContainerXMLLoader&#45;&gt;_Oktopus_IContainer -->
+<g id="edge17" class="edge"><title>_Oktopus_ContainerXMLLoader-&gt;_Oktopus_IContainer</title>
+<path style="fill:none;stroke:black;stroke-dasharray:1,5;" d="M194,-609C168,-606 138,-601 113,-598"/>
+<polygon style="fill:none;stroke:black;" points="113.299,-594.512 103,-597 112.602,-601.478 113.299,-594.512"/>
+</g>
+<!-- _Oktopus_Debug -->
+<g id="node16" class="node"><title>_Oktopus_Debug</title>
+<a xlink:href="_Oktopus_debug_Debug.class.html" xlink:title="Debug" target="_parent">
+<polygon style="fill:none;stroke:black;" points="534,-204 480,-204 480,-168 534,-168 534,-204"/>
+<text text-anchor="middle" x="507" y="-183.1" style="font-family:Courier New;font-size:11.00;">Debug</text>
 </a>
 </g>
 <!-- _Oktopus_ITimer -->
@@ -189,11 +189,11 @@
 <path style="fill:none;stroke:black;stroke-dasharray:1,5;" d="M480,-294C436,-294 352,-294 302,-294"/>
 <polygon style="fill:none;stroke:black;" points="302,-290.5 292,-294 302,-297.5 302,-290.5"/>
 </g>
-<!-- _Oktopus_Debug -->
-<g id="node19" class="node"><title>_Oktopus_Debug</title>
-<a xlink:href="_Oktopus_debug_Debug.class.html" xlink:title="Debug" target="_parent">
+<!-- _Oktopus_UTF8 -->
+<g id="node19" class="node"><title>_Oktopus_UTF8</title>
+<a xlink:href="_Oktopus_utf8_utf8.html" xlink:title="UTF8" target="_parent">
 <polygon style="fill:none;stroke:black;" points="534,-96 480,-96 480,-60 534,-60 534,-96"/>
-<text text-anchor="middle" x="507" y="-75.1" style="font-family:Courier New;font-size:11.00;">Debug</text>
+<text text-anchor="middle" x="507" y="-75.1" style="font-family:Courier New;font-size:11.00;">UTF8</text>
 </a>
 </g>
 </g>

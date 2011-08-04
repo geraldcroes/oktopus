@@ -76,6 +76,7 @@
 <dd><a class="method public" href="#%5COktopus%5CDebug::trace()">trace</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CDebug::unregisterErrorHandler()">unregisterErrorHandler</a></dd>
 <dd><a class="method public" href="#%5COktopus%5CDebug::unregisterExceptionHandler()">unregisterExceptionHandler</a></dd>
+<dd><a class="method public" href="#%5COktopus%5CDebug::vars()">vars</a></dd>
 </dl>
 <h3>Description</h3>
 <p class="short-description">Class that gives services to format errors messages / data / ...</p>
@@ -593,6 +594,40 @@ exception, and the stack trace of the error.</p>
         :
         </code><p class="short-description">Restores the old exception_handler before registerExceptionHandler was called</p>
 <div class="long-description"></div>
+<div class="api-section">
+<h5 class="info">
+<img src="images/arrow_right.gif"> Details</h5>
+<dl class="function-info">
+<dt>visibility</dt>
+<dd>public</dd>
+<dt>final</dt>
+<dd>false</dd>
+<dt>static</dt>
+<dd>true</dd>
+</dl>
+<div class="clear"></div>
+</div>
+</div>
+<a id="\Oktopus\Debug::vars()"></a><h4 class="method public">vars<div class="to-top"><a href="#Debug">jump to class</a></div>
+</h4>
+<div class="method">
+<code><span class="highlight">vars</span><span class="nb-faded-text">(
+          
+          )
+        </span>
+        :
+        string</code><p class="short-description">Returns an HTML string of debugging information about any number of
+variables, each wrapped in a "pre" tag:</p>
+<div class="long-description">// Displays the type and value of each variable
+    echo Debug::vars($foo, $bar, $baz);</div>
+<div class="api-section">
+<h5 class="output">Output</h5>
+<dl class="return-info">
+<dt>string</dt>
+<dd><em></em></dd>
+</dl>
+<div class="clear"></div>
+</div>
 <div class="api-section">
 <h5 class="info">
 <img src="images/arrow_right.gif"> Details</h5>
