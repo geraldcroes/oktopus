@@ -37,7 +37,7 @@
     <!-- ============================================  -->
     <!-- Target: Test                                  -->
     <!-- ============================================  -->
-    <target name="test" depends="update_atoum">
+    <target name="test">
         <atoum
                 atoumpharpath="../tests/mageekguy.atoum.phar"
                 phppath="/usr/bin/php"
@@ -48,6 +48,7 @@
                 showprogress="true"
                 showmemory="true"
                 showduration="true"
+                maxchildren="2"
                 >
             <fileset dir="../tests/container">
                 <include name="**/*.php" />
