@@ -385,8 +385,9 @@ class Autoloader
     private function _makeFileName ($pDirectoryName, $pRecurse)
     {
         if ($this->_cachePath !== null) {
-            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).
-                   substr(realpath($pDirectoryName).'index.php', (strtoupper(substr(php_uname(), 0, 3)) === "WIN") ? 3 : 1);
+/*            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).
+                   substr(realpath($pDirectoryName).'index.php', (strtoupper(substr(php_uname(), 0, 3)) === "WIN") ? 3 : 1);*/
+            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).strtr($pDirectoryName, './\\', '_~|').'.php';
         }
         return null;
     }
