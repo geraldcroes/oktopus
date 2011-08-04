@@ -22,6 +22,7 @@ class AtoumTask extends Task
     private $showmemory = true;
     private $showcodecoverage = true;
     private $showmissingcodecoverage = true;
+    private $maxchildren = false;
 
     /**
      * Nested creator, adds a set of files (nested fileset attribute).
@@ -141,6 +142,9 @@ class AtoumTask extends Task
             if ($this->phppath !== null){
                 $this->runner->setPhpPath($this->phppath);
             }
+            if ($this->maxchildren !== false){
+                $this->runner->setMaxChildrenNumber($this->maxchildren);
+            }
         }
 
         $this->runner->run();
@@ -233,5 +237,10 @@ class AtoumTask extends Task
     {
         $this->codecoveragereporturl = (string) $codecoveragereporturl;
         return $this;
+    }
+
+    public function setMaxchildren($maxchildren)
+    {
+        $this->maxchildren = (int) $maxchildren;
     }
 }
