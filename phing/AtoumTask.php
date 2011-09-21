@@ -88,7 +88,7 @@ class AtoumTask extends Task
             require_once $this->bootstrap;
         }
 
-        define('mageekguy\\atoum\\scripts\\runner\\autorun', true);
+        define('mageekguy\\atoum\\autorun', true);
         if (!empty($this->atoumpharpath)) {
             require_once('phar://'.$this->atoumpharpath.'/classes/autoloader.php');
         } elseif (!empty($this->atoumautoloaderpath)){
