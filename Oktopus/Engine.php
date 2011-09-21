@@ -2,10 +2,11 @@
 /**
  * Oktopus Engine
  * 
- * @author "Gérald Croës <gerald@croes.org>"
+ * @author    Gérald Croës <gerald@croes.org>
  * @copyright 2010-2011 Gérald Croës <gerald@croes.org>
- * @link http://www.oktopus-project.org
- * @license GNU Lesser General Public License see LICENCE file or http://www.gnu.org/licenses/lgpl.html
+ * @license   GNU Lesser General Public License see LICENCE file or http://www.gnu.org/licenses/lgpl.html
+ * @version   $Id$
+ * @link      http://www.oktopus-project.org
  */
 namespace Oktopus;
 
@@ -38,10 +39,11 @@ interface IClassParser
  * <?php
  *    $parser = new CodeParserForPHP5_3();
  *    $classes = $parser->find('/path/to/file/name.php');
- *    //$classes is now an array with every classes and interfaces declared in name.php
+ *    // $classes is now an array with every classes and interfaces declared
+ *    // in name.php
  * ?>
  * </code>
- *
+ *  
  * @see IClassParser
  * @package Oktopus
  */
@@ -306,7 +308,7 @@ class Autoloader
         }
 
         //We're gonna remove old files from classes.
-        if (count($toRemoveFiles)){
+        if (count($toRemoveFiles)) {
             $listHasChanged = true;
             foreach ($toRemoveFiles as $fileName) {
                 if (isset($classes[$fileName])) {
@@ -331,7 +333,7 @@ class Autoloader
                         if (!in_array($fileName, $allClasses[$className], true)) {
                             $allClasses[$className][] = $fileName;
                         } else {
-                            if ($this->getSilentDuplicatesInSameFile() === false){
+                            if ($this->getSilentDuplicatesInSameFile() === false) {
                                 trigger_error(
                                     "The class $className was found twice or more in the file ".
                                     "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
@@ -342,7 +344,7 @@ class Autoloader
                         if ($allClasses[$className] !== $fileName) {
                             $allClasses[$className] = array($allClasses[$className], $fileName);
                         } else {
-                            if ($this->getSilentDuplicatesInSameFile() === false){
+                            if ($this->getSilentDuplicatesInSameFile() === false) {
                                 trigger_error(
                                     "The class $className was found twice or more in the file ".
                                     "$fileName (PHP may trigger a FATAL ERROR while loading the file)", E_USER_WARNING
@@ -357,7 +359,7 @@ class Autoloader
         }
 
         //Will adress warnings if a class was found in multiple files.
-        if ($this->getSilentDuplicatesInDifferentFiles() === false){
+        if ($this->getSilentDuplicatesInDifferentFiles() === false) {
             foreach ($allClasses as $className=>$files) {
                 if (is_array($files)) {
                     $countFiles = count($files);
