@@ -117,6 +117,16 @@ class AutoloaderException extends Exception
 class Autoloader
 {
     /**
+     * The name of the index in the cache for classes
+     */
+    const CLASSES_INDEX = 'c';
+
+    /**
+     * The name of the index in the cache for timestamps
+     */
+    const TIMESTAMP_INDEX = 't';
+
+    /**
      * Construct
      * 
      * @param string       $pTmpPath     the path where to store the cache files
@@ -241,7 +251,7 @@ class Autoloader
     private function _loadDirectoryClasses ($pDirectoryName, $pRecurse, $pForce = false, $pCheckFiles = true)
     {
         //Can we find the directory index ?
-        $directoryIndex = array();
+        $classes = array();
         $listHasChanged = false;
 
         //If we did not asks to force the autoload to look for classes, we'll include the cache if it exists
@@ -271,10 +281,10 @@ class Autoloader
 
         //We iterate in the directories to find its files...
         foreach ($directories as $fileName) {
-            if (!array_key_exists($fileName->getPathName(), $directoryIndex)) {
+            if (!array_key_exists($fileName->getPathName(), $classes)) {
                 //The file is not registered in the directory index, we have to analyze the new file
                 $haveToAnalyzeFile = true;
-            } elseif ($directoryIndex[$fileName->getPathName()] < $fileName->getMTime()) {
+            } elseif ($classes[$fileName->getPathName()][self::TIMESTAMP_INDEX] < $fileName->getMTime()) {
                 //The file is not up to date, we have to analyze.
                 $haveToAnalyzeFile = true;
             } else {
@@ -284,8 +294,8 @@ class Autoloader
 
             //So we have to analyze the file ?
             if ($haveToAnalyzeFile) {
-                $directoryIndex[$fileName->getPathName()] = $fileName->getMTime();
-                $classes[$fileName->getPathName()]= $this->_classHunter->find($fileName->getPathName());
+                $classes[$fileName->getPathName()][self::CLASSES_INDEX] = $this->_classHunter->find($fileName->getPathName());
+                $classes[$fileName->getPathName()][self::TIMESTAMP_INDEX] = $fileName->getMTime();
                 $analyzedFiles[$fileName->getPathName()] = true;
                 $listHasChanged = true;
             } else {
@@ -296,7 +306,7 @@ class Autoloader
         //if we had to check the content of the index, we'll now have to iterate through the old index to find
         // if there are no missing classes.
         $toRemoveFiles = array();
-        foreach ($directoryIndex as $filePathName=>$fileMTime) {
+        foreach ($classes as $filePathName=>$informations) {
             //The file has just been checked or is up to date ?
             if (isset ($analyzedFiles[$filePathName])) {
                 //nothing to do, the file was found in the directories
@@ -314,7 +324,7 @@ class Autoloader
                 if (isset($classes[$fileName])) {
                     unset($classes[$fileName]);
                 }
-                unset($directoryIndex[$fileName]);
+                unset($classes[$fileName]);
             }
         }
 
@@ -326,7 +336,7 @@ class Autoloader
         //now we're gonna make a direct access array to get the files.
         $allClasses = array ();
         foreach ($classes as $fileName=>$classesInFileName) {
-            foreach ($classesInFileName as $className) {
+            foreach ($classesInFileName[self::CLASSES_INDEX] as $className) {
                 $className = strtolower($className);
                 if (isset($allClasses[$className])) {
                     if (is_array($allClasses[$className])) {
@@ -372,7 +382,7 @@ class Autoloader
             }
         }
 
-        $this->_saveInCache($directoryIndex, $classes, $allClasses, $cacheFileName);
+        $this->_saveInCache($classes, $allClasses, $cacheFileName);
         $this->_directoryClasses[$pDirectoryName] = $allClasses;
     }
 
@@ -398,20 +408,18 @@ class Autoloader
      * Saves the classes in the cache path
      * 
      * If the cache file cannot be created, will launch an exception
-     * 
-     * @param array  $directoryIndex  the path contained in the directory
+     *
      * @param array  $classes         classes by files $classes[filename] = array of classes
      * @param array  $allClasses      all classes by names $classname[name] = array of files 
      * @param string $fileName        the file name we will write the cache data in      
      *
      * @throws AutoloaderException
      */
-    private function _saveIncache ($directoryIndex, $classes, $allClasses, $fileName)
+    private function _saveIncache ($classes, $allClasses, $fileName)
     {
         if ($fileName !== null) {
             $toSave = '<?php $classes = '.var_export($classes, true).';';
             $toSave .= '$allClasses = '.var_export($allClasses, true).';';
-            $toSave .= '$directoryIndex = '.var_export($directoryIndex, true).';';
 
             if (!file_exists(dirname($fileName))) {
                 if (@mkdir(dirname($fileName), 0755, true) === false) {
