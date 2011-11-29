@@ -10,8 +10,8 @@ namespace Oktopus;
  */
 function _trim($str, $charlist = NULL)
 {
-	if ($charlist === NULL)
-		return trim($str);
+    if ($charlist === NULL)
+        return trim($str);
 
-	return UTF8::ltrim(UTF8::rtrim($str, $charlist), $charlist);
+    return UTF8::ltrim(UTF8::rtrim($str, $charlist), $charlist);
 }
