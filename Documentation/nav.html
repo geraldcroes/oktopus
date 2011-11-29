@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml"><head><title>API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/black-tie/jquery-ui-1.8.2.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>API Documentation</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta><link rel="stylesheet" href="css/jquery-ui.css" type="text/css"></link><link rel="stylesheet" href="css/docblox/jquery-ui-1.8.16.custom.css" type="text/css"></link><link rel="stylesheet" href="css/jquery.treeview.css" type="text/css"></link><link rel="stylesheet" href="css/theme.css" type="text/css"></link><script type="text/javascript" src="js/jquery-1.4.2.min.js"></script><script type="text/javascript" src="js/jquery-ui-1.8.2.custom.min.js"></script><script type="text/javascript" src="js/jquery.cookie.js"></script><script type="text/javascript" src="js/jquery.treeview.js"></script><script type="text/javascript">
             $(document).ready(function() {
                 $(".filetree").treeview({
                     collapsed: true,
@@ -13,233 +13,293 @@
 
                 $(".tabs").tabs();
             });
-        </script></head><body><div xmlns="" id="accordion">
-<h1><a href="#">Namespaces</a></h1>
-<div style="padding: 0px;"><ul id="namespaces-" class="filetree"><li class="closed">
+        </script></head><body><script xmlns="" type="text/javascript" src="js/sidebar.js"></script><div xmlns="" id="sidebar">
+<div id="sidebar-header">
+<h1>API Documentation</h1>
+<div style="clear: both"></div>
+</div>
+<div id="sidebar-nav">
+<h3 id="sidebar-dashboard">
+<img class="icon" src="css/docblox/images/icons/dashboard.png" alt="Dashboard"><a href="content.html" class="link" target="content">Dashboard</a>
+</h3>
+<div style="display: none"></div>
+<h3 id="sidebar-files">
+<img src="css/docblox/images/icons/files.png" alt="Files"><a href="#files">Files</a>
+</h3>
+<div class="sidebar-section">
+<div class="search-bar">
+<a href="#" onclick="$(this).parent().next().find('.collapsable-hitarea').click(); return false;"><img src="images/collapse_all.png" title="Collapse all" alt="Collapse all"></a><a href="#" onclick="$(this).parent().next().find('.expandable-hitarea').click(); return false;"><img src="images/expand_all.png" title="Expand all" alt="Expand all"></a><div><input type="text" onkeyup="tree_search(this);"></div>
+</div>
+<ul class="sidebar-nav-tree">
+<li class="closed">
+<span class="file"><a href="db_Engine.html" target="content">Engine.php</a></span><ul id="files_a84ab73b7911190855298d6db060b042" class="filetree">
+<li><span class="interface"><a href="db_Engine.html#%5COktopus%5CIClassParser" target="content">IClassParser<br></a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CException" target="content">Exception<br></a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CClassParserForPHP5_3" target="content">ClassParserForPHP5_3<br></a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CAutoloaderException" target="content">AutoloaderException<br></a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CAutoloader" target="content">Autoloader<br></a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CEngine" target="content">Engine<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_container_ComponentDefinition.class.html" target="content">container/ComponentDefinition.class.php</a></span><ul id="files_ed03831bcf481a5294e705f64ef48e9a" class="filetree">
+<li><span class="class"><a href="db_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinitionException" target="content">ComponentDefinitionException<br></a></span></li>
+<li><span class="class"><a href="db_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinition" target="content">ComponentDefinition<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_container_ComponentReference.class.html" target="content">container/ComponentReference.class.php</a></span><ul id="files_a5ef95fd7b0121a10bf109fa4820c91e" class="filetree"><li><span class="class"><a href="db_container_ComponentReference.class.html#%5COktopus%5CComponentReference" target="content">ComponentReference<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_container_Container.class.html" target="content">container/Container.class.php</a></span><ul id="files_51a3f153e087ff970512074a52b4a1bb" class="filetree">
+<li><span class="interface"><a href="db_container_Container.class.html#%5COktopus%5CIContainer" target="content">IContainer<br></a></span></li>
+<li><span class="interface"><a href="db_container_Container.class.html#%5COktopus%5CIMutableContainer" target="content">IMutableContainer<br></a></span></li>
+<li><span class="class"><a href="db_container_Container.class.html#%5COktopus%5CContainerException" target="content">ContainerException<br></a></span></li>
+<li><span class="class"><a href="db_container_Container.class.html#%5COktopus%5CContainer" target="content">Container<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_container_ContainerXMLLoader.class.html" target="content">container/ContainerXMLLoader.class.php</a></span><ul id="files_698d4709e80829fad2173258f6968acb" class="filetree"><li><span class="class"><a href="db_container_ContainerXMLLoader.class.html#%5COktopus%5CContainerXMLLoader" target="content">ContainerXMLLoader<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_debug_Debug.class.html" target="content">debug/Debug.class.php</a></span><ul id="files_168595205f5aeb7e0914777c7cde03ad" class="filetree"><li><span class="class"><a href="db_debug_Debug.class.html#%5COktopus%5CDebug" target="content">Debug<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_debug_error.view.html" target="content">debug/error.view.php</a></span><ul id="files_4342251657cddd7d25a4ec612eaf13f6" class="filetree"><li><span class="function"><a href="db_debug_error.view.html#::__()" target="content">__<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_mvc_controllers_controllers.class.html" target="content">mvc/controllers/controllers.class.php</a></span><ul id="files_6a321b36e2cb82ddfd51ef8b2455407f" class="filetree"><li><span class="class"><a href="db_mvc_controllers_controllers.class.html#%5COktopus%5CMVC%5CFrontController" target="content">FrontController<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_proxy_ProxyGenerator.class.html" target="content">proxy/ProxyGenerator.class.php</a></span><ul id="files_51e45198e8c2314347733d8932134adf" class="filetree">
+<li><span class="class"><a href="db_proxy_ProxyGenerator.class.html#%5COktopus%5CProxyGenerator" target="content">ProxyGenerator<br></a></span></li>
+<li><span class="class"><a href="db_proxy_ProxyGenerator.class.html#%5COktopus%5CProxyGeneratorException" target="content">ProxyGeneratorException<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_proxy_inheritenceproxy.template.html" target="content">proxy/inheritenceproxy.template.php</a></span><ul id="files_e36d7085aeea5c92c698386d67eec4f5" class="filetree"></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_timer_Timer.class.html" target="content">timer/Timer.class.php</a></span><ul id="files_943e45b4fe4850a9fb9561d4715e2dc6" class="filetree">
+<li><span class="interface"><a href="db_timer_Timer.class.html#%5COktopus%5CITimer" target="content">ITimer<br></a></span></li>
+<li><span class="class"><a href="db_timer_Timer.class.html#%5COktopus%5CTimer" target="content">Timer<br></a></span></li>
+</ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_from_unicode.html" target="content">utf8/from_unicode.php</a></span><ul id="files_4d7c922ab78ee9c6386a2e1adcb198d0" class="filetree"><li><span class="function"><a href="db_utf8_from_unicode.html#::_from_unicode()" target="content">_from_unicode<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_ltrim.html" target="content">utf8/ltrim.php</a></span><ul id="files_50196067be7133ab114f267e8786a8a3" class="filetree"><li><span class="function"><a href="db_utf8_ltrim.html#::_ltrim()" target="content">_ltrim<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_ord.html" target="content">utf8/ord.php</a></span><ul id="files_677330d3c5d376a338df3e48d63c1c8f" class="filetree"><li><span class="function"><a href="db_utf8_ord.html#::_ord()" target="content">_ord<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_rtrim.html" target="content">utf8/rtrim.php</a></span><ul id="files_2f453dbf3aba58e296130300bb5e85c6" class="filetree"><li><span class="function"><a href="db_utf8_rtrim.html#::_rtrim()" target="content">_rtrim<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_str_ireplace.html" target="content">utf8/str_ireplace.php</a></span><ul id="files_8b8b59ffff8fe4b0131dbb749ec0b4a5" class="filetree"><li><span class="function"><a href="db_utf8_str_ireplace.html#::_str_ireplace()" target="content">_str_ireplace<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_str_pad.html" target="content">utf8/str_pad.php</a></span><ul id="files_2fae8e606e54da6c40ce6c3b72c6ef9d" class="filetree"><li><span class="function"><a href="db_utf8_str_pad.html#::_str_pad()" target="content">_str_pad<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_str_split.html" target="content">utf8/str_split.php</a></span><ul id="files_2fa7096d8ae06aa241a513543d649209" class="filetree"><li><span class="function"><a href="db_utf8_str_split.html#::_str_split()" target="content">_str_split<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strcasecmp.html" target="content">utf8/strcasecmp.php</a></span><ul id="files_6ffc798ad168a4cb9675ef48cf9aa2d3" class="filetree"><li><span class="function"><a href="db_utf8_strcasecmp.html#::_strcasecmp()" target="content">_strcasecmp<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strcspn.html" target="content">utf8/strcspn.php</a></span><ul id="files_2becdd82aed53c701a8499a82d24c196" class="filetree"><li><span class="function"><a href="db_utf8_strcspn.html#::_strcspn()" target="content">_strcspn<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_stristr.html" target="content">utf8/stristr.php</a></span><ul id="files_0c59281ee2118bc560533a06534f8d83" class="filetree"><li><span class="function"><a href="db_utf8_stristr.html#::_stristr()" target="content">_stristr<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strlen.html" target="content">utf8/strlen.php</a></span><ul id="files_41a38e59aa10965ea3e4ca954973cbe6" class="filetree"><li><span class="function"><a href="db_utf8_strlen.html#::_strlen()" target="content">_strlen<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strpos.html" target="content">utf8/strpos.php</a></span><ul id="files_78ab99bfb63d5f904f1e0e411f8b9f07" class="filetree"><li><span class="function"><a href="db_utf8_strpos.html#::_strpos()" target="content">_strpos<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strrev.html" target="content">utf8/strrev.php</a></span><ul id="files_cf7ccef145fa910ac00911108b9cf15a" class="filetree"><li><span class="function"><a href="db_utf8_strrev.html#::_strrev()" target="content">_strrev<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strrpos.html" target="content">utf8/strrpos.php</a></span><ul id="files_ffd710db62fb48a8a8e49feadccbbbcd" class="filetree"><li><span class="function"><a href="db_utf8_strrpos.html#::_strrpos()" target="content">_strrpos<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strspn.html" target="content">utf8/strspn.php</a></span><ul id="files_34e8196251ce483b489fd249dbf4311e" class="filetree"><li><span class="function"><a href="db_utf8_strspn.html#::_strspn()" target="content">_strspn<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strtolower.html" target="content">utf8/strtolower.php</a></span><ul id="files_a1733581d565cde98c1cd86dcf8073ef" class="filetree"><li><span class="function"><a href="db_utf8_strtolower.html#::_strtolower()" target="content">_strtolower<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_strtoupper.html" target="content">utf8/strtoupper.php</a></span><ul id="files_585785fd4c657dc9da6f5df5b0de48a3" class="filetree"><li><span class="function"><a href="db_utf8_strtoupper.html#::_strtoupper()" target="content">_strtoupper<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_substr.html" target="content">utf8/substr.php</a></span><ul id="files_c1436bab90f1b832764861785ae6daf2" class="filetree"><li><span class="function"><a href="db_utf8_substr.html#::_substr()" target="content">_substr<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_substr_replace.html" target="content">utf8/substr_replace.php</a></span><ul id="files_c93233649bc931404efd160f746ef6cc" class="filetree"><li><span class="function"><a href="db_utf8_substr_replace.html#::_substr_replace()" target="content">_substr_replace<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_to_unicode.html" target="content">utf8/to_unicode.php</a></span><ul id="files_d801b72b0d58638813cf993d5f90e047" class="filetree"><li><span class="function"><a href="db_utf8_to_unicode.html#::_to_unicode()" target="content">_to_unicode<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_transliterate_to_ascii.html" target="content">utf8/transliterate_to_ascii.php</a></span><ul id="files_1919959a8b43a3c63a3de77303e15d4a" class="filetree"><li><span class="function"><a href="db_utf8_transliterate_to_ascii.html#::_transliterate_to_ascii()" target="content">_transliterate_to_ascii<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_trim.html" target="content">utf8/trim.php</a></span><ul id="files_a07bf3007b0ad7cfa3b40d1ab36d666a" class="filetree"><li><span class="function"><a href="db_utf8_trim.html#::_trim()" target="content">_trim<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_ucfirst.html" target="content">utf8/ucfirst.php</a></span><ul id="files_54fa6ce41b3b1f4a516228af967a5c72" class="filetree"><li><span class="function"><a href="db_utf8_ucfirst.html#::_ucfirst()" target="content">_ucfirst<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_ucwords.html" target="content">utf8/ucwords.php</a></span><ul id="files_52a19bc6ef69de997a7fa40195b4392b" class="filetree"><li><span class="function"><a href="db_utf8_ucwords.html#::_ucwords()" target="content">_ucwords<br></a></span></li></ul>
+</li>
+<li class="closed">
+<span class="file"><a href="db_utf8_utf8.html" target="content">utf8/utf8.php</a></span><ul id="files_e50697a61cec5b3263cb86e2fe1f174a" class="filetree"><li><span class="class"><a href="db_utf8_utf8.html#%5COktopus%5CUTF8" target="content">UTF8<br></a></span></li></ul>
+</li>
+</ul>
+</div>
+<h3 id="sidebar-packages">
+<img src="css/docblox/images/icons/packages.png" alt="Packages"><a href="#packages">Packages</a>
+</h3>
+<div class="sidebar-section sidebar-tree">
+<div class="search-bar">
+<a href="#" onclick="$(this).parent().next().find('.collapsable-hitarea').click(); return false;"><img src="images/collapse_all.png" title="Collapse all" alt="Collapse all"></a><a href="#" onclick="$(this).parent().next().find('.expandable-hitarea').click(); return false;"><img src="images/expand_all.png" title="Expand all" alt="Expand all"></a><div><input type="text" onkeyup="tree_search(this);"></div>
+</div>
+<ul class="sidebar-nav-tree">
+<li class="closed">
+<span class="folder">Default</span><ul>
+<li><span class="function"><a href="db_debug_error.view.html#::__()" target="content">__</a></span></li>
+<li><span class="function"><a href="db_utf8_from_unicode.html#::_from_unicode()" target="content">_from_unicode</a></span></li>
+<li><span class="function"><a href="db_utf8_ltrim.html#::_ltrim()" target="content">_ltrim</a></span></li>
+<li><span class="function"><a href="db_utf8_ord.html#::_ord()" target="content">_ord</a></span></li>
+<li><span class="function"><a href="db_utf8_rtrim.html#::_rtrim()" target="content">_rtrim</a></span></li>
+<li><span class="function"><a href="db_utf8_str_ireplace.html#::_str_ireplace()" target="content">_str_ireplace</a></span></li>
+<li><span class="function"><a href="db_utf8_str_pad.html#::_str_pad()" target="content">_str_pad</a></span></li>
+<li><span class="function"><a href="db_utf8_str_split.html#::_str_split()" target="content">_str_split</a></span></li>
+<li><span class="function"><a href="db_utf8_strcasecmp.html#::_strcasecmp()" target="content">_strcasecmp</a></span></li>
+<li><span class="function"><a href="db_utf8_strcspn.html#::_strcspn()" target="content">_strcspn</a></span></li>
+<li><span class="function"><a href="db_utf8_stristr.html#::_stristr()" target="content">_stristr</a></span></li>
+<li><span class="function"><a href="db_utf8_strlen.html#::_strlen()" target="content">_strlen</a></span></li>
+<li><span class="function"><a href="db_utf8_strpos.html#::_strpos()" target="content">_strpos</a></span></li>
+<li><span class="function"><a href="db_utf8_strrev.html#::_strrev()" target="content">_strrev</a></span></li>
+<li><span class="function"><a href="db_utf8_strrpos.html#::_strrpos()" target="content">_strrpos</a></span></li>
+<li><span class="function"><a href="db_utf8_strspn.html#::_strspn()" target="content">_strspn</a></span></li>
+<li><span class="function"><a href="db_utf8_strtolower.html#::_strtolower()" target="content">_strtolower</a></span></li>
+<li><span class="function"><a href="db_utf8_strtoupper.html#::_strtoupper()" target="content">_strtoupper</a></span></li>
+<li><span class="function"><a href="db_utf8_substr.html#::_substr()" target="content">_substr</a></span></li>
+<li><span class="function"><a href="db_utf8_substr_replace.html#::_substr_replace()" target="content">_substr_replace</a></span></li>
+<li><span class="function"><a href="db_utf8_to_unicode.html#::_to_unicode()" target="content">_to_unicode</a></span></li>
+<li><span class="function"><a href="db_utf8_transliterate_to_ascii.html#::_transliterate_to_ascii()" target="content">_transliterate_to_ascii</a></span></li>
+<li><span class="function"><a href="db_utf8_trim.html#::_trim()" target="content">_trim</a></span></li>
+<li><span class="function"><a href="db_utf8_ucfirst.html#::_ucfirst()" target="content">_ucfirst</a></span></li>
+<li><span class="function"><a href="db_utf8_ucwords.html#::_ucwords()" target="content">_ucwords</a></span></li>
+<li><span class="class"><a href="db_mvc_controllers_controllers.class.html#%5COktopus%5CMVC%5CFrontController" target="content">FrontController</a></span></li>
+<li><span class="class"><a href="db_proxy_ProxyGenerator.class.html#%5COktopus%5CProxyGenerator" target="content">ProxyGenerator</a></span></li>
+<li><span class="class"><a href="db_proxy_ProxyGenerator.class.html#%5COktopus%5CProxyGeneratorException" target="content">ProxyGeneratorException</a></span></li>
+<li><span class="class"><a href="db_utf8_utf8.html#%5COktopus%5CUTF8" target="content">UTF8</a></span></li>
+</ul>
+</li>
+<li class="closed">
 <span class="folder">Oktopus</span><ul>
-<li><span class="function"><a href="_Oktopus_debug_error.view.html#::__()" target="content">__<br><small></small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_from_unicode.html#::_from_unicode()" target="content">_from_unicode<br><small>UTF8::from_unicode</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_ltrim.html#::_ltrim()" target="content">_ltrim<br><small>UTF8::ltrim</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_ord.html#::_ord()" target="content">_ord<br><small>UTF8::ord</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_rtrim.html#::_rtrim()" target="content">_rtrim<br><small>UTF8::rtrim</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_str_ireplace.html#::_str_ireplace()" target="content">_str_ireplace<br><small>UTF8::str_ireplace</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_str_pad.html#::_str_pad()" target="content">_str_pad<br><small>UTF8::str_pad</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_str_split.html#::_str_split()" target="content">_str_split<br><small>UTF8::str_split</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strcasecmp.html#::_strcasecmp()" target="content">_strcasecmp<br><small>UTF8::strcasecmp</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strcspn.html#::_strcspn()" target="content">_strcspn<br><small>UTF8::strcspn</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_stristr.html#::_stristr()" target="content">_stristr<br><small>UTF8::stristr</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strlen.html#::_strlen()" target="content">_strlen<br><small>UTF8::strlen</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strpos.html#::_strpos()" target="content">_strpos<br><small>UTF8::strpos</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strrev.html#::_strrev()" target="content">_strrev<br><small>UTF8::strrev</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strrpos.html#::_strrpos()" target="content">_strrpos<br><small>UTF8::strrpos</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strspn.html#::_strspn()" target="content">_strspn<br><small>UTF8::strspn</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strtolower.html#::_strtolower()" target="content">_strtolower<br><small>UTF8::strtolower</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_strtoupper.html#::_strtoupper()" target="content">_strtoupper<br><small>UTF8::strtoupper</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_substr.html#::_substr()" target="content">_substr<br><small>UTF8::substr</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_substr_replace.html#::_substr_replace()" target="content">_substr_replace<br><small>UTF8::substr_replace</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_to_unicode.html#::_to_unicode()" target="content">_to_unicode<br><small>UTF8::to_unicode</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_transliterate_to_ascii.html#::_transliterate_to_ascii()" target="content">_transliterate_to_ascii<br><small>UTF8::transliterate_to_ascii</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_trim.html#::_trim()" target="content">_trim<br><small>UTF8::trim</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_ucfirst.html#::_ucfirst()" target="content">_ucfirst<br><small>UTF8::ucfirst</small></a></span></li>
-<li><span class="function"><a href="_Oktopus_utf8_ucwords.html#::_ucwords()" target="content">_ucwords<br><small>UTF8::ucwords</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader" target="content">Autoloader<br><small>Main Oktopus Autoloader</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloaderException" target="content">AutoloaderException<br><small>Base exception for Autolaoding errors</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CClassParserForPHP5_3" target="content">ClassParserForPHP5_3<br><small>Algorithm to find classes in a given file</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinition" target="content">ComponentDefinition<br><small>Component definition</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinitionException" target="content">ComponentDefinitionException<br><small>Base exception for container component definition exception</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_ComponentReference.class.html#%5COktopus%5CComponentReference" target="content">ComponentReference<br><small>The component reference.</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CContainer" target="content">Container<br><small>Container</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CContainerException" target="content">ContainerException<br><small>Base Exception class for container operations</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_ContainerXMLLoader.class.html#%5COktopus%5CContainerXMLLoader" target="content">ContainerXMLLoader<br><small></small></a></span></li>
-<li><span class="class"><a href="_Oktopus_debug_Debug.class.html#%5COktopus%5CDebug" target="content">Debug<br><small>Class that gives services to format errors messages / data / ...</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CEngine" target="content">Engine<br><small>Main base class for Oktopus</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CException" target="content">Exception<br><small>Base Oktopus Exception</small></a></span></li>
-<li><span class="interface"><a href="_Oktopus_Engine.html#%5COktopus%5CIClassParser" target="content">IClassParser<br><small>Interface for class parsing</small></a></span></li>
-<li><span class="interface"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIContainer" target="content">IContainer<br><small>Interface for Oktopus Containers</small></a></span></li>
-<li><span class="interface"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIMutableContainer" target="content">IMutableContainer<br><small>Interface for containers where you can add / update definitions</small></a></span></li>
-<li><span class="interface"><a href="_Oktopus_timer_Timer.class.html#%5COktopus%5CITimer" target="content">ITimer<br><small>A simple timer interface</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_timer_Timer.class.html#%5COktopus%5CTimer" target="content">Timer<br><small>This class is an easy way to measure the elapsed time beetween two operations</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_utf8_utf8.html#%5COktopus%5CUTF8" target="content">UTF8<br><small>A port of Kohana_UTF8 (http://kohanaframework.org/)
-wich is a port of [phputf8](http://phputf8.sourceforge.net/) to a unified set
-of files. Provides multi-byte aware replacement string functions.</small></a></span></li>
-</ul>
-</li></ul></div>
-<h1><a href="#">Packages</a></h1>
-<div style="padding: 0px;"><ul id="packages-" class="filetree">
-<li class="closed">
-<span class="folder">Default</span><ul id="packages_" class="filetree">
-<li class="closed"><span class="function"><a href="_Oktopus_debug_error.view.html#::__()" target="content">__<br><small></small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_from_unicode.html#::_from_unicode()" target="content">_from_unicode<br><small>UTF8::from_unicode</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_ltrim.html#::_ltrim()" target="content">_ltrim<br><small>UTF8::ltrim</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_ord.html#::_ord()" target="content">_ord<br><small>UTF8::ord</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_rtrim.html#::_rtrim()" target="content">_rtrim<br><small>UTF8::rtrim</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_str_ireplace.html#::_str_ireplace()" target="content">_str_ireplace<br><small>UTF8::str_ireplace</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_str_pad.html#::_str_pad()" target="content">_str_pad<br><small>UTF8::str_pad</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_str_split.html#::_str_split()" target="content">_str_split<br><small>UTF8::str_split</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strcasecmp.html#::_strcasecmp()" target="content">_strcasecmp<br><small>UTF8::strcasecmp</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strcspn.html#::_strcspn()" target="content">_strcspn<br><small>UTF8::strcspn</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_stristr.html#::_stristr()" target="content">_stristr<br><small>UTF8::stristr</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strlen.html#::_strlen()" target="content">_strlen<br><small>UTF8::strlen</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strpos.html#::_strpos()" target="content">_strpos<br><small>UTF8::strpos</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strrev.html#::_strrev()" target="content">_strrev<br><small>UTF8::strrev</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strrpos.html#::_strrpos()" target="content">_strrpos<br><small>UTF8::strrpos</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strspn.html#::_strspn()" target="content">_strspn<br><small>UTF8::strspn</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strtolower.html#::_strtolower()" target="content">_strtolower<br><small>UTF8::strtolower</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_strtoupper.html#::_strtoupper()" target="content">_strtoupper<br><small>UTF8::strtoupper</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_substr.html#::_substr()" target="content">_substr<br><small>UTF8::substr</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_substr_replace.html#::_substr_replace()" target="content">_substr_replace<br><small>UTF8::substr_replace</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_to_unicode.html#::_to_unicode()" target="content">_to_unicode<br><small>UTF8::to_unicode</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_transliterate_to_ascii.html#::_transliterate_to_ascii()" target="content">_transliterate_to_ascii<br><small>UTF8::transliterate_to_ascii</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_trim.html#::_trim()" target="content">_trim<br><small>UTF8::trim</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_ucfirst.html#::_ucfirst()" target="content">_ucfirst<br><small>UTF8::ucfirst</small></a></span></li>
-<li class="closed"><span class="function"><a href="_Oktopus_utf8_ucwords.html#::_ucwords()" target="content">_ucwords<br><small>UTF8::ucwords</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_utf8_utf8.html#%5COktopus%5CUTF8" target="content">UTF8<br><small>A port of Kohana_UTF8 (http://kohanaframework.org/)
-wich is a port of [phputf8](http://phputf8.sourceforge.net/) to a unified set
-of files. Provides multi-byte aware replacement string functions.</small></a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CAutoloader" target="content">Autoloader</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CAutoloaderException" target="content">AutoloaderException</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CClassParserForPHP5_3" target="content">ClassParserForPHP5_3</a></span></li>
+<li><span class="class"><a href="db_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinition" target="content">ComponentDefinition</a></span></li>
+<li><span class="class"><a href="db_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinitionException" target="content">ComponentDefinitionException</a></span></li>
+<li><span class="class"><a href="db_container_ComponentReference.class.html#%5COktopus%5CComponentReference" target="content">ComponentReference</a></span></li>
+<li><span class="class"><a href="db_container_Container.class.html#%5COktopus%5CContainer" target="content">Container</a></span></li>
+<li><span class="class"><a href="db_container_Container.class.html#%5COktopus%5CContainerException" target="content">ContainerException</a></span></li>
+<li><span class="class"><a href="db_container_ContainerXMLLoader.class.html#%5COktopus%5CContainerXMLLoader" target="content">ContainerXMLLoader</a></span></li>
+<li><span class="class"><a href="db_debug_Debug.class.html#%5COktopus%5CDebug" target="content">Debug</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CEngine" target="content">Engine</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CException" target="content">Exception</a></span></li>
+<li><span class="interface"><a href="db_Engine.html#%5COktopus%5CIClassParser" target="content">IClassParser</a></span></li>
+<li><span class="interface"><a href="db_container_Container.class.html#%5COktopus%5CIContainer" target="content">IContainer</a></span></li>
+<li><span class="interface"><a href="db_container_Container.class.html#%5COktopus%5CIMutableContainer" target="content">IMutableContainer</a></span></li>
+<li><span class="interface"><a href="db_timer_Timer.class.html#%5COktopus%5CITimer" target="content">ITimer</a></span></li>
+<li><span class="class"><a href="db_timer_Timer.class.html#%5COktopus%5CTimer" target="content">Timer</a></span></li>
 </ul>
 </li>
-<li class="closed">
-<span class="folder">Oktopus</span><ul id="packages_Oktopus" class="filetree">
-<li class="closed"><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader" target="content">Autoloader<br><small>Main Oktopus Autoloader</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloaderException" target="content">AutoloaderException<br><small>Base exception for Autolaoding errors</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CClassParserForPHP5_3" target="content">ClassParserForPHP5_3<br><small>Algorithm to find classes in a given file</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinition" target="content">ComponentDefinition<br><small>Component definition</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinitionException" target="content">ComponentDefinitionException<br><small>Base exception for container component definition exception</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_container_ComponentReference.class.html#%5COktopus%5CComponentReference" target="content">ComponentReference<br><small>The component reference.</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CContainer" target="content">Container<br><small>Container</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CContainerException" target="content">ContainerException<br><small>Base Exception class for container operations</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_container_ContainerXMLLoader.class.html#%5COktopus%5CContainerXMLLoader" target="content">ContainerXMLLoader<br><small></small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_debug_Debug.class.html#%5COktopus%5CDebug" target="content">Debug<br><small>Class that gives services to format errors messages / data / ...</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CEngine" target="content">Engine<br><small>Main base class for Oktopus</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CException" target="content">Exception<br><small>Base Oktopus Exception</small></a></span></li>
-<li class="closed"><span class="interface"><a href="_Oktopus_Engine.html#%5COktopus%5CIClassParser" target="content">IClassParser<br><small>Interface for class parsing</small></a></span></li>
-<li class="closed"><span class="interface"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIContainer" target="content">IContainer<br><small>Interface for Oktopus Containers</small></a></span></li>
-<li class="closed"><span class="interface"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIMutableContainer" target="content">IMutableContainer<br><small>Interface for containers where you can add / update definitions</small></a></span></li>
-<li class="closed"><span class="interface"><a href="_Oktopus_timer_Timer.class.html#%5COktopus%5CITimer" target="content">ITimer<br><small>A simple timer interface</small></a></span></li>
-<li class="closed"><span class="class"><a href="_Oktopus_timer_Timer.class.html#%5COktopus%5CTimer" target="content">Timer<br><small>This class is an easy way to measure the elapsed time beetween two operations</small></a></span></li>
 </ul>
+</div>
+<h3 id="sidebar-namespaces">
+<img src="css/docblox/images/icons/namespaces.png" alt="Namespaces"><a href="#namespaces">Namespaces</a>
+</h3>
+<div class="sidebar-section sidebar-tree">
+<div class="search-bar">
+<a href="#" onclick="$(this).parent().next().find('.collapsable-hitarea').click(); return false;"><img src="images/collapse_all.png" title="Collapse all" alt="Collapse all"></a><a href="#" onclick="$(this).parent().next().find('.expandable-hitarea').click(); return false;"><img src="images/expand_all.png" title="Expand all" alt="Expand all"></a><div><input type="text" onkeyup="tree_search(this);"></div>
+</div>
+<ul class="sidebar-nav-tree"><li class="closed">
+<span class="folder">Oktopus</span><ul>
+<li class="closed">
+<span class="folder">MVC</span><ul><li><span class="class"><a href="db_mvc_controllers_controllers.class.html#%5COktopus%5CMVC%5CFrontController" target="content">FrontController</a></span></li></ul>
 </li>
+<li><span class="function"><a href="db_debug_error.view.html#::__()" target="content">__</a></span></li>
+<li><span class="function"><a href="db_utf8_from_unicode.html#::_from_unicode()" target="content">_from_unicode</a></span></li>
+<li><span class="function"><a href="db_utf8_ltrim.html#::_ltrim()" target="content">_ltrim</a></span></li>
+<li><span class="function"><a href="db_utf8_ord.html#::_ord()" target="content">_ord</a></span></li>
+<li><span class="function"><a href="db_utf8_rtrim.html#::_rtrim()" target="content">_rtrim</a></span></li>
+<li><span class="function"><a href="db_utf8_str_ireplace.html#::_str_ireplace()" target="content">_str_ireplace</a></span></li>
+<li><span class="function"><a href="db_utf8_str_pad.html#::_str_pad()" target="content">_str_pad</a></span></li>
+<li><span class="function"><a href="db_utf8_str_split.html#::_str_split()" target="content">_str_split</a></span></li>
+<li><span class="function"><a href="db_utf8_strcasecmp.html#::_strcasecmp()" target="content">_strcasecmp</a></span></li>
+<li><span class="function"><a href="db_utf8_strcspn.html#::_strcspn()" target="content">_strcspn</a></span></li>
+<li><span class="function"><a href="db_utf8_stristr.html#::_stristr()" target="content">_stristr</a></span></li>
+<li><span class="function"><a href="db_utf8_strlen.html#::_strlen()" target="content">_strlen</a></span></li>
+<li><span class="function"><a href="db_utf8_strpos.html#::_strpos()" target="content">_strpos</a></span></li>
+<li><span class="function"><a href="db_utf8_strrev.html#::_strrev()" target="content">_strrev</a></span></li>
+<li><span class="function"><a href="db_utf8_strrpos.html#::_strrpos()" target="content">_strrpos</a></span></li>
+<li><span class="function"><a href="db_utf8_strspn.html#::_strspn()" target="content">_strspn</a></span></li>
+<li><span class="function"><a href="db_utf8_strtolower.html#::_strtolower()" target="content">_strtolower</a></span></li>
+<li><span class="function"><a href="db_utf8_strtoupper.html#::_strtoupper()" target="content">_strtoupper</a></span></li>
+<li><span class="function"><a href="db_utf8_substr.html#::_substr()" target="content">_substr</a></span></li>
+<li><span class="function"><a href="db_utf8_substr_replace.html#::_substr_replace()" target="content">_substr_replace</a></span></li>
+<li><span class="function"><a href="db_utf8_to_unicode.html#::_to_unicode()" target="content">_to_unicode</a></span></li>
+<li><span class="function"><a href="db_utf8_transliterate_to_ascii.html#::_transliterate_to_ascii()" target="content">_transliterate_to_ascii</a></span></li>
+<li><span class="function"><a href="db_utf8_trim.html#::_trim()" target="content">_trim</a></span></li>
+<li><span class="function"><a href="db_utf8_ucfirst.html#::_ucfirst()" target="content">_ucfirst</a></span></li>
+<li><span class="function"><a href="db_utf8_ucwords.html#::_ucwords()" target="content">_ucwords</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CAutoloader" target="content">Autoloader</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CAutoloaderException" target="content">AutoloaderException</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CClassParserForPHP5_3" target="content">ClassParserForPHP5_3</a></span></li>
+<li><span class="class"><a href="db_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinition" target="content">ComponentDefinition</a></span></li>
+<li><span class="class"><a href="db_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinitionException" target="content">ComponentDefinitionException</a></span></li>
+<li><span class="class"><a href="db_container_ComponentReference.class.html#%5COktopus%5CComponentReference" target="content">ComponentReference</a></span></li>
+<li><span class="class"><a href="db_container_Container.class.html#%5COktopus%5CContainer" target="content">Container</a></span></li>
+<li><span class="class"><a href="db_container_Container.class.html#%5COktopus%5CContainerException" target="content">ContainerException</a></span></li>
+<li><span class="class"><a href="db_container_ContainerXMLLoader.class.html#%5COktopus%5CContainerXMLLoader" target="content">ContainerXMLLoader</a></span></li>
+<li><span class="class"><a href="db_debug_Debug.class.html#%5COktopus%5CDebug" target="content">Debug</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CEngine" target="content">Engine</a></span></li>
+<li><span class="class"><a href="db_Engine.html#%5COktopus%5CException" target="content">Exception</a></span></li>
+<li><span class="interface"><a href="db_Engine.html#%5COktopus%5CIClassParser" target="content">IClassParser</a></span></li>
+<li><span class="interface"><a href="db_container_Container.class.html#%5COktopus%5CIContainer" target="content">IContainer</a></span></li>
+<li><span class="interface"><a href="db_container_Container.class.html#%5COktopus%5CIMutableContainer" target="content">IMutableContainer</a></span></li>
+<li><span class="interface"><a href="db_timer_Timer.class.html#%5COktopus%5CITimer" target="content">ITimer</a></span></li>
+<li><span class="class"><a href="db_proxy_ProxyGenerator.class.html#%5COktopus%5CProxyGenerator" target="content">ProxyGenerator</a></span></li>
+<li><span class="class"><a href="db_proxy_ProxyGenerator.class.html#%5COktopus%5CProxyGeneratorException" target="content">ProxyGeneratorException</a></span></li>
+<li><span class="class"><a href="db_timer_Timer.class.html#%5COktopus%5CTimer" target="content">Timer</a></span></li>
+<li><span class="class"><a href="db_utf8_utf8.html#%5COktopus%5CUTF8" target="content">UTF8</a></span></li>
+</ul>
+</li></ul>
+</div>
+<h3 id="sidebar-charts">
+<img src="css/docblox/images/icons/chart.png" alt="Charts"><a href="#charts">Charts</a>
+</h3>
+<div class="sidebar-section"><ul style="list-style-image: url('css/docblox/images/icons/chart15x12.png');"><li><a href="graph.html" target="content">Class Inheritance Diagram</a></li></ul></div>
+<h3 id="sidebar-reports">
+<img src="css/docblox/images/icons/reports.png" alt="Reports"><a href="#reports">Reports</a>
+</h3>
+<div class="sidebar-section"><ul style="list-style-image: url('css/docblox/images/icons/reports9x12.png');">
+<li><a href="report_markers.html" target="content">Markers (TODO/FIXME)</a></li>
+<li><a href="report_parse_markers.html" target="content">Parsing errors</a></li>
+<li><a href="report_deprecated.html" target="content">Deprecated elements</a></li>
 </ul></div>
-<h1><a href="#">Files</a></h1>
-<div style="padding: 0px;"><ul id="files-" class="filetree">
-<li class="closed">
-<span class="file"><a href="_Oktopus_Engine.html" target="content">Oktopus/Engine.php</a></span><ul id="files_3cf46bf66904383c5a5bd8fcf17cca3b" class="filetree">
-<li><span class="interface"><a href="_Oktopus_Engine.html#%5COktopus%5CIClassParser" target="content">IClassParser<br><small>Interface for class parsing</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CException" target="content">Exception<br><small>Base Oktopus Exception</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CClassParserForPHP5_3" target="content">ClassParserForPHP5_3<br><small>Algorithm to find classes in a given file</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloaderException" target="content">AutoloaderException<br><small>Base exception for Autolaoding errors</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CAutoloader" target="content">Autoloader<br><small>Main Oktopus Autoloader</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_Engine.html#%5COktopus%5CEngine" target="content">Engine<br><small>Main base class for Oktopus</small></a></span></li>
-</ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_container_ComponentDefinition.class.html" target="content">Oktopus/container/ComponentDefinition.class.php</a></span><ul id="files_09faf93a71178f04484b9114181335c5" class="filetree">
-<li><span class="class"><a href="_Oktopus_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinitionException" target="content">ComponentDefinitionException<br><small>Base exception for container component definition exception</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_ComponentDefinition.class.html#%5COktopus%5CComponentDefinition" target="content">ComponentDefinition<br><small>Component definition</small></a></span></li>
-</ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_container_ComponentReference.class.html" target="content">Oktopus/container/ComponentReference.class.php</a></span><ul id="files_a5ef95fd7b0121a10bf109fa4820c91e" class="filetree"><li><span class="class"><a href="_Oktopus_container_ComponentReference.class.html#%5COktopus%5CComponentReference" target="content">ComponentReference<br><small>The component reference.</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_container_Container.class.html" target="content">Oktopus/container/Container.class.php</a></span><ul id="files_51a3f153e087ff970512074a52b4a1bb" class="filetree">
-<li><span class="interface"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIContainer" target="content">IContainer<br><small>Interface for Oktopus Containers</small></a></span></li>
-<li><span class="interface"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CIMutableContainer" target="content">IMutableContainer<br><small>Interface for containers where you can add / update definitions</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CContainerException" target="content">ContainerException<br><small>Base Exception class for container operations</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_container_Container.class.html#%5COktopus%5CContainer" target="content">Container<br><small>Container</small></a></span></li>
-</ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_container_ContainerXMLLoader.class.html" target="content">Oktopus/container/ContainerXMLLoader.class.php</a></span><ul id="files_698d4709e80829fad2173258f6968acb" class="filetree"><li><span class="class"><a href="_Oktopus_container_ContainerXMLLoader.class.html#%5COktopus%5CContainerXMLLoader" target="content">ContainerXMLLoader<br><small></small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_debug_Debug.class.html" target="content">Oktopus/debug/Debug.class.php</a></span><ul id="files_168595205f5aeb7e0914777c7cde03ad" class="filetree"><li><span class="class"><a href="_Oktopus_debug_Debug.class.html#%5COktopus%5CDebug" target="content">Debug<br><small>Class that gives services to format errors messages / data / ...</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_debug_error.view.html" target="content">Oktopus/debug/error.view.php</a></span><ul id="files_4342251657cddd7d25a4ec612eaf13f6" class="filetree"><li><span class="function"><a href="_Oktopus_debug_error.view.html#::__()" target="content">__<br><small></small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_timer_Timer.class.html" target="content">Oktopus/timer/Timer.class.php</a></span><ul id="files_943e45b4fe4850a9fb9561d4715e2dc6" class="filetree">
-<li><span class="interface"><a href="_Oktopus_timer_Timer.class.html#%5COktopus%5CITimer" target="content">ITimer<br><small>A simple timer interface</small></a></span></li>
-<li><span class="class"><a href="_Oktopus_timer_Timer.class.html#%5COktopus%5CTimer" target="content">Timer<br><small>This class is an easy way to measure the elapsed time beetween two operations</small></a></span></li>
-</ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_from_unicode.html" target="content">Oktopus/utf8/from_unicode.php</a></span><ul id="files_5b33ef9a227e2472486e0e344eebcb22" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_from_unicode.html#::_from_unicode()" target="content">_from_unicode<br><small>UTF8::from_unicode</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_ltrim.html" target="content">Oktopus/utf8/ltrim.php</a></span><ul id="files_ddc7d082bbcbc9ca088eeace92fafd1b" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_ltrim.html#::_ltrim()" target="content">_ltrim<br><small>UTF8::ltrim</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_ord.html" target="content">Oktopus/utf8/ord.php</a></span><ul id="files_6e45d664d4881b941805132fdcb11b4e" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_ord.html#::_ord()" target="content">_ord<br><small>UTF8::ord</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_rtrim.html" target="content">Oktopus/utf8/rtrim.php</a></span><ul id="files_54286c6e4d0a50b302231b9ffe5efc95" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_rtrim.html#::_rtrim()" target="content">_rtrim<br><small>UTF8::rtrim</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_str_ireplace.html" target="content">Oktopus/utf8/str_ireplace.php</a></span><ul id="files_e0f9a1e99dc6f94f42aa81dbac7cceb9" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_str_ireplace.html#::_str_ireplace()" target="content">_str_ireplace<br><small>UTF8::str_ireplace</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_str_pad.html" target="content">Oktopus/utf8/str_pad.php</a></span><ul id="files_17d7c607c24408af38474cb986d30377" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_str_pad.html#::_str_pad()" target="content">_str_pad<br><small>UTF8::str_pad</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_str_split.html" target="content">Oktopus/utf8/str_split.php</a></span><ul id="files_ba6653f22b8a777f7f9792a92aacd0cf" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_str_split.html#::_str_split()" target="content">_str_split<br><small>UTF8::str_split</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strcasecmp.html" target="content">Oktopus/utf8/strcasecmp.php</a></span><ul id="files_9420785c989e88ba37e8e4a5e18326d9" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strcasecmp.html#::_strcasecmp()" target="content">_strcasecmp<br><small>UTF8::strcasecmp</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strcspn.html" target="content">Oktopus/utf8/strcspn.php</a></span><ul id="files_2f716f124dfe545669e1142a1103cab1" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strcspn.html#::_strcspn()" target="content">_strcspn<br><small>UTF8::strcspn</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_stristr.html" target="content">Oktopus/utf8/stristr.php</a></span><ul id="files_4f463d8c85ad6a04930c46dc759b4e2d" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_stristr.html#::_stristr()" target="content">_stristr<br><small>UTF8::stristr</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strlen.html" target="content">Oktopus/utf8/strlen.php</a></span><ul id="files_9737fb5fbac4e6a8b13041fad7b3d317" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strlen.html#::_strlen()" target="content">_strlen<br><small>UTF8::strlen</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strpos.html" target="content">Oktopus/utf8/strpos.php</a></span><ul id="files_80c47cf3734ed5563089b8e2a47df05b" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strpos.html#::_strpos()" target="content">_strpos<br><small>UTF8::strpos</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strrev.html" target="content">Oktopus/utf8/strrev.php</a></span><ul id="files_e7c18c3fa69febff548f5bec059153da" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strrev.html#::_strrev()" target="content">_strrev<br><small>UTF8::strrev</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strrpos.html" target="content">Oktopus/utf8/strrpos.php</a></span><ul id="files_886b58e57544b57b2df5d72b1395510f" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strrpos.html#::_strrpos()" target="content">_strrpos<br><small>UTF8::strrpos</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strspn.html" target="content">Oktopus/utf8/strspn.php</a></span><ul id="files_446283ddbe633bff355e990fa36b8b44" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strspn.html#::_strspn()" target="content">_strspn<br><small>UTF8::strspn</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strtolower.html" target="content">Oktopus/utf8/strtolower.php</a></span><ul id="files_32531337be16a198431b2b6e2bf4a8e7" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strtolower.html#::_strtolower()" target="content">_strtolower<br><small>UTF8::strtolower</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_strtoupper.html" target="content">Oktopus/utf8/strtoupper.php</a></span><ul id="files_fec5d97b1b6d19667207e988f378ffef" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_strtoupper.html#::_strtoupper()" target="content">_strtoupper<br><small>UTF8::strtoupper</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_substr.html" target="content">Oktopus/utf8/substr.php</a></span><ul id="files_6ab6756843ed9000e56275c157ebe25a" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_substr.html#::_substr()" target="content">_substr<br><small>UTF8::substr</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_substr_replace.html" target="content">Oktopus/utf8/substr_replace.php</a></span><ul id="files_6201269e1f390c993c62f239c591d8f4" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_substr_replace.html#::_substr_replace()" target="content">_substr_replace<br><small>UTF8::substr_replace</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_to_unicode.html" target="content">Oktopus/utf8/to_unicode.php</a></span><ul id="files_bfbf0ba64cce7417802f5a440eaa7640" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_to_unicode.html#::_to_unicode()" target="content">_to_unicode<br><small>UTF8::to_unicode</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_transliterate_to_ascii.html" target="content">Oktopus/utf8/transliterate_to_ascii.php</a></span><ul id="files_1f69241eaa2fdd121780522c9a23a8a1" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_transliterate_to_ascii.html#::_transliterate_to_ascii()" target="content">_transliterate_to_ascii<br><small>UTF8::transliterate_to_ascii</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_trim.html" target="content">Oktopus/utf8/trim.php</a></span><ul id="files_93694927678b462bcb937e6ee76ba31e" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_trim.html#::_trim()" target="content">_trim<br><small>UTF8::trim</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_ucfirst.html" target="content">Oktopus/utf8/ucfirst.php</a></span><ul id="files_d54854184f88c328f983a7af8bd1ebf6" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_ucfirst.html#::_ucfirst()" target="content">_ucfirst<br><small>UTF8::ucfirst</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_ucwords.html" target="content">Oktopus/utf8/ucwords.php</a></span><ul id="files_99e3b29bdeb0605ea268bb5e200b775b" class="filetree"><li><span class="function"><a href="_Oktopus_utf8_ucwords.html#::_ucwords()" target="content">_ucwords<br><small>UTF8::ucwords</small></a></span></li></ul>
-</li>
-<li class="closed">
-<span class="file"><a href="_Oktopus_utf8_utf8.html" target="content">Oktopus/utf8/utf8.php</a></span><ul id="files_73e17bc891c393246d3b16544d41b8ea" class="filetree"><li><span class="class"><a href="_Oktopus_utf8_utf8.html#%5COktopus%5CUTF8" target="content">UTF8<br><small>A port of Kohana_UTF8 (http://kohanaframework.org/)
-wich is a port of [phputf8](http://phputf8.sourceforge.net/) to a unified set
-of files. Provides multi-byte aware replacement string functions.</small></a></span></li></ul>
-</li>
-</ul></div>
+</div>
+<div id="sidebar-footer">
+        Documentation is generated by <a href="http://docblox-project.org" target="_top"><img src="images/icon48x48.png" height="12" align="top" alt="Logo"> DocBlox 0.15.1</a>, images courtesy of <a href="http://glyphish.com/" target="_top">Glyphish</a>
+</div>
 </div></body></html>
