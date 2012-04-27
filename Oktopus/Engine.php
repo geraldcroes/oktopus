@@ -695,24 +695,12 @@ class Engine
 
         self::$_temporaryFilesPath = $pTmpPath;
 
-        if ($pMode === self::MODE_DEBUG) {
-            ini_set('display_errors', 1);
-            error_reporting(E_ALL | E_STRICT);
-        } else {
-            ini_set('display_errors', 0);
-        }
-
         self::$_autoloader = new Autoloader($pTmpPath, new ClassParserForPHP5_3());
         self::$_autoloader->addPath(__DIR__, true)->register();
 
         if ($pMode === self::MODE_PRODUCTION){
             self::$_autoloader->setSilentDuplicatesInSameFile(true)
-                              ->setSilentDuplicatesInSameFile(true);
-        }
-
-        if ($pMode === self::MODE_DEBUG && self::$_autoloader->autoload('Oktopus\\Debug')) {
-            Debug::registerErrorHandler();
-            Debug::registerExceptionHandler();
+                              ->setSilentDuplicatesInDifferentFiles(true);
         }
     }
 

@@ -30,11 +30,8 @@ class Engine extends atoum\test {
 
         \Oktopus\Engine::autoloader()->unregister();
         \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_PRODUCTION);
-        $this->assert
-                ->string(ini_get('display_errors'))
-                ->isEqualTo('0');
         $this->assert->variable(\Oktopus\Engine::getMode())
-                     ->isEqualTo(\Oktopus\Engine::MODE_PRODUCTION);
+                         ->isEqualTo(\Oktopus\Engine::MODE_PRODUCTION);
 	}
 
     public function testGetTemporaryFilePath()
@@ -84,27 +81,26 @@ class Engine extends atoum\test {
         //Silent should be true by default in production mode
         $this->assert
                 ->variable(\Oktopus\Engine::getMode())
-                ->isEqualTo(\Oktopus\Engine::MODE_PRODUCTION);
+                    ->isEqualTo(\Oktopus\Engine::MODE_PRODUCTION);
         $this->assert
                     ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInSameFile())
-                    ->isTrue();
-
+                        ->isTrue();
         $this->assert
-                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInDifferentFile())
-                    ->isTrue();
+                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInDifferentFiles())
+                        ->isTrue();
 
         //Silent should be false by default in debug mode
         \Oktopus\Engine::start('/tmp/', \Oktopus\Engine::MODE_DEBUG);
         $this->assert
                 ->variable(\Oktopus\Engine::getMode())
-                ->isEqualTo(\Oktopus\Engine::MODE_DEBUG);
+                    ->isEqualTo(\Oktopus\Engine::MODE_DEBUG);
 
         $this->assert
                     ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInSameFile())
-                    ->isFalse();
+                        ->isFalse();
 
         $this->assert
-                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInDifferentFile())
-                    ->isFalse();
+                    ->boolean(\Oktopus\Engine::autoloader()->getSilentDuplicatesInDifferentFiles())
+                        ->isFalse();
     }
 }

@@ -40,8 +40,6 @@ class Autoloader extends atoum\test {
     public function testAutoloadKnownClassThatHasBeenDeletedDebugMode (){
         \Oktopus\Engine::autoloader()->unregister();
         \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_DEBUG);
-        \Oktopus\Debug::unregisterErrorHandler();
-        \Oktopus\Debug::unregisterExceptionHandler();
 
 		//Remove old cache file if it exists and copy sources to test
 		exec('rm -Rf /tmp/OktopusTest2');
@@ -123,8 +121,6 @@ class Autoloader extends atoum\test {
         //Restarting the engine in debug mode
         \Oktopus\Engine::autoloader()->unregister();
         \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_DEBUG);
-        \Oktopus\Debug::unregisterErrorHandler();
-        \Oktopus\Debug::unregisterExceptionHandler();
 
 		//Remove old cache file if it exists and copy sources to test
 		exec('rm -Rf /tmp/OktopusTest4');
