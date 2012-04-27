@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="Oktopus" default="doc">
-    <taskdef name="atoum" classpath="./" classname="AtoumTask"/>
+    <taskdef name="atoum" classpath="./phing/" classname="phing.AtoumTask"/>
     <!-- ============================================  -->
     <!-- Target: preparebuild                          -->
     <!-- ============================================  -->
     <target name="preparebuild">
-        <mkdir dir="../build" />
+        <mkdir dir="build" />
     </target>
 
     <!-- ============================================  -->
@@ -14,9 +14,9 @@
     <!-- ============================================  -->
     <target name="update_atoum">
         <echo msg="Updating Atoum" />
-        <exec command="php -n ../tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_before" />
-        <httpget url="http://downloads.atoum.org/nightly/mageekguy.atoum.phar" dir="../tests" />
-        <exec command="php -n ../tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_after" />
+        <exec command="php -n ./tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_before" />
+        <httpget url="http://downloads.atoum.org/nightly/mageekguy.atoum.phar" dir="tests" />
+        <exec command="php -n ./tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_after" />
         <if>
             <or>
                 <equals arg1="${atoum_version_before}" arg2="${atoum_version_after}" />
@@ -29,7 +29,7 @@
                 <echo message="Updating ATOUM"/>
                 <echo message="From ${atoum_version_before}" />
                 <echo message="TO   ${atoum_version_after}" />
-                <exec command='git commit -m "${atoum_version_after}" ../tests/mageekguy.atoum.phar' logoutput="true"/>
+                <exec command='git commit -m "${atoum_version_after}" ./tests/mageekguy.atoum.phar' logoutput="true"/>
             </else>
         </if>
     </target>
@@ -39,10 +39,10 @@
     <!-- ============================================  -->
     <target name="test">
         <atoum
-                atoumpharpath="../tests/mageekguy.atoum.phar"
+                atoumpharpath="./tests/mageekguy.atoum.phar"
                 phppath="/usr/bin/php"
                 codecoverage="true"
-                codecoveragereportpath="../coverage/"
+                codecoveragereportpath="./coverage/"
                 showcodecoverage="true"
                 showmissingcodecoverage="true"
                 showprogress="true"
@@ -50,10 +50,10 @@
                 showduration="true"
                 maxchildren="2"
                 >
-            <fileset dir="../tests/container">
+            <fileset dir="./tests/container">
                 <include name="**/*.php" />
             </fileset>
-            <fileset dir="../tests/engine">
+            <fileset dir="./tests/engine">
                 <include name="**/*.php" />
             </fileset>
         </atoum>
@@ -63,8 +63,8 @@
     <!-- Target: Doc                               -->
     <!-- ============================================  -->
     <target name="doc">
-        <docblox title="API Documentation" destdir="../Documentation">
-            <fileset dir="../Oktopus">
+        <docblox title="API Documentation" destdir="./Documentation">
+            <fileset dir="Oktopus">
                 <include name="**/*.php" />
             </fileset>
         </docblox>
@@ -75,11 +75,11 @@
     <!-- ============================================  -->
     <target name="phar" depends="test,preparebuild">
         <pharpackage
-          destfile="../build/oktopus.phar"
-          basedir="../"
+          destfile="build/oktopus.phar"
+          basedir="/"
           stub="stub.php"
           >
-          <fileset dir="../Oktopus">
+          <fileset dir="Oktopus">
             <include name="**/**" />
           </fileset>
           <metadata>

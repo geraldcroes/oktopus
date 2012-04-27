@@ -99,15 +99,15 @@ class AtoumTask extends Task
             }
         }
 
-        require_once "./atoum/reports/realtime/phing.php";
-        require_once "./atoum/report/fields/runner/tests/coverage/phing.php";
-        require_once "./atoum/report/fields/runner/tests/memory/phing.php";
-        require_once "./atoum/report/fields/runner/atoum/phing.php";
-        require_once "./atoum/report/fields/runner/duration/phing.php";
-        require_once "./atoum/report/fields/test/run/phing.php";
-        require_once "./atoum/report/fields/test/event/phing.php";
-        require_once "./atoum/report/fields/test/memory/phing.php";
-        require_once "./atoum/report/fields/test/duration/phing.php";
+        require_once __DIR__ . "/atoum/reports/realtime/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/runner/tests/coverage/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/runner/tests/memory/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/runner/atoum/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/runner/duration/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/test/run/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/test/event/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/test/memory/phing.php";
+        require_once __DIR__ . "/atoum/report/fields/test/duration/phing.php";
 
         //including files to test
         foreach ($this->getFiles() as $file) {
