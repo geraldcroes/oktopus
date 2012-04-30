@@ -95,11 +95,6 @@ class Engine
 
         self::$_autoloader = new Autoloader($pTmpPath, new ClassParserForPHP5_3());
         self::$_autoloader->addPath(__DIR__, true)->register();
-
-        if ($pMode === self::MODE_PRODUCTION){
-            self::$_autoloader->setSilentDuplicatesInSameFile(true)
-                              ->setSilentDuplicatesInDifferentFiles(true);
-        }
     }
 
     /**

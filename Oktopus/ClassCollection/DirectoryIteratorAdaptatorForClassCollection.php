@@ -32,6 +32,13 @@ class DirectoryIteratorAdaptatorForClassCollection implements KnownClassCollecti
     private $silentDuplicatesInSameFile = false;
 
     /**
+     * If we want to raise a warning while founding twice or more the same class in different files
+     *
+     * @var bool true will raise warnings, false won't raise any error
+     */
+    private $silentDuplicatesInDifferentFile = false;
+
+    /**
      * Sets if we want to raise a warning while founding twice or more the same class in the same file
      *
      * @param bool $pSilent
@@ -53,13 +60,6 @@ class DirectoryIteratorAdaptatorForClassCollection implements KnownClassCollecti
     {
         return $this->silentDuplicatesInSameFile;
     }
-
-    /**
-     * If we want to raise a warning while founding twice or more the same class in different files
-     *
-     * @var bool true will raise warnings, false won't raise any error
-     */
-    private $silentDuplicatesInDifferentFile = false;
 
     /**
      * Sets if we want to generate a warning while founding twice or more the same class in different files
