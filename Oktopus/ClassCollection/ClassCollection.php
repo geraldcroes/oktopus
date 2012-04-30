@@ -3,6 +3,8 @@ namespace Oktopus\ClassCollection;
 
 /**
  * Represents a Class Collection Classname / Filename
+ *
+ * @package Oktopus
  */
 interface ClassCollection
 {
