@@ -1,7 +1,6 @@
 <?php
 require_once "phing/Task.php";
 
-
 class AtoumTask extends Task
 {
     private $runner = false;
@@ -82,36 +81,26 @@ class AtoumTask extends Task
     public function main() {
         if ($this->codecoverage && !extension_loaded('xdebug')) {
             throw new Exception("AtoumTask depends on Xdebug being installed to gather code coverage information.");
-	    }
+        }
 
         if ($this->bootstrap) {
             require_once $this->bootstrap;
         }
 
-        define('mageekguy\\atoum\\autorun', true);
+        define('mageekguy\\atoum\\autorun', false);
         if (!empty($this->atoumpharpath)) {
-            require_once('phar://'.$this->atoumpharpath.'/classes/autoloader.php');
-        } elseif (!empty($this->atoumautoloaderpath)){
+            require_once($this->atoumpharpath);
+        } elseif (!empty($this->atoumautoloaderpath)) {
             require_once($this->atoumautoloaderpath);
         } else {
-            if (!class_exists('mageekguy\atoum\scripts\runner', false)){
+            if (!class_exists('mageekguy\atoum\scripts\runner', false)) {
                 throw new Exception("Unknown class mageekguy\\atoum\\scripts\\runner.\n\rConsider setting atoumpharpath parameter");
             }
         }
 
-        require_once __DIR__ . "/atoum/reports/realtime/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/runner/tests/coverage/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/runner/tests/memory/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/runner/atoum/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/runner/duration/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/test/run/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/test/event/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/test/memory/phing.php";
-        require_once __DIR__ . "/atoum/report/fields/test/duration/phing.php";
-
         //including files to test
         foreach ($this->getFiles() as $file) {
-           include($file);
+            include($file);
         }
         $this->execute();
     }
