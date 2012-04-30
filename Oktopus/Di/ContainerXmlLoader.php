@@ -1,19 +1,19 @@
 <?php
-namespace Oktopus;
+namespace Oktopus\Di;
 
 /**
  * @package Oktopus
  */
-class ContainerXMLLoader implements IContainer
+class ContainerXMLLoader implements Container
 {
 	/**
 	 * The container
 	 *
-	 * @var IMutableContainer
+	 * @var MutableContainer
 	 */
 	private $_container;
 
-	public function __construct (IMutableContainer $pContainer)
+	public function __construct (MutableContainer $pContainer)
 	{
 		$this->_container = $pContainer;
 	}

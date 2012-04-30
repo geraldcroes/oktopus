@@ -50,10 +50,7 @@
                 showduration="true"
                 maxchildren="2"
                 >
-            <fileset dir="./tests/container">
-                <include name="**/*.php" />
-            </fileset>
-            <fileset dir="./tests/engine">
+            <fileset dir="./tests/units">
                 <include name="**/*.php" />
             </fileset>
         </atoum>

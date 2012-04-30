@@ -1,5 +1,5 @@
 <?php
-namespace Oktopus;
+namespace Oktopus\Di;
 
 /**
  * The component reference.
@@ -19,7 +19,7 @@ class ComponentReference
     /**
      * The container where the id will be looked for
      * 
-     * @var IContainer
+     * @var Container
      */
     private $_container;
 
@@ -27,9 +27,9 @@ class ComponentReference
      * Construction
      * 
      * @param string $pId the refered component id
-     * @param IContainer $pContainer the container
+     * @param Container $pContainer the container
      */
-    public function __construct ($pId, IContainer $pContainer = null)
+    public function __construct ($pId, Container $pContainer = null)
     {
         $this->_id = $pId;
         $this->_container = $pContainer;
@@ -48,7 +48,7 @@ class ComponentReference
     /**
      * Returns the container
      * 
-     * @return IContainer
+     * @return Container
      */
     public function getContainer ()
     {

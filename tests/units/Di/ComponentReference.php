@@ -1,7 +1,10 @@
 <?php
-namespace Oktopus\tests\units;
+namespace Oktopus\Di\tests\units;
 
-require __DIR__.'/../bootstrap.php';
+require __DIR__.'/../../bootstrap.php';
+require_once __DIR__ . '/../../../Oktopus/Di/ComponentReference.php';
+require_once __DIR__ . '/../../../Oktopus/Di/Container.php';
+require_once __DIR__ . '/../../../Oktopus/Di/BasicContainer.php';
 
 use \mageekguy\atoum;
 use \Oktopus\Container;
@@ -10,7 +13,7 @@ class ComponentReference extends atoum\test
 {
     public function test__construct ()
     {
-        $componentReference = new \Oktopus\ComponentReference('id');
+        $componentReference = new \Oktopus\Di\ComponentReference('id');
         $this->assert
             ->string($componentReference->getId())
                 ->isEqualTo('id')
@@ -20,8 +23,8 @@ class ComponentReference extends atoum\test
 
     public function testContainer ()
     {
-        $container = new \Oktopus\Container();
-        $componentReference = new \Oktopus\ComponentReference('id', $container);
+        $container = new \Oktopus\Di\BasicContainer();
+        $componentReference = new \Oktopus\Di\ComponentReference('id', $container);
         $this->assert
             ->string($componentReference->getId())
                 ->isEqualTo('id')

@@ -1,7 +1,7 @@
 <?php
 namespace Oktopus\tests\units;
 
-require __DIR__.'/../bootstrap.php';
+require __DIR__ . '/../bootstrap.php';
 
 use \mageekguy\atoum;
 
@@ -17,14 +17,14 @@ class Autoloader extends atoum\test {
 		mkdir('/tmp/OktopusTest1/testDeleteFile/sources', 0775, true);
 		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest1/testDeleteFile/sources/');
 		//will generate cache file for every classes (including foo)
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest1/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest1/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest1/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 		
 		//will try to load foo after deleting the autoloader cache
-	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest1/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest1/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest1/testDeleteFile/sources/');
 		$autoloader->autoload('foo2');//to include the cache and tells where foo should also be founded.
 
@@ -46,14 +46,14 @@ class Autoloader extends atoum\test {
 		mkdir('/tmp/OktopusTest2/testDeleteFile/sources', 0775, true);
 		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest2/testDeleteFile/sources/');
 		//will generate cache file for every classes (including foo)
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest2/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 
 		//will try to load foo after deleting the autoloader cache
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest2/testDeleteFile/sources/');
 		$autoloader->autoload('foo2');//to include the cache and tells where foo should also be founded.
 
@@ -68,7 +68,7 @@ class Autoloader extends atoum\test {
 	    //moving the class foo back to the autoload (by changing it's extension)
         //to check that Oktopus will notice it reapears and autoload it
         exec('mv /tmp/OktopusTest2/testDeleteFile/sources/foo.txt /tmp/OktopusTest2/testDeleteFile/sources/foo.php');
-	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest2/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest2/testDeleteFile/sources/');
 		$autoloader->autoload('foo2');//to include the cache and tells where foo should also be founded.
 		//Now trying to load foo that should be back
@@ -87,13 +87,13 @@ class Autoloader extends atoum\test {
 		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest3/testDeleteFile/sources/');
 
 		//will generate cache file for every classes (including foo)
-	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest3/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+	    $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest3/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest3/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 
-		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest3/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest3/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest3/testDeleteFile/sources/');
 
 		exec('mv /tmp/OktopusTest3/testDeleteFile/sources/foo.php /tmp/OktopusTest3/testDeleteFile/sources/foomoved.php');
@@ -118,7 +118,7 @@ class Autoloader extends atoum\test {
      * Tries to autoload a previously known class (in the cache) that has been moved around not in production mode
      */
 	public function testAutoloadKnownClassThatHasBeenMovedNotProductionMode (){
-        //Restarting the engine in debug mode
+        //Restarting the Parser in debug mode
         \Oktopus\Engine::autoloader()->unregister();
         \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_DEBUG);
 
@@ -128,13 +128,13 @@ class Autoloader extends atoum\test {
 		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest4/testDeleteFile/sources/');
 
 		//will generate cache file for every classes (including foo)
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest4/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest4/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest4/testDeleteFile/sources/');
 		$this->assert
                 ->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();
 
-		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest4/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest4/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath('/tmp/OktopusTest4/testDeleteFile/sources/');
 
 		exec('mv /tmp/OktopusTest4/testDeleteFile/sources/foo.php /tmp/OktopusTest4/testDeleteFile/sources/foomoved.php');
@@ -162,12 +162,12 @@ class Autoloader extends atoum\test {
 		mkdir('/tmp/OktopusTest5/testDeleteFile/sources/', 0775, true);
 		exec('cp -R '.__DIR__.'/../resources/nowarning/* /tmp/OktopusTest5/testDeleteFile/sources/');
 
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest5/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest5/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath('/tmp/OktopusTest5/testDeleteFile/sources/');
         $this->assert->boolean($autoloader->autoload ('foo2'))
                 ->isTrue();//wil generate cachefile for every classes.
 
-        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest5/testDeleteFile/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/OktopusTest5/testDeleteFile/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath('/tmp/OktopusTest5/testDeleteFile/sources/');
         exec('mv /tmp/OktopusTest5/testDeleteFile/sources/foo.php /tmp/OktopusTest5/testDeleteFile/sources/foomoved.php');
         $this->assert->boolean($autoloader->autoload('foo', true))->isTrue();
@@ -177,7 +177,7 @@ class Autoloader extends atoum\test {
      * Test register / unregister.
      */
     public function testRegister (){
-        $autoloader = new \Oktopus\Autoloader('/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader('/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
                 ->boolean($autoloader->isRegistered())
                 ->isFalse();
@@ -187,7 +187,7 @@ class Autoloader extends atoum\test {
                 ->boolean($autoloader->isRegistered())
                 ->isTrue();
 
-        $autoloader2 = new \Oktopus\Autoloader('/tmp/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader2 = new \Oktopus\Autoloader('/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
                 ->boolean($autoloader2->isRegistered())
                 ->isFalse();
@@ -217,18 +217,18 @@ class Autoloader extends atoum\test {
     public function testNotWritablePath (){
         //The path is not writable
         $this->assert
-                ->exception(function(){new \Oktopus\Autoloader('/etc/', new \Oktopus\ClassParserForPHP5_3());})
+                ->exception(function(){new \Oktopus\Autoloader('/etc/', new \Oktopus\Parser\ClassParserForPHP5_3());})
                 ->isInstanceOf('\Oktopus\AutoloaderException');
 
 		//The path is not writable (we will asks Oktopus to try to create a subdirectory)
         $this->assert
-                ->exception(function(){new \Oktopus\Autoloader('/etc/OKTOPUS/', new \Oktopus\ClassParserForPHP5_3());})
+                ->exception(function(){new \Oktopus\Autoloader('/etc/OKTOPUS/', new \Oktopus\Parser\ClassParserForPHP5_3());})
                 ->isInstanceOf('\Oktopus\AutoloaderException');
     }
 
     public function testAutoloaderRecursiveAndNonRecursive (){
         //testing recursive
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3 ());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3 ());
         $autoloader->addPath (__DIR__.'/../resources/nowarning/', false);
 
         //we test that we can find foo, foo2 and foo3 (non recursive call)
@@ -240,7 +240,7 @@ class Autoloader extends atoum\test {
         $this->assert->boolean($autoloader->autoload ('foo\\foo'))->isFalse();
 
         //--- Recursive test
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3 ());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3 ());
         $autoloader->addPath (__DIR__.'/../resources/nowarning/');
 
         //we test that we can find foo, foo2 and foo3 (non recursive call)
@@ -253,7 +253,7 @@ class Autoloader extends atoum\test {
     }
 
     public function testAutoloaderWarningTwoSameClassesSameFile (){
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/warning/');
         $this->assert
                 ->boolean($autoloader->autoload ('not_exists'))
@@ -264,7 +264,7 @@ class Autoloader extends atoum\test {
 		->exists();//second error
 
         //Silent mode
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/warning/')
                     ->setSilentDuplicatesInSameFile(true);
         $this->assert
@@ -273,7 +273,7 @@ class Autoloader extends atoum\test {
     }
 
 	public function testAutoloaderWarningTwoSameClassesTwoFile (){
-		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/warning2files');
 
 		$this->assert
@@ -286,7 +286,7 @@ class Autoloader extends atoum\test {
                 ->exists();
 
         //Silent mode (different files)
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/warning2files')
                     ->setSilentDuplicatesInDifferentFiles(true);
 
@@ -300,7 +300,7 @@ class Autoloader extends atoum\test {
                 //other errors won't show up
 
         //Silent mode (same files)
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/warning2files')
                     ->setSilentDuplicatesInSameFile(true);
 
@@ -314,7 +314,7 @@ class Autoloader extends atoum\test {
                 ->exists();//Two errors as the AFoo declared in the same file won't show up
 
         //Silent mode
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/warning2files')
                     ->setSilentDuplicatesInDifferentFiles(true)
                     ->setSilentDuplicatesInSameFile(true);
@@ -327,7 +327,7 @@ class Autoloader extends atoum\test {
 	}
 
 	public function testAutoloaderWarningTwoSameNamespaceClassesTwoFile (){
-		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/warningnamespace2files');
 
 		$this->assert
@@ -338,7 +338,7 @@ class Autoloader extends atoum\test {
                 ->exists();
 
         //Silent won't raise warnings
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/warningnamespace2files')
                     ->setSilentDuplicatesInDifferentFiles(true);
 
@@ -349,14 +349,14 @@ class Autoloader extends atoum\test {
 
     public function testUpdatedFileTimeLoader (){
         //Simple autoload with no cache
-        $autoloader = new \Oktopus\Autoloader ('/tmp/UpdatedFileTimeLoader/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader ('/tmp/UpdatedFileTimeLoader/', new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/nowarning/');
         $this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
 
         usleep (100);
         touch (__DIR__.'/../resources/nowarning/foo.php');
 
-        $autoloader = new \Oktopus\Autoloader ('/tmp/UpdatedFileTimeLoader/', new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader ('/tmp/UpdatedFileTimeLoader/', new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/nowarning/');
         $this->assert->boolean($autoloader->autoload ('foo', true))->isTrue();//asking to check files
     }
@@ -372,12 +372,12 @@ class Autoloader extends atoum\test {
             }
         }
 
-		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 		$autoloader->includesAll ();
 
 		//now trying to raise the exception
-		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache2/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 		//cache should have been writen, going to make it read only
 		$directory = new \RecursiveIteratorIterator (new \RecursiveDirectoryIterator('/tmp/nowriteincache2/'));
@@ -411,7 +411,7 @@ class Autoloader extends atoum\test {
      		}
 		}
 
-		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader ('/tmp/nowriteincache/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 		chmod('/tmp/nowriteincache/', 0400);
 		$this->assert
@@ -420,7 +420,7 @@ class Autoloader extends atoum\test {
 	}
 
     public function testKnownClasses (){
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 
         //No class has been loaded.
@@ -445,7 +445,7 @@ class Autoloader extends atoum\test {
     }
 
 	public function testIncludesAll (){
-		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/', false);
 
 		//No class has been loaded.
@@ -509,19 +509,19 @@ class Autoloader extends atoum\test {
 
 	public function testAutoloaderCacheAndNoCache (){
 		//Simple autoload with no cache
-		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
 
 		//Testing several cases, forcing or not the loading of the class
-		$autoloader = new \Oktopus\Autoloader ('/tmp/', new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader ('/tmp/', new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
 		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
 		$this->assert->boolean($autoloader->autoload ('FOONOTEXISTS___'))->isFalse();
 
 		//Testing to generate a cache file (tmp/somethingnew)
-		$autoloader = new \Oktopus\Autoloader ('/tmp/'.uniqid (), new \Oktopus\ClassParserForPHP5_3());
+		$autoloader = new \Oktopus\Autoloader ('/tmp/'.uniqid (), new \Oktopus\Parser\ClassParserForPHP5_3());
 		$autoloader->addPath(__DIR__.'/../resources/nowarning/');
 		$this->assert->boolean($autoloader->autoload ('foo'))->isTrue();
 
@@ -533,7 +533,7 @@ class Autoloader extends atoum\test {
 
     public function testAutoloaderSetGetCachePath()
     {
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert->variable($autoloader->getCachePath())->isNull();
         $autoloader->setCachePath('/tmp/');
         $this->assert->string($autoloader->getCachePath())->isEqualTo('/tmp/');
@@ -541,7 +541,7 @@ class Autoloader extends atoum\test {
 
     public function testAutoloaderSetGetSilentSameFile()
     {
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
                     ->object($autoloader->setSilentDuplicatesInSameFile(false))
                         ->isIdenticalTo($autoloader)
@@ -555,7 +555,7 @@ class Autoloader extends atoum\test {
 
     public function testAutoloaderSetGetSilentDifferentFiles ()
     {
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
                     ->object($autoloader->setSilentDuplicatesInDifferentFiles(false))
                         ->isIdenticalTo($autoloader)
@@ -569,7 +569,7 @@ class Autoloader extends atoum\test {
 
     public function testAutoloaderSilentDefaultValues ()
     {
-        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\ClassParserForPHP5_3());
+        $autoloader = new \Oktopus\Autoloader (null, new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert->boolean($autoloader->getSilentDuplicatesInSameFile())
             ->isFalse();
         $this->assert->boolean($autoloader->getSilentDuplicatesInDifferentFiles())

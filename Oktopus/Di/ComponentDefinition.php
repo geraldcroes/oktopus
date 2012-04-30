@@ -1,13 +1,5 @@
 <?php
-namespace Oktopus;
-
-/**
- * Base exception for container component definition exception
- * @package Oktopus
- */
-class ComponentDefinitionException extends \Exception
-{
-}
+namespace Oktopus\Di;
 
 /**
  * Component definition

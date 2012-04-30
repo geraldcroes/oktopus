@@ -1,45 +1,17 @@
 <?php
-namespace Oktopus;
+namespace Oktopus\Di;
 
 use \Closure;
 
 
 /**
- * Interface for Oktopus Containers
- * @package Oktopus
- */
-interface IContainer
-{
-    public function get ($pId);
-    public function hasComponent($pId);
-}
-
-/**
- * Interface for containers where you can add / update definitions
- * @package Oktopus
- */
-interface IMutableContainer extends IContainer
-{
-    public function define ($pId, $pClassName = null);
-    public function getDefinition ($pId);
-}
-
-/**
- * Base Exception class for container operations
- * @package Oktopus
- */
-class ContainerException extends \Exception
-{
-}
-
-/**
  * Container
  * @package Oktopus
  */
-class Container implements IMutableContainer
+class BasicContainer implements MutableContainer
 {
     private $_componentDefinitions = array();
-    
+
     private $_components = array();
 
     public function define ($pId, $pClassName = null)
@@ -77,18 +49,18 @@ class Container implements IMutableContainer
         return $toReturn;
     }
 
-    public function hasComponent ($pId) 
+    public function hasComponent ($pId)
     {
         return array_key_exists($pId, $this->_componentDefinitions);
     }
-    
+
     public function _create (ComponentDefinition $pDefinition)
     {
         //TODO : We should try / catch the method calls and properties
         //       to avoid a __destruct call in the constructed object
-        //       destruction that could makes use of the injected 
+        //       destruction that could makes use of the injected
         //       properties & elements.
-        
+
         if ($pDefinition->hasFactory()) {
         	$args = array();
         	$factory = $pDefinition->getFactory();
@@ -151,7 +123,7 @@ class Container implements IMutableContainer
             }
             $reflectionProperty->setValue($object, $value);
         }
-        
+
         //Calling methods
         foreach ($pDefinition->getMethods() as $methodName=>$parameters) {
         	$args = array();
@@ -178,5 +150,5 @@ class Container implements IMutableContainer
 
         //Calling the configurator
         return $object;
-    }    
+    }
 }
