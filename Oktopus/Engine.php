@@ -10,6 +10,15 @@
  */
 namespace Oktopus;
 
+require_once __DIR__ . '/Exception.php';
+require_once __DIR__ . '/Autoloader.php';
+require_once __DIR__ . '/AutoloaderException.php';
+require_once __DIR__ . '/Parser/ClassParser.php';
+require_once __DIR__ . '/Parser/ClassParserForPhp5_3.php';
+require_once __DIR__ . '/ClassCollection/ClassCollection.php';
+require_once __DIR__ . '/ClassCollection/KnownClassCollection.php';
+require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
+
 use Oktopus\Parser\ClassParser,
     Oktopus\Parser\ClassParserForPhp5_3,
     Oktopus\Di\ContainerXMLLoader,
@@ -31,51 +40,18 @@ class Engine
     const VERSION = '0.1';
 
     /**
-     * Includes the base class for Oktopus
-     * 
-     * In debug mode, Oktopus will add its own error and exception handlers.
-     * 
-     * @param string $pTmpPath the temporary path
-     * @param int    $pMode    the mode the Parser will be in (Engine::MODE_DEBUG,
-     *                         Engine::MODE_PRODUCTION), default is DEBUG
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @see Oktopus\Engine::MODE_PRODUCTION
-     * @see Oktopus\Engine::MODE_DEBUG
-     * @see Oktopus\Engine::MODE_RESET
-     * @see Oktopus\Debug
-     */
-    public static function start ()
-    {
-        if (self::$_autoloader === false) {
-            require_once __DIR__ . '/Exception.php';
-            require_once __DIR__ . '/Autoloader.php';
-            require_once __DIR__ . '/AutoloaderException.php';
-            require_once __DIR__ . '/Parser/ClassParser.php';
-            require_once __DIR__ . '/Parser/ClassParserForPhp5_3.php';
-            require_once __DIR__ . '/ClassCollection/ClassCollection.php';
-            require_once __DIR__ . '/ClassCollection/KnownClassCollection.php';
-            require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
-
-            self::$_autoloader = new Autoloader();
-            self::$_autoloader->addPath(__DIR__, true)->register();
-        }
-    }
-
-    /**
      * The Parser Autoloader instance
      * 
      * @var Autoloader
      */
-    private static $_autoloader = false;
+    private static $autoloader = false;
 
     /**
      * The Oktopus Container
      *
      * @var Container
      */
-    private static $_container = false;
+    private static $container = false;
 
     /**
      * Gets the Engine Autoloader instance
@@ -84,12 +60,11 @@ class Engine
      */
     public static function autoloader ()
     {
-        if (self::$_autoloader === false) {
-            throw new AutoloaderException (
-                'The Engine Autoloader is not ready, you have to call Oktopus\\Engine::start () before'
-            );
+        if (self::$autoloader === false) {
+            self::$autoloader = new Autoloader();
+            self::$autoloader->addPath(__DIR__, true);
         }
-        return self::$_autoloader;
+        return self::$autoloader;
     }
     
     /**
@@ -99,9 +74,9 @@ class Engine
      */
     public static function container ()
     {
-        if (self::$_container === false) {
-            self::$_container = new ContainerXMLLoader(new BasicContainer());
+        if (self::$container === false) {
+            self::$container = new ContainerXMLLoader(new BasicContainer());
         }
-        return self::$_container;
+        return self::$container;
     }
 }

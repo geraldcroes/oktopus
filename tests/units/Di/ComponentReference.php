@@ -1,7 +1,7 @@
 <?php
 namespace Oktopus\Di\tests\units;
 
-require __DIR__.'/../../bootstrap.php';
+require_once __DIR__.'/../../bootstrap.php';
 
 use \mageekguy\atoum;
 use \Oktopus\Container;
