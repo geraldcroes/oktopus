@@ -2,9 +2,6 @@
 namespace Oktopus\Di\tests\units;
 
 require __DIR__.'/../../bootstrap.php';
-require_once __DIR__ . '/../../../Oktopus/Di/ComponentReference.php';
-require_once __DIR__ . '/../../../Oktopus/Di/Container.php';
-require_once __DIR__ . '/../../../Oktopus/Di/BasicContainer.php';
 
 use \mageekguy\atoum;
 use \Oktopus\Container;

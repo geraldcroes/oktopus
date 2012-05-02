@@ -3,16 +3,6 @@ namespace Oktopus\Di\tests\units;
 
 require __DIR__.'/../../bootstrap.php';
 
-require_once __DIR__ . '/../../../Oktopus/Exception.php';
-require_once __DIR__ . '/../../../Oktopus/Di/ComponentDefinition.php';
-require_once __DIR__ . '/../../../Oktopus/Di/ComponentReference.php';
-require_once __DIR__ . '/../../../Oktopus/Di/Container.php';
-require_once __DIR__ . '/../../../Oktopus/Di/MutableContainer.php';
-require_once __DIR__ . '/../../../Oktopus/Di/BasicContainer.php';
-require_once __DIR__ . '/../../../Oktopus/Di/ContainerXmlLoader.php';
-require_once __DIR__ . '/../../../Oktopus/Di/ContainerException.php';
-require_once __DIR__ . '/../../../Oktopus/Di/ComponentDefinitionException.php';
-
 use \mageekguy\atoum;
 use \Oktopus;
 

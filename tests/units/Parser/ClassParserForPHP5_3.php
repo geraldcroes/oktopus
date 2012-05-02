@@ -2,8 +2,6 @@
 namespace Oktopus\Parser\tests\units;
 
 require __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/../../../Oktopus/Parser/ClassParser.php';
-require_once __DIR__ . '/../../../Oktopus/Parser/ClassParserForPhp5_3.php';
 
 use \mageekguy\atoum;
 

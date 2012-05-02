@@ -2,16 +2,17 @@
 namespace Oktopus\tests\units;
 
 require_once __DIR__ . '/../mageekguy.atoum.phar';
+
 require_once __DIR__ . '/../../Oktopus/Exception.php';
 require_once __DIR__ . '/../../Oktopus/AutoloaderException.php';
 require_once __DIR__ . '/../../Oktopus/Engine.php';
 require_once __DIR__ . '/../../Oktopus/Parser/ClassParser.php';
 require_once __DIR__ . '/../../Oktopus/Parser/ClassParserForPhp5_3.php';
+require_once __DIR__ . '/../../Oktopus/Autoloader.php';
 require_once __DIR__ . '/../../Oktopus/Di/Container.php';
 require_once __DIR__ . '/../../Oktopus/Di/MutableContainer.php';
 require_once __DIR__ . '/../../Oktopus/Di/ContainerXmlLoader.php';
 require_once __DIR__ . '/../../Oktopus/Di/BasicContainer.php';
-
 
 use \mageekguy\atoum;
 
@@ -22,31 +23,18 @@ class Engine extends atoum\test {
         $this->assert
                 ->exception(function(){\Oktopus\Engine::autoloader();})
                 ->isInstanceOf('\exception');
-
-        //should raise an exception as the second argument is not a known mode
-        $this->assert
-                ->exception(function(){\Oktopus\Engine::start ('/tmp/', 56756785678567856785678);})
-                ->isInstanceOf('\exception');
 	}
 
 	public function testContainer ()
 	{
-        \Oktopus\Engine::start('/tmp/');
+        \Oktopus\Engine::start();
 
         $this->assert
                 ->object(\Oktopus\Engine::container())
                 ->isInstanceOf('\Oktopus\Di\Container');
 
         \Oktopus\Engine::autoloader()->unregister();
-        \Oktopus\Engine::start ('/tmp/', \Oktopus\Engine::MODE_PRODUCTION);
-        $this->assert->variable(\Oktopus\Engine::getMode())
-                         ->isEqualTo(\Oktopus\Engine::MODE_PRODUCTION);
 	}
-
-    public function testGetTemporaryFilePath()
-    {
-        $this->assert->variable(\Oktopus\Engine::getTemporaryFilesPath())->isNull();
-    }
 
     public function testGetAutoloader ()
     {
@@ -59,25 +47,7 @@ class Engine extends atoum\test {
         \Oktopus\Engine::start('/tmp/');
         $this->assert
                 ->object(\Oktopus\Engine::autoloader())
-                ->isInstanceOf('\Oktopus\Autoloader')
-                ->string(\Oktopus\Engine::autoloader()->getCachePath())
-                ->isEqualTo(\Oktopus\Engine::getTemporaryFilesPath());
-    }
-
-    /**
-     * Test the Parser autoloader (maybe we should move this test into the Engine test class)
-     */
-    public function testEngineAutoloader (){
-        \Oktopus\Engine::start('/tmp/');
-        //Check that the Parser autoloader has the Oktopus temporary files path configured
-        $this->assert
-                   ->string(\Oktopus\Engine::getTemporaryFilesPath ())
-                   ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
-
-        //check that the Parser reports changes to the temporary path...
-        \Oktopus\Engine::setTemporaryFilesPath(null);
-        $this->assert
-                ->variable(\Oktopus\Engine::getTemporaryFilesPath ())
-                ->isEqualTo(\Oktopus\Engine::autoloader()->getCachePath ());
+                    ->isInstanceOf('\Oktopus\Autoloader')
+                    ->isIdenticalTo(\Oktopus\Engine::autoloader());
     }
 }

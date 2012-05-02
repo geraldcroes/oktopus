@@ -24,40 +24,12 @@ use Oktopus\Parser\ClassParser,
 class Engine
 {
     /**
-     * The RESET mode of Oktopus (delete every cache files on initialization)
-     */
-    const MODE_RESET = -1;
-
-    /**
-     * The DEBUG mode of Oktopus
-     */
-    const MODE_DEBUG = 0;
-
-    /**
-     * The production mode of Oktopus
-     */
-    const MODE_PRODUCTION = 1;
-
-    /**
      * The Oktopus Version
      *
      * @var string
      */
     const VERSION = '0.1';
 
-    /**
-     * The charset of Oktopus
-     */
-    public static $charset = 'utf-8';
-
-    /**
-     * Configured mode for Oktopus
-     * 
-     * @see Oktopus\Engine::MODE_DEBUG
-     * @see Oktopus\Engine::MODE_PRODUCTION
-     */
-    private static $_mode;
-    
     /**
      * Includes the base class for Oktopus
      * 
@@ -74,55 +46,21 @@ class Engine
      * @see Oktopus\Engine::MODE_RESET
      * @see Oktopus\Debug
      */
-    public static function start ($pTmpPath, $pMode = self::MODE_DEBUG)
+    public static function start ()
     {
-        require_once __DIR__ . '/Exception.php';
-        require_once __DIR__ . '/Autoloader.php';
-        require_once __DIR__ . '/AutoloaderException.php';
-        require_once __DIR__ . '/Parser/ClassParser.php';
-        require_once __DIR__ . '/Parser/ClassParserForPhp5_3.php';
+        if (self::$_autoloader === false) {
+            require_once __DIR__ . '/Exception.php';
+            require_once __DIR__ . '/Autoloader.php';
+            require_once __DIR__ . '/AutoloaderException.php';
+            require_once __DIR__ . '/Parser/ClassParser.php';
+            require_once __DIR__ . '/Parser/ClassParserForPhp5_3.php';
+            require_once __DIR__ . '/ClassCollection/ClassCollection.php';
+            require_once __DIR__ . '/ClassCollection/KnownClassCollection.php';
+            require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
 
-        if (!in_array($pMode, array(self::MODE_DEBUG, self::MODE_PRODUCTION, self::MODE_RESET))) {
-            throw new \InvalidArgumentException(
-                'Unknown start mode, you can start the Parser using Oktopus\Engine::MODE_DEBUG '.
-                'or Oktopus\Engine::MODE_PRODUCTION'
-            );
-        } else {
-            self::$_mode = $pMode;
+            self::$_autoloader = new Autoloader();
+            self::$_autoloader->addPath(__DIR__, true)->register();
         }
-
-        self::$_temporaryFilesPath = $pTmpPath;
-
-        self::$_autoloader = new Autoloader($pTmpPath, new ClassParserForPHP5_3());
-        self::$_autoloader->addPath(__DIR__, true)->register();
-    }
-
-    /**
-     * The temporary files path
-     * 
-     * @var string
-     */
-    private static $_temporaryFilesPath;
-
-    /**
-     * Gets the Temporary Files path
-     * 
-     * @return string
-     */
-    public static function getTemporaryFilesPath ()
-    {
-        return self::$_temporaryFilesPath;
-    }
-
-    /**
-     * Sets the temporary files path
-     *
-     * @param string $pTmpPath the path to set
-     */
-    public static function setTemporaryFilesPath ($pTmpPath)
-    {
-        self::$_temporaryFilesPath = $pTmpPath;
-        self::autoloader()->setCachePath($pTmpPath);
     }
 
     /**
@@ -131,6 +69,13 @@ class Engine
      * @var Autoloader
      */
     private static $_autoloader = false;
+
+    /**
+     * The Oktopus Container
+     *
+     * @var Container
+     */
+    private static $_container = false;
 
     /**
      * Gets the Engine Autoloader instance
@@ -148,13 +93,6 @@ class Engine
     }
     
     /**
-     * The Oktopus Container
-     * 
-     * @var Container
-     */
-    private static $_container = false;
-
-    /**
      * Gets the Oktopus Container
      * 
      * @return Container
@@ -165,20 +103,5 @@ class Engine
             self::$_container = new ContainerXMLLoader(new BasicContainer());
         }
         return self::$_container;
-    } 
-
-    /**
-     * Gets the configured mode for Oktopus
-     * 
-     * @see Engine::MODE_DEBUG
-     * @see Engine::MODE_PRODUCTION
-     * @see Engine::MODE_RESET
-     * @see Engine::start ();
-     * 
-     * @return int
-     */
-    public static function getMode ()
-    {
-        return self::$_mode;
     }
 }

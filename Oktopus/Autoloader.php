@@ -1,63 +1,43 @@
 <?php
 namespace Oktopus;
 
-use Oktopus\Parser\ClassParser;
+use Oktopus\Parser\ClassParser,
+    Oktopus\Parser\ClassParserForPhp5_3,
+    Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection,
+    Oktopus\ClassCollection\ClassCollection;
 
 /**
- * Main Oktopus Autoloader
+ * Autoloader from ClassCollections
+ *
  * @package Oktopus
+ * @author  Gérald Croës <gerald@croes.org>
  */
 class Autoloader
 {
     /**
-     * The name of the index in the cache for classes
+     * @var \SplObjectStorage
      */
-    const CLASSES_INDEX = 'c';
+    protected $classCollection;
 
     /**
-     * The name of the index in the cache for timestamps
+     * Constructor
      */
-    const TIMESTAMP_INDEX = 't';
-
-    /**
-     * Construct
-     *
-     * @param string       $pTmpPath     the path where to store the cache files
-     * @param ClassParser $pClassParser the class Parser to find classes in PHPFiles.
-     */
-    public final function __construct ($pTmpPath, ClassParser $pClassParser)
+    public function __construct()
     {
-        $this->classParser = $pClassParser;
-        $this->setCachePath($pTmpPath);
+        $this->classCollection = new \SplObjectStorage();
     }
-
-    /**
-     * Gets the configured cache path
-     *
-     * @return string
-     */
-    public function getCachePath ()
-    {
-        return $this->_cachePath;
-    }
-
-    /**
-     * The class Parser Oktopus will use
-     * @var ClassParser
-     */
-    private $classParser;
 
     /**
      * Register the autoloader to the stack
      *
-     * @throws Exception if the autoloader is already registered
+     * @throws AutoloaderException if the autoloader is already registered
      *
-     * @return Autoloader
+     * @return Oktopus\Autoloader
      */
-    public function register ()
+    public function register()
     {
         if ($this->isRegistered()) {
-            throw new AutoloaderException('Oktopus\Autoloader is already registered');
+            throw new AutoloaderException('This Oktopus\Autoloader is already registered');
         } else {
             spl_autoload_register(array($this, 'autoload'));
         }
@@ -66,10 +46,13 @@ class Autoloader
 
     /**
      * Remove Autoloader from the autoload stack
+     *
+     * @return Oktopus\Autoloader
      */
-    public function unregister ()
+    public function unregister()
     {
         spl_autoload_unregister(array($this, 'autoload'));
+        return $this;
     }
 
     /**
@@ -77,7 +60,7 @@ class Autoloader
      *
      * @return boolean
      */
-    public function isRegistered ()
+    public function isRegistered()
     {
         if (($stack = spl_autoload_functions()) !== false) {
             foreach ($stack as $autoloadDescription) {
@@ -92,337 +75,60 @@ class Autoloader
     }
 
     /**
-     * The cache path on the file system to store the previously parsed classes
+     * Adds a collection for the autoload to look into while autoloading classes
      *
-     * @var string
+     * @param ClassCollection $pCollection the collection you wish to add to the autoload stack
+     *
+     * @return Oktopus\Autoload
      */
-    private $_cachePath;
-
-    /**
-     * Defines the cache where Oktopus\Autoload can write cache files
-     *
-     * @param string $pTmp the path where to store cache files
-     *
-     * @throws AutoloaderException if the given path is not writable
-     *
-     * @return Autoloader
-     */
-    public function setCachePath ($pTmp)
+    public function addClassCollection(ClassCollection $pCollection)
     {
-        if ($pTmp !== null) {
-            if (! file_exists($pTmp)) {
-                if (@mkdir($pTmp, 0755, true) === false) {
-                    throw new AutoloaderException('Cannot create the given CachePath ['.$pTmp.']');
-                }
-            } elseif (!is_writable($pTmp)) {
-                throw new AutoloaderException('Cannot write in given CachePath directory ['.$pTmp.']');
-            }
-        }
-        $this->_cachePath = ($pTmp !== null && substr($pTmp, -1) !== '/') ? $pTmp.'/' : $pTmp;
+        $this->classCollection->attach($pCollection);
         return $this;
     }
 
     /**
-     * Known classes by directories
-     *
-     * @var array
+     * @param $pDirectory string the directory where the phpfiles are located
+     * @param $pRecursive bool   if subdirectories should be parsed
      */
-    private $_directoryClasses = array ();
-
-    /**
-     * Loads the Directory classes
-     *
-     * Check if the cache file exists, then check its content (debug mode) and compiles if needed
-     *
-     * @param string  $pDirectoryName the directory name we want to compile
-     * @param boolean $pRecurse       if we want to find files recursively into the given path
-     * @param boolean $pForce         if true, will look for files and compile every data without checking
-     *                                the cache files.
-     * @param boolean $pCheckFiles    if true, will check the MTime of each files to know if we
-     *                                should re-check for its classes, and will check for new / removed files.
-     */
-    private function _loadDirectoryClasses ($pDirectoryName, $pRecurse, $pForce = false, $pCheckFiles = true)
+    public function addPath($pDirectory, $pRecursive = true)
     {
-        //Can we find the directory index ?
-        $classes = array();
-        $listHasChanged = false;
-
-        //If we did not asks to force the autoload to look for classes, we'll include the cache if it exists
-        $cacheFileName = $this->_makeFileName($pDirectoryName, $pRecurse);
-        if ($pForce === false && is_readable($cacheFileName)) {
-            require $cacheFileName;
-            $this->_directoryClasses[$pDirectoryName] = $allClasses;
-
-            //we'll get directoryIndex in the included file
-            //we'll also get the classes by files
-            if ($pCheckFiles === false) {
-                //We were asked to just load the file if it exists.... exiting
-                return;
-            }
-        }
-
-        //Prepare the iterator to compile all the directory classes
-        if ($pRecurse) {
-            $directories = new \RegexIterator(
-                new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($pDirectoryName)
-                ), '/^.*\.php$/i'
+        //recursive or not ?
+        if ($pRecursive) {
+            $baseIterator = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($pDirectory)
             );
         } else {
-            $directories = new \RegexIterator(new \DirectoryIterator($pDirectoryName), '/^.*\.php$/i');
+            $baseIterator = new \DirectoryIterator($pDirectory);
         }
 
-        //We iterate in the directories to find its files...
-        foreach ($directories as $fileName) {
-            if (!array_key_exists($fileName->getPathName(), $classes)) {
-                //The file is not registered in the directory index, we have to analyze the new file
-                $haveToAnalyzeFile = true;
-            } elseif ($classes[$fileName->getPathName()][self::TIMESTAMP_INDEX] < $fileName->getMTime()) {
-                //The file is not up to date, we have to analyze.
-                $haveToAnalyzeFile = true;
-            } else {
-                //The file is up to date and is in the directoryIndex
-                $haveToAnalyzeFile = false;
-            }
+        //only parsing php files.
+        $baseIterator = new \RegexIterator($baseIterator, '/^.*\.php$/i');
+        $this->addClassCollection(new DirectoryIteratorAdaptatorForClassCollection(
+                $baseIterator,
+                new ClassParserForPHP5_3()
+            )
+        );
 
-            //So we have to analyze the file ?
-            if ($haveToAnalyzeFile) {
-                $classes[$fileName->getPathName()][self::CLASSES_INDEX] = $this->classParser->find($fileName->getPathName());
-                $classes[$fileName->getPathName()][self::TIMESTAMP_INDEX] = $fileName->getMTime();
-                $analyzedFiles[$fileName->getPathName()] = true;
-                $listHasChanged = true;
-            } else {
-                $analyzedFiles[$fileName->getPathName()] = false;
-            }
-        }
-
-        //if we had to check the content of the index, we'll now have to iterate through the old index to find
-        // if there are no missing classes.
-        $toRemoveFiles = array();
-        foreach ($classes as $filePathName=>$informations) {
-            //The file has just been checked or is up to date ?
-            if (isset ($analyzedFiles[$filePathName])) {
-                //nothing to do, the file was found in the directories
-                continue;
-            }
-
-            //the file does not exists anymore ? (only reason or it would have been in the iterated elements)
-            $toRemoveFiles[] = $filePathName;
-        }
-
-        //We're gonna remove old files from classes.
-        if (count($toRemoveFiles)) {
-            $listHasChanged = true;
-            foreach ($toRemoveFiles as $fileName) {
-                if (isset($classes[$fileName])) {
-                    unset($classes[$fileName]);
-                }
-                unset($classes[$fileName]);
-            }
-        }
-
-        //Nothing changed.... ne need to go further
-        if (! $listHasChanged) {
-            return;
-        }
-
-        //now we're gonna make a direct access array to get the files.
-        $allClasses = array ();
-        foreach ($classes as $fileName=>$classesInFileName) {
-            foreach ($classesInFileName[self::CLASSES_INDEX] as $className) {
-                $className = strtolower($className);
-                if (isset($allClasses[$className])) {
-                    if (is_array($allClasses[$className])) {
-                        if (!in_array($fileName, $allClasses[$className], true)) {
-                            $allClasses[$className][] = $fileName;
-                        }
-                    } else {
-                        if ($allClasses[$className] !== $fileName) {
-                            $allClasses[$className] = array($allClasses[$className], $fileName);
-                        }
-                    }
-                } else {
-                    $allClasses[$className] = $fileName;
-                }
-            }
-        }
-
-        $this->_saveInCache($classes, $allClasses, $cacheFileName);
-        $this->_directoryClasses[$pDirectoryName] = $allClasses;
+        return $this;
     }
 
     /**
-     * Makes the cache file name for the given directory
+     * The autoload itself
      *
-     * @param string $pDirectoryName
-     * @param string $pRecurse
+     * @param $pClassName the classname to autoload
      *
-     * @return null|string null if no cachePath was given, or a filepath for the cache file
+     * @return bool
      */
-    private function _makeFileName ($pDirectoryName, $pRecurse)
+    public function autoload($className)
     {
-        if ($this->_cachePath !== null) {
-/*            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).
-                   substr(realpath($pDirectoryName).'index.php', (strtoupper(substr(php_uname(), 0, 3)) === "WIN") ? 3 : 1);*/
-            return $this->_cachePath.'autoload/'.($pRecurse ? '_R_' : '' ).strtr($pDirectoryName, './\\', '_~|').'.php';
-        }
-        return null;
-    }
-
-    /**
-     * Saves the classes in the cache path
-     *
-     * If the cache file cannot be created, will launch an exception
-     *
-     * @param array  $classes         classes by files $classes[filename] = array of classes
-     * @param array  $allClasses      all classes by names $classname[name] = array of files
-     * @param string $fileName        the file name we will write the cache data in
-     *
-     * @throws AutoloaderException
-     */
-    private function _saveIncache ($classes, $allClasses, $fileName)
-    {
-        if ($fileName !== null) {
-            $toSave = '<?php $classes = '.var_export($classes, true).';';
-            $toSave .= '$allClasses = '.var_export($allClasses, true).';';
-
-            if (!file_exists(dirname($fileName))) {
-                if (@mkdir(dirname($fileName), 0755, true) === false) {
-                    throw new AutoloaderException('Cannot create cache directory '.dirname($fileName));
-                }
-            }
-
-            if (@file_put_contents($fileName, $toSave, \LOCK_EX) === false) {
-                throw new AutoloaderException('Cannot write cache file '.$fileName);
+        $className = strtolower($className);
+        foreach ($this->classCollection as $collection) {
+            if (($filename = $collection->getPath($className)) !== null) {
+                include_once $filename;
+                return true;
             }
         }
-    }
-
-    /**
-     * Trys to find a class
-     *
-     * @param string $pClassName the class name to find
-     *
-     * @return boolean (the class was found true, or not false)
-     */
-    public function autoload ($pClassName, $pAnalyzeChangedFiles = false)
-    {
-        $pClassName = strtolower($pClassName);
-        foreach ($this->_directories as $name=>$recurse) {
-            if (isset ($this->_directoryClasses[$name])
-                && isset ($this->_directoryClasses[$name][$pClassName])) {
-                if (! $this->_includeDirectoryClass($name, $pClassName)) {
-                    //We couldn't include the class (maybe the file was deleted....
-                    //We have to compile the file again.
-                    $this->_loadDirectoryClasses($name, $recurse, true);
-                    if ($this->_includeDirectoryClass($name, $pClassName)) {
-                        //founded, return
-                        return true;
-                    }//else we continue..... maybe the class is in another directory now
-                } else {
-                    return true;
-                }
-            } else {
-                $this->_loadDirectoryClasses($name, $recurse, false, $pAnalyzeChangedFiles);
-                //we check if the class has been found
-                if ($this->_includeDirectoryClass($name, $pClassName)) {
-                    //founded, return
-                    return true;
-                }
-            }
-        }
-
-        //did not find the class.... if in developpment, we'll redo the autoload
-        //asking for an analyzing of files in the directories.
-        //In a production environnement, we want the autoloader to trust its cached files
-        // (to avoid the situation where multiple autoloaders check every files....)
-        if ((!$pAnalyzeChangedFiles) && (Engine::getMode() !== Engine::MODE_PRODUCTION)) {
-            return $this->autoload($pClassName, true);
-        }
-
-        //there are no class that match at all
         return false;
     }
-
-    /**
-     * We call this method when we are absolutely sure that
-     *
-     * @param string $pDirectory the path of the directory where the class should exist
-     * @param string $pClassName the classname to include
-     *
-     * @return boolean
-     */
-    private function _includeDirectoryClass ($pDirectory, $pClassName)
-    {
-        if (! isset ($this->_directoryClasses[$pDirectory][$pClassName])) {
-            return false;
-        }
-        if (is_array($this->_directoryClasses[$pDirectory][$pClassName])) {
-            $classFile = $this->_directoryClasses[$pDirectory][$pClassName][0];
-        } else {
-            $classFile = $this->_directoryClasses[$pDirectory][$pClassName];
-        }
-        if (is_readable($classFile)) {
-            include_once $classFile;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Adds a path to look for classes
-     *
-     * @param string  $pDirectory  where to look for php files
-     * @param boolean $pRecursive  if we'll look recursively into the class tree
-     * @param boolean $pMustExists if addPath must check the existence of the directory or not.
-     *
-     * @throws AutoloaderException If $pMustExists and the directory is not readable
-     *
-     * @return Oktopus\Autoloader
-     */
-    public function addPath ($pDirectory, $pRecursive = true, $pMustExists = true)
-    {
-        if (! is_readable($pDirectory) && $pMustExists) {
-            //The directory must exists. Raise an exception.
-            throw new AutoloaderException('Cannot read from ['.$pDirectory.']');
-        } else {
-            $this->_directories[$pDirectory] = $pRecursive ? true : false;
-            return $this;
-        }
-    }
-
-    /**
-     * Gets the known classes
-     *
-     * @return array
-     */
-    public function getKnownClasses ()
-    {
-        $toReturn = array();
-        foreach ($this->_directoryClasses as $fileName=>$classes) {
-            if (count($classes)) {
-                $toReturn[$fileName] = array_keys($classes);
-            }
-        }
-        return $toReturn;
-    }
-
-    /**
-     * Includes every classes the autoloader may know
-     */
-    public function includesAll ()
-    {
-        foreach ($this->_directories as $name=>$recurse) {
-            $this->_loadDirectoryClasses($name, $recurse, true);
-        }
-    }
-
-    /**
-     * Current path where to look for classes
-     *
-     * @see Oktopus\Autoloader::addPath
-     * @var array
-     */
-    private $_directories = array ();
 }

@@ -2,7 +2,6 @@
 namespace Oktopus\ClassCollection\tests\units;
 
 require __DIR__ . '/../../bootstrap.php';
-require_once __DIR__ . '/../../../Oktopus/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
 
 use \mageekguy\atoum;
 use \Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection as DirectoryClassCollection;

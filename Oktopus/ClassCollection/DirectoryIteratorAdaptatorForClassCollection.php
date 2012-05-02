@@ -47,7 +47,7 @@ class DirectoryIteratorAdaptatorForClassCollection implements KnownClassCollecti
      */
     public function setSilentDuplicatesInSameFile($pSilent)
     {
-        $this->silentDuplicatesInSameFile = (boolean)$pSilent;
+        $this->silentDuplicatesInSameFile = (boolean) $pSilent;
         return $this;
     }
 
@@ -70,7 +70,7 @@ class DirectoryIteratorAdaptatorForClassCollection implements KnownClassCollecti
      */
     public function setSilentDuplicatesInDifferentFiles($pSilent)
     {
-        $this->silentDuplicatesInDifferentFile = (boolean)$pSilent;
+        $this->silentDuplicatesInDifferentFile = (boolean) $pSilent;
         return $this;
     }
 
