@@ -1,5 +1,5 @@
 <?php
-namespace Oktopus\Di;
+namespace Oktopus\Di\Container;
 
 use Oktopus\Exception;
 

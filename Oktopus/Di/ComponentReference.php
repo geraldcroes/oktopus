@@ -1,6 +1,8 @@
 <?php
 namespace Oktopus\Di;
 
+use Oktopus\Di\Container\Container;
+
 /**
  * The component reference.
  *

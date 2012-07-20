@@ -1,6 +1,6 @@
 <?php
-namespace Oktopus\Di\tests\units {
-    require_once __DIR__ . '/../../bootstrap.php';
+namespace Oktopus\Di\Container\tests\units {
+    require_once __DIR__ . '/../../../bootstrap.php';
 
     use \mageekguy\atoum;
     use \Oktopus;
@@ -28,7 +28,7 @@ namespace Oktopus\Di\tests\units {
         public function testBasicConstruction()
         {
             //Testing nested call in definition
-            $container = new \Oktopus\Di\BasicContainer();
+            $container = new \Oktopus\Di\Container\BasicContainer();
             $container->define('foo', 'foodi')
                 ->setProperty('_fooDirect', '_fooDirect')
                 ->setMethod('setFoo', array('foo'))
@@ -47,7 +47,7 @@ namespace Oktopus\Di\tests\units {
 
             //Testing multiple call of define in definition to assert it will add
             // element to the existing one
-            $container = new \Oktopus\Di\BasicContainer();
+            $container = new \Oktopus\Di\Container\BasicContainer();
             $container->define('foo')
                 ->setClass('foodi');
             $container->getDefinition('foo')
@@ -67,22 +67,22 @@ namespace Oktopus\Di\tests\units {
 
         public function testDoubleDefinition()
         {
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foo')
                 ->setClass('foodi');
             //Trying to define two objects with the same id should raise an error
             $this->assert->exception(function() use($container)
             {
                 $container->define('foo');
-            })->isInstanceOf('Oktopus\Di\ContainerException');
+            })->isInstanceOf('Oktopus\Di\Container\ContainerException');
         }
 
         public function testLazyConstruction()
         {
-            $this->mockGenerator->generate('\Oktopus\Di\tests\units\MockFoo');
-            $mockFoo = new \mock\Oktopus\Di\tests\units\MockFoo;
+            $this->mockGenerator->generate('\Oktopus\Di\Container\tests\units\MockFoo');
+            $mockFoo = new \mock\Oktopus\Di\Container\tests\units\MockFoo;
 
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foo', 'foodi')
                 ->setProperty('_fooDirect', function () use($mockFoo)
             {
@@ -148,9 +148,9 @@ namespace Oktopus\Di\tests\units {
 
 
             //Now testing with an unshared component
-            $mockFoo2 = new \mock\Oktopus\Di\tests\units\MockFoo;
+            $mockFoo2 = new \mock\Oktopus\Di\Container\tests\units\MockFoo;
 
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foo2', 'foodi')
                 ->setProperty('_fooDirect', function () use($mockFoo2)
             {
@@ -218,17 +218,17 @@ namespace Oktopus\Di\tests\units {
 
         public function testGettingNotSet()
         {
-            $container = new \Oktopus\Di\BasicContainer();
+            $container = new \Oktopus\Di\Container\BasicContainer();
             $this->assert->exception(function () use($container)
             {
                 $container->get('unset');
-            })->isInstanceOf('\Oktopus\Di\ContainerException');
+            })->isInstanceOf('\Oktopus\Di\Container\ContainerException');
         }
 
         public function testShared()
         {
             //Shared is set to true, container will distribute the same component
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foodi')
                 ->setConstructorArguments(array('foo1', 'foo2'))
                 ->setShared(true);
@@ -237,7 +237,7 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($foo)->isInstanceOf('foodi')->isIdenticalTo($foo2);
 
             //Shared is set to false, container will NOT distribute the same component
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foo', 'foodi')
                 ->setConstructorArguments(array('foo1', 'foo2'))
                 ->setShared(false);
@@ -252,7 +252,7 @@ namespace Oktopus\Di\tests\units {
         public function testEmptyConstructorAndMethodCalls()
         {
             //Setting no parameters to the constructor
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foo', 'foodi2')
                 ->setMethod('setFoo')
                 ->setConstructorArguments();
@@ -262,7 +262,7 @@ namespace Oktopus\Di\tests\units {
             $this->assert->string($foo->getFoo2())->isEqualTo('value of foo2');
 
             //Setting no parameters to the constructor
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foodi2')
                 ->setMethod('setFoo');
             $foo = $container->get('foodi2');
@@ -274,7 +274,7 @@ namespace Oktopus\Di\tests\units {
         public function testExternalFactory()
         {
             //With no parameters
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foodi2')
                 ->setMethod('setFoo')
                 ->setFactory(array('FooDi2Factory', 'getInstance'));
@@ -284,7 +284,7 @@ namespace Oktopus\Di\tests\units {
             $this->assert->string($foo->getFoo2())->isEqualTo('value of foo2');
 
             //With parameters
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foodi')
                 ->setMethod('setFoo', array('value'))
                 ->setFactory(array('FooDiFactory', 'getInstance'), array('value1', 'value2'));
@@ -299,7 +299,7 @@ namespace Oktopus\Di\tests\units {
             $mock = new \mock\MockFooForTest();
             $mock->getMockController()->getValue1 = 'value1';
 
-            $container = new Oktopus\Di\BasicContainer();
+            $container = new Oktopus\Di\Container\BasicContainer();
             $container->define('foodi')
                 ->setMethod('setFoo', array('value'))
                 ->setFactory(
@@ -327,10 +327,10 @@ namespace Oktopus\Di\tests\units {
 
         public function testWithSharedComponent()
         {
-            $container = new \Oktopus\Di\BasicContainer();
+            $container = new \Oktopus\Di\Container\BasicContainer();
 
             //Setting a shared instance
-            $container->define('UniqueInstance', '\Oktopus\Di\tests\units\UniqueInstance')
+            $container->define('UniqueInstance', '\Oktopus\Di\Container\tests\units\UniqueInstance')
                 ->setShared(true);
 
             $ui = $container->get('UniqueInstance');
@@ -338,7 +338,7 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($ui)->isIdenticalTo($ui2);
 
             //testing with a single reference in the same container
-            $container->define('UseUniqueInstance', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container->define('UseUniqueInstance', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance'))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance')))
                 ->setConstructorArguments(array(new \Oktopus\Di\ComponentReference('UniqueInstance')));
@@ -349,8 +349,8 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($useUniqueInstance->getUniqueInstance3())->isIdenticalTo($ui);
 
             //Testing with an a reference in another container
-            $container2 = new \Oktopus\Di\BasicContainer();
-            $container2->define('UseUniqueInstance', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container2 = new \Oktopus\Di\Container\BasicContainer();
+            $container2->define('UseUniqueInstance', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance', $container))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)))
                 ->setConstructorArguments(array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)));
@@ -362,10 +362,10 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($useUniqueInstance)->IsNotIdenticalTo($useUniqueInstance2);
 
             //Test using a factory and using unique instance in the same container
-            $container->define('UseUniqueInstance2', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container->define('UseUniqueInstance2', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance'))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance')))
-                ->setFactory(array('\Oktopus\Di\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance')));
+                ->setFactory(array('\Oktopus\Di\Container\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance')));
 
             $useUniqueInstance3 = $container->get('UseUniqueInstance2');
             $this->assert->object($ui)->isIdenticalTo($useUniqueInstance3->getUniqueInstance());
@@ -374,10 +374,10 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($useUniqueInstance)->isNotIdenticalTo($useUniqueInstance3);
 
             //test using a factory and using unique instance in another container
-            $container2->define('UseUniqueInstance2', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container2->define('UseUniqueInstance2', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance', $container))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)))
-                ->setFactory(array('\Oktopus\Di\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)));
+                ->setFactory(array('\Oktopus\Di\Container\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)));
 
             $useUniqueInstance4 = $container2->get('UseUniqueInstance2');
             $this->assert->object($useUniqueInstance4->getUniqueInstance())->isIdenticalTo($ui);
@@ -388,10 +388,10 @@ namespace Oktopus\Di\tests\units {
 
         public function testWithUnSharedComponent()
         {
-            $container = new \Oktopus\Di\BasicContainer();
+            $container = new \Oktopus\Di\Container\BasicContainer();
 
             //Setting a shared instance
-            $container->define('UniqueInstance', '\Oktopus\Di\tests\units\UniqueInstance')
+            $container->define('UniqueInstance', '\Oktopus\Di\Container\tests\units\UniqueInstance')
                 ->setShared(false);
 
             $ui = $container->get('UniqueInstance');
@@ -399,7 +399,7 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($ui)->isNotIdenticalTo($ui2);
 
             //testing with a single reference in the same container
-            $container->define('UseUniqueInstance', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container->define('UseUniqueInstance', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance'))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance')))
                 ->setConstructorArguments(array(new \Oktopus\Di\ComponentReference('UniqueInstance')));
@@ -410,8 +410,8 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($useUniqueInstance->getUniqueInstance3())->isNotIdenticalTo($ui);
 
             //Testing with an a reference in another container
-            $container2 = new \Oktopus\Di\BasicContainer();
-            $container2->define('UseUniqueInstance', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container2 = new \Oktopus\Di\Container\BasicContainer();
+            $container2->define('UseUniqueInstance', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance', $container))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)))
                 ->setConstructorArguments(array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)));
@@ -423,10 +423,10 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($useUniqueInstance)->isNotIdenticalTo($useUniqueInstance2);
 
             //Test using a factory and using unique instance in the same container
-            $container->define('UseUniqueInstance2', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container->define('UseUniqueInstance2', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance'))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance')))
-                ->setFactory(array('\Oktopus\Di\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance')));
+                ->setFactory(array('\Oktopus\Di\Container\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance')));
 
             $useUniqueInstance3 = $container->get('UseUniqueInstance2');
             $this->assert->object($useUniqueInstance3->getUniqueInstance())->isNotIdenticalTo($ui);
@@ -435,10 +435,10 @@ namespace Oktopus\Di\tests\units {
             $this->assert->object($useUniqueInstance)->isNotIdenticalTo($useUniqueInstance3);
 
             //test using a factory and using unique instance in another container
-            $container2->define('UseUniqueInstance2', '\Oktopus\Di\tests\units\UseUniqueInstance')
+            $container2->define('UseUniqueInstance2', '\Oktopus\Di\Container\tests\units\UseUniqueInstance')
                 ->setProperty('_uniqueInstance3', new \Oktopus\Di\ComponentReference('UniqueInstance', $container))
                 ->setMethod('setUniqueInstance2', array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)))
-                ->setFactory(array('\Oktopus\Di\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)));
+                ->setFactory(array('\Oktopus\Di\Container\tests\units\UseUniqueInstanceFactory', 'create'), array(new \Oktopus\Di\ComponentReference('UniqueInstance', $container)));
 
             $useUniqueInstance4 = $container2->get('UseUniqueInstance2');
             $this->assert->object($useUniqueInstance4->getUniqueInstance())->isNotIdenticalTo($ui);

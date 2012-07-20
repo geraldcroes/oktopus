@@ -1,18 +1,18 @@
 <?php
-namespace Oktopus\Di\tests\units;
+namespace Oktopus\Di\Container\tests\units;
 
-require_once __DIR__ . '/../../bootstrap.php';
+require_once __DIR__ . '/../../../bootstrap.php';
 
 use \mageekguy\atoum;
 use \Oktopus;
 
-Oktopus\Engine::autoloader()->addPath(__DIR__ . '/../../resources/container/');
+Oktopus\Engine::autoloader()->addPath(__DIR__ . '/../../../resources/container/');
 
 class XmlContainer extends atoum\test
 {
     public function testBasicLoading()
     {
-        $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/basics.xml');
+        $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/basics.xml');
 
         $this->assert->boolean($container->hasComponent('notInContainer'))->isFalse();
         $this->assert->boolean($container->hasComponent('Fruit'))->isTrue();
@@ -98,9 +98,9 @@ class XmlContainer extends atoum\test
         //Trying to add a non existant XML file should raise an error
         $this->assert
             ->exception(function () {
-                    $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fileDoesNotExists');
+                    $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fileDoesNotExists');
                 })
-                ->isInstanceOf('Oktopus\Di\ContainerException');
+                ->isInstanceOf('Oktopus\Di\Container\ContainerException');
     }
 
     public function testUnsetComponentId()
@@ -108,7 +108,7 @@ class XmlContainer extends atoum\test
         //Trying to load an XML file with a component that do not have an id should raise an exception
         $this->assert
             ->exception(function () {
-                    $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fail_unset_component_id.xml');
+                    $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fail_unset_component_id.xml');
                 })
                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
@@ -118,7 +118,7 @@ class XmlContainer extends atoum\test
         //Trying to load an XML file with a component that have a component with a missing property name should raise an exception
         $this->assert
             ->exception(function () {
-                $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fail_unset_property_name.xml');
+                $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fail_unset_property_name.xml');
                 })
                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
@@ -128,7 +128,7 @@ class XmlContainer extends atoum\test
         //Trying to load an XML file with a component that have a component with a missing property value should raise an exception
         $this->assert
             ->exception(function () {
-                $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fail_unset_property_value.xml');
+                $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fail_unset_property_value.xml');
             })
                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
@@ -138,7 +138,7 @@ class XmlContainer extends atoum\test
         //Trying to load an XML file with a component that have a component with a missing method name should raise an exception
         $this->assert
             ->exception(function () {
-                $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fail_unset_method_name.xml');
+                $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fail_unset_method_name.xml');
             })
                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
@@ -148,7 +148,7 @@ class XmlContainer extends atoum\test
         //Trying to load an XML file with a component that have a component with a missing factory classname attribute should raise an exception
         $this->assert
             ->exception(function () {
-                    $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fail_unset_factory_classname.xml');
+                    $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fail_unset_factory_classname.xml');
                 })
                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
@@ -158,7 +158,7 @@ class XmlContainer extends atoum\test
         //Trying to load an XML file with a component that have a component with a missing factory method attribute should raise an exception
         $this->assert
             ->exception(function () {
-                    $container = new Oktopus\Di\XmlContainer(__DIR__ . '/../../resources/container/fail_unset_factory_method.xml');
+                    $container = new Oktopus\Di\Container\XmlContainer(__DIR__ . '/../../../resources/container/fail_unset_factory_method.xml');
                 })
                     ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }

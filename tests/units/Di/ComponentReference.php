@@ -4,7 +4,7 @@ namespace Oktopus\Di\tests\units;
 require_once __DIR__ . '/../../bootstrap.php';
 
 use \mageekguy\atoum;
-use \Oktopus\Container;
+use \Oktopus\Di\Container\Container;
 
 class ComponentReference extends atoum\test
 {
@@ -20,7 +20,7 @@ class ComponentReference extends atoum\test
 
     public function testContainer()
     {
-        $container = new \Oktopus\Di\BasicContainer();
+        $container = new \Oktopus\Di\Container\BasicContainer();
         $componentReference = new \Oktopus\Di\ComponentReference('id', $container);
         $this->assert
             ->string($componentReference->getId())

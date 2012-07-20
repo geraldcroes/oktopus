@@ -1,5 +1,5 @@
 <?php
-namespace Oktopus\Di;
+namespace Oktopus\Di\Container;
 
 /**
  * Interface for containers where you can add / update definitions

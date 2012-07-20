@@ -1,20 +1,20 @@
 <?php
-namespace Oktopus\Di\tests\units;
+namespace Oktopus\Di\Container\tests\units;
 
-require_once __DIR__ . '/../../bootstrap.php';
+require_once __DIR__ . '/../../../bootstrap.php';
 
 use \mageekguy\atoum;
 use \Oktopus;
 
-Oktopus\Engine::autoloader()->addPath(__DIR__ . '/../../resources/container/');
+Oktopus\Engine::autoloader()->addPath(__DIR__ . '/../../../resources/container/');
 
 class ContainerXmlLoader extends atoum\test
 {
     public function testBasicLoading()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
-        $container->addXmlFile(__DIR__ . '/../../resources/container/basics.xml');
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
+        $container->addXmlFile(__DIR__ . '/../../../resources/container/basics.xml');
 
         $this->assert->boolean($container->hasComponent('notInContainer'))->isFalse();
         $this->assert->boolean($container->hasComponent('Fruit'))->isTrue();
@@ -97,97 +97,97 @@ class ContainerXmlLoader extends atoum\test
 
     public function testUnreadableFile()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
         //Trying to add a non existant XML file should raise an error
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fileDoesNotExists');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fileDoesNotExists');
         })
-            ->isInstanceOf('Oktopus\Di\ContainerException');
+            ->isInstanceOf('Oktopus\Di\Container\ContainerException');
     }
 
     public function testUnsetComponentId()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that do not have an id should raise an exception
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_component_id.xml');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fail_unset_component_id.xml');
         })
             ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
     public function testUnsetPropertyName()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing property name should raise an exception
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_property_name.xml');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fail_unset_property_name.xml');
         })
             ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
     public function testUnsetPropertyValue()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing property value should raise an exception
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_property_value.xml');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fail_unset_property_value.xml');
         })
             ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
     public function testUnsetMethodName()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing method name should raise an exception
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_method_name.xml');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fail_unset_method_name.xml');
         })
             ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
     public function testUnsetFactoryClassname()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing factory classname attribute should raise an exception
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_factory_classname.xml');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fail_unset_factory_classname.xml');
         })
             ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
     public function testUnsetFactoryMethod()
     {
-        $nakedContainer = new Oktopus\Di\BasicContainer();
-        $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
+        $nakedContainer = new Oktopus\Di\Container\BasicContainer();
+        $container = new Oktopus\Di\Container\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing factory method attribute should raise an exception
         $this->assert
             ->exception(function () use($container)
         {
-            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_factory_method.xml');
+            $container->addXmlFile(__DIR__ . '/../../../resources/container/fail_unset_factory_method.xml');
         })
             ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }

@@ -1,8 +1,10 @@
 <?php
-namespace Oktopus\Di;
+namespace Oktopus\Di\Container;
 
 use \Closure;
-
+use Oktopus\Di\ComponentDefinition,
+    Oktopus\Di\ComponentReference,
+    Oktopus\Di\ComponentDefinitionException;
 
 /**
  * Container

@@ -22,8 +22,8 @@ require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassColle
 
 use Oktopus\Parser\ClassParser,
 Oktopus\Parser\ClassParserForPhp5_3,
-Oktopus\Di\ContainerXMLLoader,
-Oktopus\Di\BasicContainer;
+Oktopus\Di\Container\ContainerXMLLoader,
+Oktopus\Di\Container\BasicContainer;
 
 /**
  * Main base class for Oktopus
