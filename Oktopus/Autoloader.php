@@ -4,7 +4,8 @@ namespace Oktopus;
 use Oktopus\Parser\ClassParser,
     Oktopus\Parser\ClassParserForPhp5_3,
     Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection,
-    Oktopus\ClassCollection\ClassCollection;
+    Oktopus\ClassCollection\ClassCollection,
+    Oktopus\ClassCollection\ClassCollectionCollection;
 
 /**
  * Autoloader from ClassCollections
@@ -15,7 +16,7 @@ use Oktopus\Parser\ClassParser,
 class Autoloader
 {
     /**
-     * @var \SplObjectStorage
+     * @var ClassCollectionCollection
      */
     protected $classCollection;
 
@@ -24,7 +25,7 @@ class Autoloader
      */
     public function __construct()
     {
-        $this->classCollection = new \SplObjectStorage();
+        $this->classCollection = new ClassCollectionCollection();
     }
 
     /**
@@ -83,7 +84,7 @@ class Autoloader
      */
     public function addClassCollection(ClassCollection $pCollection)
     {
-        $this->classCollection->attach($pCollection);
+        $this->classCollection->add($pCollection);
         return $this;
     }
 
@@ -104,11 +105,13 @@ class Autoloader
 
         //only parsing php files.
         $baseIterator = new \RegexIterator($baseIterator, '/^.*\.php$/i');
-        $this->addClassCollection(new DirectoryIteratorAdaptatorForClassCollection(
+        $this->addClassCollection($collection = new DirectoryIteratorAdaptatorForClassCollection(
                 $baseIterator,
                 new ClassParserForPHP5_3()
             )
         );
+        $collection->setSilentDuplicatesInDifferentFiles(true);
+        $collection->setSilentDuplicatesInSameFile(true);
 
         return $this;
     }
@@ -122,12 +125,9 @@ class Autoloader
      */
     public function autoload($className)
     {
-        $className = strtolower($className);
-        foreach ($this->classCollection as $collection) {
-            if (($filename = $collection->getPath($className)) !== null) {
-                include_once $filename;
-                return true;
-            }
+        if (($fileName = $this->classCollection->getPath(strtolower($className))) !== null) {
+           include_once $fileName;
+           return true;
         }
         return false;
     }

@@ -17,6 +17,7 @@ require_once __DIR__ . '/Parser/ClassParser.php';
 require_once __DIR__ . '/Parser/ClassParserForPhp5_3.php';
 require_once __DIR__ . '/ClassCollection/ClassCollection.php';
 require_once __DIR__ . '/ClassCollection/KnownClassCollection.php';
+require_once __DIR__ . '/ClassCollection/ClassCollectionCollection.php';
 require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
 
 use Oktopus\Parser\ClassParser,
