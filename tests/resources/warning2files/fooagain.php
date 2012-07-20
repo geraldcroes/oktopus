@@ -1,12 +1,15 @@
 <?php
-class Afoo {
-	
+class Afoo
+{
+
 }
 
-class Afoo {
-	
+class Afoo
+{
+
 }
 
-class Afoo2 {
+class Afoo2
+{
 
 }

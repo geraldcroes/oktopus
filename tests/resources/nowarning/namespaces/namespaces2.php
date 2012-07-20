@@ -1,20 +1,22 @@
 <?php
 namespace foo2;
 
-class foo {
+class foo
+{
 }
 
-class foo2 {
-	function test (){
-		new namespace\FooNotAClass ();
-	}
+class foo2
+{
+    function test()
+    {
+        new namespace\FooNotAClass ();
+    }
 }
 
-namespace 
+namespace
 
-foo3
+foo3;
 
-;
-
-class foo {
+class foo
+{
 }

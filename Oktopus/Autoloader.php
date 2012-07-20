@@ -2,10 +2,10 @@
 namespace Oktopus;
 
 use Oktopus\Parser\ClassParser,
-    Oktopus\Parser\ClassParserForPhp5_3,
-    Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection,
-    Oktopus\ClassCollection\ClassCollection,
-    Oktopus\ClassCollection\ClassCollectionCollection;
+Oktopus\Parser\ClassParserForPhp5_3,
+Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection,
+Oktopus\ClassCollection\ClassCollection,
+Oktopus\ClassCollection\ClassCollectionCollection;
 
 /**
  * Autoloader from ClassCollections
@@ -126,8 +126,8 @@ class Autoloader
     public function autoload($className)
     {
         if (($fileName = $this->classCollection->getPath(strtolower($className))) !== null) {
-           include_once $fileName;
-           return true;
+            include_once $fileName;
+            return true;
         }
         return false;
     }

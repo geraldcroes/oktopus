@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container>
- <!--  Will fail as id is not set -->
- <component id="EasyPrivate">
-   <property name="_property" />
- </component>
+    <!--  Will fail as id is not set -->
+    <component id="EasyPrivate">
+        <property name="_property"/>
+    </component>
 </container>

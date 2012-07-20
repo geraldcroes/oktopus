@@ -1,35 +1,35 @@
 <?php
 namespace Oktopus\Di\tests\units;
 
-require_once __DIR__.'/../../bootstrap.php';
+require_once __DIR__ . '/../../bootstrap.php';
 
 use \mageekguy\atoum;
 use \Oktopus;
 
-Oktopus\Engine::autoloader()->addPath(__DIR__.'/../../resources/container/');
+Oktopus\Engine::autoloader()->addPath(__DIR__ . '/../../resources/container/');
 
 class ContainerXmlLoader extends atoum\test
 {
-    public function testBasicLoading ()
+    public function testBasicLoading()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
-        $container->addXmlFile(__DIR__.'/../../resources/container/basics.xml');
+        $container->addXmlFile(__DIR__ . '/../../resources/container/basics.xml');
 
         $this->assert->boolean($container->hasComponent('notInContainer'))->isFalse();
         $this->assert->boolean($container->hasComponent('Fruit'))->isTrue();
         $this->assert->boolean($container->hasComponent('Apple'))->isTrue();
         $this->assert->boolean($container->hasComponent('Juicer'))->isTrue();
-        
+
         //creating objects
-        $apple  = $container->get('Apple');
+        $apple = $container->get('Apple');
         $juicer = $container->get('Juicer');
         $tool = $container->get('Tool');
         $this->assert->object($apple)->isIdenticalTo($juicer->getFruit());
         $this->assert->object($juicer->getTool())->isIdenticalTo($tool);
-        
+
         //creating unshared components
-        $fruit  = $container->get('Fruit');
+        $fruit = $container->get('Fruit');
         $fruit2 = $container->get('Fruit');
         $this->assert->object($fruit)->isNotIdenticalTo($fruit2);
 
@@ -38,15 +38,15 @@ class ContainerXmlLoader extends atoum\test
         $this->assert->object($juicer1)->isNotIdenticalTo($juicer);
         $this->assert->object($juicer1->getFruit())->isIdenticalTo($apple);
         $this->assert->object($juicer1->getTool())->isIdenticalTo($tool);
-        
+
         //creating an object with a simple value as its property
         $easyPrivate = $container->get('EasyPrivate');
         $this->assert->string($easyPrivate->getProperty())->isEqualTo('propertyValue');
-        
+
         //creating an object with a simple value as its property declared in a tag
         $easyPrivate1 = $container->get('EasyPrivate1');
         $this->assert->string($easyPrivate1->getProperty())->isEqualTo('propertyValue');
-        
+
         //creating an object with a simple empty value as its property declared in an attribute
         $easyPrivate2 = $container->get('EasyPrivate2');
         $this->assert->string($easyPrivate2->getProperty())->isEqualTo('');
@@ -54,7 +54,7 @@ class ContainerXmlLoader extends atoum\test
         //creating an object with a simple empty value as its property declared in a tag
         $easyPrivate3 = $container->get('EasyPrivate3');
         $this->assert->string($easyPrivate3->getProperty())->isEqualTo('');
-        
+
         //creating an object with a simple empty value as its property declared in a tag
         $easyPrivate4 = $container->get('EasyPrivate4');
         $this->assert->variable($easyPrivate4->getProperty())->isNull();
@@ -67,107 +67,128 @@ class ContainerXmlLoader extends atoum\test
         $constructedTwoArguments = $container->get('ConstructedTwoParameter');
         $this->assert->string($constructedTwoArguments->getFirst())->isEqualTo('one2');
         $this->assert->string($constructedTwoArguments->getSecond())->isEqualTo('two2');
-        
+
         //creating an object with a constructor with one argument and a method call and a property directly assigned
         $constructedOneArguments2 = $container->get('ConstructedOneParameter2');
         $this->assert->string($constructedOneArguments2->getFirst())->isEqualTo('one12');
         $this->assert->string($constructedOneArguments2->getMore())->isEqualTo('valueOfMore12');
         $this->assert->string($constructedOneArguments2->getMoreNoSetter())->isEqualTo('valueOfMoreNoSetter12');
-        
+
         //creating an object with a constructor with two arguments and a method call and a property directly assigned
         $constructedTwoArguments2 = $container->get('ConstructedTwoParameter2');
         $this->assert->string($constructedTwoArguments2->getFirst())->isEqualTo('one22');
         $this->assert->string($constructedTwoArguments2->getSecond())->isEqualTo('two22');
         $this->assert->string($constructedTwoArguments2->getMore())->isEqualTo('valueOfMore22');
         $this->assert->string($constructedTwoArguments2->getMore2())->isEqualTo('valueOfMore222');
-        
+
         //creating an object with a factory with no parameters
-        $constructedWithFactoryConstructedNoParameter  = $container->get('FactoryConstructedNoParameter');
+        $constructedWithFactoryConstructedNoParameter = $container->get('FactoryConstructedNoParameter');
         $this->assert->string($constructedWithFactoryConstructedNoParameter->getFirst())->isEqualTo('one');
         $this->assert->string($constructedWithFactoryConstructedNoParameter->getSecond())->isEqualTo('two');
 
         $constructedWithFactoryConstructedOneParameter = $container->get('FactoryConstructedOneParameter');
         $this->assert->string($constructedWithFactoryConstructedOneParameter->getFirst())->isEqualTo('one1');
         $this->assert->string($constructedWithFactoryConstructedOneParameter->getSecond())->isEqualTo('two1');
-                
+
         $constructedWithFactoryConstructedTwoParameter = $container->get('FactoryConstructedTwoParameter');
         $this->assert->string($constructedWithFactoryConstructedTwoParameter->getFirst())->isEqualTo('one2');
         $this->assert->string($constructedWithFactoryConstructedTwoParameter->getSecond())->isEqualTo('two2');
     }
-    
-    public function testUnreadableFile ()
+
+    public function testUnreadableFile()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
         //Trying to add a non existant XML file should raise an error
         $this->assert
-                ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fileDoesNotExists');})
-                ->isInstanceOf('Oktopus\Di\ContainerException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fileDoesNotExists');
+        })
+            ->isInstanceOf('Oktopus\Di\ContainerException');
     }
-    
-    public function testUnsetComponentId ()
+
+    public function testUnsetComponentId()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
-        
+
         //Trying to load an XML file with a component that do not have an id should raise an exception
         $this->assert
-                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fail_unset_component_id.xml');})
-                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_component_id.xml');
+        })
+            ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
-    
-    public function testUnsetPropertyName ()
+
+    public function testUnsetPropertyName()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
-        
+
         //Trying to load an XML file with a component that have a component with a missing property name should raise an exception
         $this->assert
-                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fail_unset_property_name.xml');})
-                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_property_name.xml');
+        })
+            ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
-    public function testUnsetPropertyValue ()
+    public function testUnsetPropertyValue()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
-        
+
         //Trying to load an XML file with a component that have a component with a missing property value should raise an exception
         $this->assert
-                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fail_unset_property_value.xml');})
-                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_property_value.xml');
+        })
+            ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
-    public function testUnsetMethodName ()
+    public function testUnsetMethodName()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing method name should raise an exception
         $this->assert
-                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fail_unset_method_name.xml');})
-                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_method_name.xml');
+        })
+            ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
-    public function testUnsetFactoryClassname ()
+    public function testUnsetFactoryClassname()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing factory classname attribute should raise an exception
         $this->assert
-                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fail_unset_factory_classname.xml');})
-                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_factory_classname.xml');
+        })
+            ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 
-    public function testUnsetFactoryMethod ()
+    public function testUnsetFactoryMethod()
     {
         $nakedContainer = new Oktopus\Di\BasicContainer();
         $container = new Oktopus\Di\ContainerXMLLoader($nakedContainer);
 
         //Trying to load an XML file with a component that have a component with a missing factory method attribute should raise an exception
         $this->assert
-                 ->exception(function ()use($container){$container->addXmlFile(__DIR__.'/../../resources/container/fail_unset_factory_method.xml');})
-                 ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
+            ->exception(function () use($container)
+        {
+            $container->addXmlFile(__DIR__ . '/../../resources/container/fail_unset_factory_method.xml');
+        })
+            ->isInstanceOf('Oktopus\Di\ComponentDefinitionException');
     }
 }

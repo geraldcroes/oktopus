@@ -1,9 +1,11 @@
 <?php
 namespace foo {
-	class foo {
-	}
+    class foo
+    {
+    }
 }
-namespace{
-	class foofoo {
-	}
+namespace {
+    class foofoo
+    {
+    }
 }

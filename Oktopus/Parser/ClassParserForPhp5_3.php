@@ -26,7 +26,7 @@ class ClassParserForPhp5_3 implements ClassParser
      *
      * @return array
      */
-    public function find ($pFileName)
+    public function find($pFileName)
     {
         $toReturn = array();
         $tokens = token_get_all(file_get_contents($pFileName, false));
@@ -45,10 +45,11 @@ class ClassParserForPhp5_3 implements ClassParser
                     continue;
                 }
                 if ($classHunt && $token[0] === T_STRING) {
-                    $toReturn[] = (strlen($currentNamespace) > 0 ? $currentNamespace.'\\' : '').$token[1];
+                    $toReturn[] = (strlen($currentNamespace) > 0 ? $currentNamespace . '\\' : '') . $token[1];
                     $classHunt = false;
                 } elseif ($namespaceHunt && $validatedNamespaceHunt
-                          && ($token[0] === T_STRING || $token[0] === T_NS_SEPARATOR)) {
+                    && ($token[0] === T_STRING || $token[0] === T_NS_SEPARATOR)
+                ) {
                     $currentNamespace .= $token[1];
                 } elseif ($namespaceHunt && !$validatedNamespaceHunt && $token[0] === T_WHITESPACE) {
                     $currentNamespace = '';

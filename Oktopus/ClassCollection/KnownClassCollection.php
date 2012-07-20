@@ -8,5 +8,5 @@ namespace Oktopus\ClassCollection;
  */
 interface KnownClassCollection extends ClassCollection
 {
-    public function getList ();
+    public function getList();
 }

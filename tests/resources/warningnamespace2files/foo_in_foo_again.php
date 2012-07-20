@@ -1,5 +1,6 @@
 <?php
 namespace foo;
 
-class foo {
+class foo
+{
 }

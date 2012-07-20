@@ -7,6 +7,7 @@ namespace Oktopus\Di;
  */
 interface Container
 {
-    public function get ($pId);
+    public function get($pId);
+
     public function hasComponent($pId);
 }

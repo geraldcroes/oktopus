@@ -42,7 +42,7 @@ class ArrayClassCollection implements KnownClassCollection
      *
      * @return array
      */
-    public function getList ()
+    public function getList()
     {
         return $this->classes;
     }

@@ -1,13 +1,17 @@
 <?php
-class foo {
-	function myMethod (){
-		call ();		
-	}
+class foo
+{
+    function myMethod()
+    {
+        call();
+    }
 }
 
-function test (){
-	$test = 'test';
+function test()
+{
+    $test = 'test';
 
-	$funct = function () {
-	};
+    $funct = function ()
+    {
+    };
 }

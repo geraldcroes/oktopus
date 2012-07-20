@@ -24,7 +24,7 @@ class ClassCollectionCacheDecorator implements ClassCollection
      * @param ClassCollection $classCollection the collection to be cached
      * @param CacheManager $cacheManager the cache manager
      */
-    public function __construct (ClassCollection $classCollection, CacheManager $cacheManager)
+    public function __construct(ClassCollection $classCollection, CacheManager $cacheManager)
     {
         $this->classCollection = $classCollection;
         $this->cacheManager = $cacheManager;
@@ -34,7 +34,7 @@ class ClassCollectionCacheDecorator implements ClassCollection
      * Gets the file path of a given class
      * @param string $className
      */
-    public function getPath ($className)
+    public function getPath($className)
     {
         //If the path is in cache, get it from cache
         if ($this->cacheManager->exists($className)) {

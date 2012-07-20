@@ -1,7 +1,7 @@
 <?php
 /**
  * Oktopus Engine
- * 
+ *
  * @author    Gérald Croës <gerald@croes.org>
  * @copyright 2010-2011 Gérald Croës <gerald@croes.org>
  * @license   GNU Lesser General Public License see LICENCE file or http://www.gnu.org/licenses/lgpl.html
@@ -21,13 +21,13 @@ require_once __DIR__ . '/ClassCollection/ClassCollectionCollection.php';
 require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
 
 use Oktopus\Parser\ClassParser,
-    Oktopus\Parser\ClassParserForPhp5_3,
-    Oktopus\Di\ContainerXMLLoader,
-    Oktopus\Di\BasicContainer;
+Oktopus\Parser\ClassParserForPhp5_3,
+Oktopus\Di\ContainerXMLLoader,
+Oktopus\Di\BasicContainer;
 
 /**
  * Main base class for Oktopus
- * 
+ *
  * @package Oktopus
  * @author  Gérald Croës <gerald@croes.org>
  */
@@ -42,7 +42,7 @@ class Engine
 
     /**
      * The Parser Autoloader instance
-     * 
+     *
      * @var Autoloader
      */
     private static $autoloader = false;
@@ -56,10 +56,10 @@ class Engine
 
     /**
      * Gets the Engine Autoloader instance
-     * 
+     *
      * @return Autoloader
      */
-    public static function autoloader ()
+    public static function autoloader()
     {
         if (self::$autoloader === false) {
             self::$autoloader = new Autoloader();
@@ -67,13 +67,13 @@ class Engine
         }
         return self::$autoloader;
     }
-    
+
     /**
      * Gets the Oktopus Container
-     * 
+     *
      * @return Container
      */
-    public static function container ()
+    public static function container()
     {
         if (self::$container === false) {
             self::$container = new ContainerXMLLoader(new BasicContainer());

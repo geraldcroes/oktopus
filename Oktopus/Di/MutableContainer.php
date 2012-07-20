@@ -7,6 +7,7 @@ namespace Oktopus\Di;
  */
 interface MutableContainer extends Container
 {
-    public function define ($pId, $pClassName = null);
-    public function getDefinition ($pId);
+    public function define($pId, $pClassName = null);
+
+    public function getDefinition($pId);
 }

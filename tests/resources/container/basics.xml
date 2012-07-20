@@ -1,116 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <container>
- <!--  A simple unshared Component with id == className-->
- <component id="Apple" shared="true">
- </component>
+    <!--  A simple unshared Component with id == className-->
+    <component id="Apple" shared="true">
+    </component>
 
- <!--  A simple unshared Component with id !== className-->
- <component id="Fruit" shared="false">
- </component>
+    <!--  A simple unshared Component with id !== className-->
+    <component id="Fruit" shared="false">
+    </component>
 
- <!--  A simple shared Component -->
- <component id="Tool">
- </component>
- 
- <!--  A simple shared component with arguments in its constructor -->
- <component id="Juicer">
-  <property name="_fruit" component_reference="Apple" />
-  <property name="_tool" component_reference="Tool" />
- </component>
+    <!--  A simple shared Component -->
+    <component id="Tool">
+    </component>
 
-<!-- 
-A component with a property using 
-   attribute to declare a component reference,  
-   and a tag for its second reference 
--->
- <component id="Juicer1" classname="Juicer">
-  <property name="_fruit" component_reference="Apple" />
-  <property name="_tool">
-   <component_reference>Tool</component_reference>
-  </property>
- </component>
+    <!--  A simple shared component with arguments in its constructor -->
+    <component id="Juicer">
+        <property name="_fruit" component_reference="Apple"/>
+        <property name="_tool" component_reference="Tool"/>
+    </component>
 
-<!-- A component with a private property declared with a value attribute -->
-<component id="EasyPrivate" classname="EasyPrivate">
- <property name="_property" value="propertyValue" />
-</component>
+    <!--
+    A component with a property using
+       attribute to declare a component reference,
+       and a tag for its second reference
+    -->
+    <component id="Juicer1" classname="Juicer">
+        <property name="_fruit" component_reference="Apple"/>
+        <property name="_tool">
+            <component_reference>Tool</component_reference>
+        </property>
+    </component>
 
-<!-- A component with a private property declared with a value tag -->
-<component id="EasyPrivate1" classname="EasyPrivate">
- <property name="_property">
-  <value>propertyValue</value>
- </property>
-</component>
+    <!-- A component with a private property declared with a value attribute -->
+    <component id="EasyPrivate" classname="EasyPrivate">
+        <property name="_property" value="propertyValue"/>
+    </component>
 
-<!--  A component with a private property declared with a value attribute (empty) -->
-<component id="EasyPrivate2" classname="EasyPrivate">
- <property name="_property" value="" />
-</component>
+    <!-- A component with a private property declared with a value tag -->
+    <component id="EasyPrivate1" classname="EasyPrivate">
+        <property name="_property">
+            <value>propertyValue</value>
+        </property>
+    </component>
 
-<!-- A component with a private property declared with a value tag (empty)-->
-<component id="EasyPrivate3" classname="EasyPrivate">
- <property name="_property">
-  <value></value>
- </property>
-</component>
+    <!--  A component with a private property declared with a value attribute (empty) -->
+    <component id="EasyPrivate2" classname="EasyPrivate">
+        <property name="_property" value=""/>
+    </component>
 
-<!-- A component with a private property declared with a value tag (null value)-->
-<component id="EasyPrivate4" classname="EasyPrivate">
- <property name="_property">
-  <value><null /></value>
- </property>
-</component>
+    <!-- A component with a private property declared with a value tag (empty)-->
+    <component id="EasyPrivate3" classname="EasyPrivate">
+        <property name="_property">
+            <value></value>
+        </property>
+    </component>
 
-<!--  A component with a constructor with one parameter  -->
-<component id="ConstructedOneParameter">
- <constructor_argument value="one1" />
-</component>
+    <!-- A component with a private property declared with a value tag (null value)-->
+    <component id="EasyPrivate4" classname="EasyPrivate">
+        <property name="_property">
+            <value>
+                <null/>
+            </value>
+        </property>
+    </component>
 
-<!--  A component with a constructor with two parameter  -->
-<component id="ConstructedTwoParameter">
- <constructor_argument value="one2" />
- <constructor_argument value="two2" />
-</component>
+    <!--  A component with a constructor with one parameter  -->
+    <component id="ConstructedOneParameter">
+        <constructor_argument value="one1"/>
+    </component>
 
-<!--  A component with a constructor with one parameters, using method call and property direct setting -->
-<component id="ConstructedOneParameter2" classname="ConstructedOneParameter">
- <constructor_argument value="one12" />
- <property name="_moreNoSetter" value="valueOfMoreNoSetter12" />
- <method name="setMore">
-  <argument value="valueOfMore12" />
- </method>
-</component>
+    <!--  A component with a constructor with two parameter  -->
+    <component id="ConstructedTwoParameter">
+        <constructor_argument value="one2"/>
+        <constructor_argument value="two2"/>
+    </component>
 
-<!--  A component with a constructor with two parameters, using method call and property direct setting -->
-<component id="ConstructedTwoParameter2" classname="ConstructedTwoParameter">
- <constructor_argument value="one22" />
- <constructor_argument value="two22" />
- <method name="setMoreValues">
-  <argument value="valueOfMore22" />
-  <argument value="valueOfMore222" />
- </method>
-</component>
+    <!--  A component with a constructor with one parameters, using method call and property direct setting -->
+    <component id="ConstructedOneParameter2" classname="ConstructedOneParameter">
+        <constructor_argument value="one12"/>
+        <property name="_moreNoSetter" value="valueOfMoreNoSetter12"/>
+        <method name="setMore">
+            <argument value="valueOfMore12"/>
+        </method>
+    </component>
 
-<!-- A component with a factory with no parameters -->
-<component id="FactoryConstructedNoParameter" classname="ConstructedTwoParameter">
- <factory classname="FactoryConstructedNoParameter" method="create" />
-</component>
+    <!--  A component with a constructor with two parameters, using method call and property direct setting -->
+    <component id="ConstructedTwoParameter2" classname="ConstructedTwoParameter">
+        <constructor_argument value="one22"/>
+        <constructor_argument value="two22"/>
+        <method name="setMoreValues">
+            <argument value="valueOfMore22"/>
+            <argument value="valueOfMore222"/>
+        </method>
+    </component>
 
-<!-- A component with a factory with one parameters -->
-<component id="FactoryConstructedOneParameter" classname="ConstructedTwoParameter">
- <factory classname="FactoryConstructedOneParameter" method="create">
-  <argument value="one1" />
- </factory>
-</component>
+    <!-- A component with a factory with no parameters -->
+    <component id="FactoryConstructedNoParameter" classname="ConstructedTwoParameter">
+        <factory classname="FactoryConstructedNoParameter" method="create"/>
+    </component>
 
-<!-- A component with a factory with two parameters -->
-<component id="FactoryConstructedTwoParameter" classname="ConstructedTwoParameter">
- <factory classname="FactoryConstructedTwoParameter" method="create">
-  <argument value="one2" />
-  <argument value="two2" />  
- </factory>
-</component>
+    <!-- A component with a factory with one parameters -->
+    <component id="FactoryConstructedOneParameter" classname="ConstructedTwoParameter">
+        <factory classname="FactoryConstructedOneParameter" method="create">
+            <argument value="one1"/>
+        </factory>
+    </component>
 
-<!-- TODO: A factory where the object refers to another component  -->
+    <!-- A component with a factory with two parameters -->
+    <component id="FactoryConstructedTwoParameter" classname="ConstructedTwoParameter">
+        <factory classname="FactoryConstructedTwoParameter" method="create">
+            <argument value="one2"/>
+            <argument value="two2"/>
+        </factory>
+    </component>
+
+    <!-- TODO: A factory where the object refers to another component  -->
 
 </container>

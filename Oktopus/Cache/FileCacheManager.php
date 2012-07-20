@@ -17,7 +17,7 @@ class FileCacheManager implements CacheManager
     /**
      * @param string $basePath the base path where cache files will be written
      */
-    public function __construct ($basePath)
+    public function __construct($basePath)
     {
         if (!is_string($basePath)) {
             throw new CacheException("Given base path is not a string");
@@ -52,9 +52,9 @@ class FileCacheManager implements CacheManager
      */
     public function set($key, $value)
     {
-         if (false === \file_put_contents($this->getFilePathForKey($key), $value)) {
-             throw new CacheException("Could not write cache data for $key");
-         }
+        if (false === \file_put_contents($this->getFilePathForKey($key), $value)) {
+            throw new CacheException("Could not write cache data for $key");
+        }
         return $this;
     }
 
@@ -90,9 +90,9 @@ class FileCacheManager implements CacheManager
      * @param $key
      * @return string
      */
-    protected function getFilePathForKey ($key)
+    protected function getFilePathForKey($key)
     {
-        return $this->basePath.$key.'.php';
+        return $this->basePath . $key . '.php';
     }
 
     /**
@@ -100,7 +100,7 @@ class FileCacheManager implements CacheManager
      *
      * @return string
      */
-    public function getBasePath ()
+    public function getBasePath()
     {
         return $this->basePath;
     }

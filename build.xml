@@ -6,29 +6,29 @@
     <!-- Target: preparebuild                          -->
     <!-- ============================================  -->
     <target name="preparebuild">
-        <mkdir dir="build" />
+        <mkdir dir="build"/>
     </target>
 
     <!-- ============================================  -->
     <!-- Target: Test                                  -->
     <!-- ============================================  -->
     <target name="update_atoum">
-        <echo msg="Updating Atoum" />
-        <exec command="php -n ./tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_before" />
-        <httpget url="http://downloads.atoum.org/nightly/mageekguy.atoum.phar" dir="tests" />
-        <exec command="php -n ./tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_after" />
+        <echo msg="Updating Atoum"/>
+        <exec command="php -n ./tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_before"/>
+        <httpget url="http://downloads.atoum.org/nightly/mageekguy.atoum.phar" dir="tests"/>
+        <exec command="php -n ./tests/mageekguy.atoum.phar -v" outputProperty="atoum_version_after"/>
         <if>
             <or>
-                <equals arg1="${atoum_version_before}" arg2="${atoum_version_after}" />
+                <equals arg1="${atoum_version_before}" arg2="${atoum_version_after}"/>
             </or>
             <then>
-                <echo message="No need to update ATOUM, versions are equals" />
-                <echo message="${atoum_version_before}" />
+                <echo message="No need to update ATOUM, versions are equals"/>
+                <echo message="${atoum_version_before}"/>
             </then>
             <else>
                 <echo message="Updating ATOUM"/>
-                <echo message="From ${atoum_version_before}" />
-                <echo message="TO   ${atoum_version_after}" />
+                <echo message="From ${atoum_version_before}"/>
+                <echo message="TO   ${atoum_version_after}"/>
                 <exec command='git commit -m "${atoum_version_after}" ./tests/mageekguy.atoum.phar' logoutput="true"/>
             </else>
         </if>
@@ -42,7 +42,7 @@
                 atoumpharpath="./tests/mageekguy.atoum.phar"
                 phppath="/usr/bin/php"
                 codecoverage="true"
-                codecoveragereportpath="./coverage/"
+                codecoveragereportpath="./build/coverage/"
                 showcodecoverage="true"
                 showmissingcodecoverage="true"
                 showprogress="true"
@@ -51,7 +51,7 @@
                 maxchildren="2"
                 >
             <fileset dir="./tests/units">
-                <include name="**/*.php" />
+                <include name="**/*.php"/>
             </fileset>
         </atoum>
     </target>
@@ -62,7 +62,7 @@
     <target name="doc">
         <docblox title="API Documentation" destdir="./Documentation">
             <fileset dir="Oktopus">
-                <include name="**/*.php" />
+                <include name="**/*.php"/>
             </fileset>
         </docblox>
     </target>
@@ -71,22 +71,79 @@
     <!-- Target: Phar                               -->
     <!-- ============================================  -->
     <target name="phar" depends="test,preparebuild">
+
         <pharpackage
-          destfile="build/oktopus.phar"
-          basedir="/"
-          stub="stub.php"
-          >
-          <fileset dir="Oktopus">
-            <include name="**/**" />
-          </fileset>
-          <metadata>
-            <element name="version" value="0.1"/>
-            <element name="authors">
-              <element name="Gérald Croës">
-                <element name="e-mail" value="gerald@croes.org" />
-              </element>
-            </element>
-          </metadata>
+                destfile="build/oktopus.phar"
+                basedir="/"
+                stub="./phing/stub.php"
+                >
+            <fileset dir="Oktopus">
+                <include name="**/**"/>
+            </fileset>
+            <metadata>
+                <element name="version" value="0.1"/>
+                <element name="authors">
+                    <element name="Gérald Croës">
+                        <element name="e-mail" value="gerald@croes.org"/>
+                    </element>
+                </element>
+            </metadata>
         </pharpackage>
+    </target>
+
+    <target name="make.download">
+        <tstamp/>
+        <echo msg="Date : ${DSTAMP}"/>
+        <delete dir="./build/downloads"/>
+        <mkdir dir="./build/downloads"/>
+
+        <copy todir="./build/downloads" overwrite="true">
+            <fileset dir="./Oktopus">
+                <include name="**/*.php"/>
+                <include name="**/*.css"/>
+                <include name="**/*.js"/>
+            </fileset>
+            <filterchain>
+                <replacetokens begintoken="@@" endtoken="@@">
+                    <token key="author" value="me"/>
+                    <token key="version" value="nightly ${DSTAMP}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <copy todir="./build/downloads" overwrite="true">
+            <fileset dir="./Oktopus">
+                <include name="**"/>
+                <exclude name="**/*.php"/>
+                <exclude name="**/*.css"/>
+                <exclude name="**/*.js"/>
+            </fileset>
+        </copy>
+
+        <fileset dir="./build/downloads/" id="files.download">
+            <include name="**"/>
+        </fileset>
+
+        <tar destfile="./build/oktopus.tar.gz" compression="gzip">
+            <fileset refid="files.download"/>
+        </tar>
+
+        <tar destfile="./build/oktopus.tar.bz2" compression="bzip2">
+            <fileset refid="files.download"/>
+        </tar>
+
+        <zip destfile="./build/oktopus.zip">
+            <fileset refid="files.download"/>
+        </zip>
+
+        <ftpdeploy host="${ftp.server}" port="${ftp.port}"
+                   username="${ftp.user}" password="${ftp.pass}"
+                   dir="./nightly" mode="binary" clearfirst="true">
+            <fileset>
+                <include name="./build/oktopus.tar.gz"/>
+                <include name="./build/oktopus.tar.bz2"/>
+                <include name="./build/oktopus.zip"/>
+            </fileset>
+        </ftpdeploy>
     </target>
 </project>

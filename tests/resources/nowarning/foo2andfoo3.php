@@ -1,10 +1,13 @@
 <?php
-class foo2 {
+class foo2
+{
 }
 
-class foo3 {
-	public function test (){
-		echo "class foo4 {
+class foo3
+{
+    public function test()
+    {
+        echo "class foo4 {
 		}";
-	}
+    }
 }
