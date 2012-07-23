@@ -6,7 +6,8 @@
     <!-- Target: preparebuild                          -->
     <!-- ============================================  -->
     <target name="preparebuild">
-        <mkdir dir="build"/>
+        <mkdir dir="build" />
+        <mkdir dir="build/documentation" />
     </target>
 
     <!-- ============================================  -->
@@ -59,8 +60,8 @@
     <!-- ============================================  -->
     <!-- Target: Doc                               -->
     <!-- ============================================  -->
-    <target name="doc">
-        <docblox title="API Documentation" destdir="./Documentation">
+    <target name="doc" depends="preparebuild">
+        <docblox title="API Documentation" destdir="./build/documentation">
             <fileset dir="Oktopus">
                 <include name="**/*.php"/>
             </fileset>
