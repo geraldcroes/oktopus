@@ -21,9 +21,9 @@ require_once __DIR__ . '/ClassCollection/ClassCollectionCollection.php';
 require_once __DIR__ . '/ClassCollection/DirectoryIteratorAdaptatorForClassCollection.php';
 
 use Oktopus\Parser\ClassParser,
-Oktopus\Parser\ClassParserForPhp5_3,
-Oktopus\Di\Container\ContainerXMLLoader,
-Oktopus\Di\Container\BasicContainer;
+    Oktopus\Parser\ClassParserForPhp5_3,
+    Oktopus\Di\Container\ContainerXMLLoader,
+    Oktopus\Di\Container\ContainerCollection;
 
 /**
  * Main base class for Oktopus
@@ -76,7 +76,7 @@ class Engine
     public static function container()
     {
         if (self::$container === false) {
-            self::$container = new ContainerXMLLoader(new BasicContainer());
+            self::$container = new ContainerCollection();
         }
         return self::$container;
     }
