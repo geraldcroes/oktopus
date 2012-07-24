@@ -18,9 +18,9 @@ class ArrayClassCollection implements KnownClassCollection
      *
      * @param array $pCollection the class collection to initialize from
      */
-    public function __construct(array $pCollection)
+    public function __construct(array $collection)
     {
-        $this->classes = $pCollection;
+        $this->classes = $collection;
     }
 
     /**
@@ -29,10 +29,10 @@ class ArrayClassCollection implements KnownClassCollection
      * @param $pClassName the class name we're looking for
      * @return string|null
      */
-    public function getPath($pClassName)
+    public function getPath($className)
     {
-        if (array_key_exists($pClassName, $this->classes)) {
-            return $this->classes[$pClassName];
+        if (array_key_exists($className, $this->classes)) {
+            return $this->classes[$className];
         }
         return null;
     }
