@@ -8,7 +8,7 @@ use Oktopus\Parser\ClassParser;
  *
  * @package Oktopus
  */
-class DirectoryIteratorAdaptatorForClassCollection implements KnownClassCollection
+class DirectoryClassCollection implements KnownClassCollection
 {
     /**
      * The adapted iterator

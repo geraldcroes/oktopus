@@ -3,7 +3,7 @@ namespace Oktopus;
 
 use Oktopus\Parser\ClassParser,
 Oktopus\Parser\ClassParserForPhp5_3,
-Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection,
+Oktopus\ClassCollection\DirectoryClassCollection,
 Oktopus\ClassCollection\ClassCollection,
 Oktopus\ClassCollection\ClassCollectionCollection;
 
@@ -105,7 +105,7 @@ class Autoloader
 
         //only parsing php files.
         $baseIterator = new \RegexIterator($baseIterator, '/^.*\.php$/i');
-        $this->addClassCollection($collection = new DirectoryIteratorAdaptatorForClassCollection(
+        $this->addClassCollection($collection = new DirectoryClassCollection(
                 $baseIterator,
                 new ClassParserForPHP5_3()
             )

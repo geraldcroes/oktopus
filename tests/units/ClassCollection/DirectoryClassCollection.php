@@ -4,20 +4,19 @@ namespace Oktopus\ClassCollection\tests\units;
 require_once __DIR__ . '/../../bootstrap.php';
 
 use \mageekguy\atoum;
-use \Oktopus\ClassCollection\DirectoryIteratorAdaptatorForClassCollection as DirectoryClassCollection;
 
-class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
+class DirectoryClassCollection extends atoum\test
 {
     public function test__construct()
     {
         $parser = new \Oktopus\Parser\ClassParserForPHP5_3();
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
     }
 
     public function testSilentGetSet()
     {
         $parser = new \Oktopus\Parser\ClassParserForPHP5_3();
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
 
         $this->assert
         //Default values for silent mode are false
@@ -47,7 +46,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
     public function testGetPathFirstCall()
     {
         $parser = new \Oktopus\Parser\ClassParserForPHP5_3();
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
 
         $this->assert
             ->string($classCollection->getPath('foo'))
@@ -57,7 +56,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
     public function testGetKnownClassesFirstCall()
     {
         $parser = new \Oktopus\Parser\ClassParserForPHP5_3();
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/nowarning/'), $parser);
 
         $this->assert
             ->array($classCollection->getKnownClasses())
@@ -68,7 +67,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
 
     public function testWarningTwoSameClassesSameFile()
     {
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning/'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning/'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
             ->array($classCollection->getList())
             ->isNotEmpty();
@@ -79,7 +78,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
         //second error
 
         //Silent mode
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning/'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning/'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $classCollection->setSilentDuplicatesInSameFile(true);
         $this->assert
             ->array($classCollection->getList())
@@ -88,7 +87,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
 
     public function testAutoloaderWarningTwoSameClassesTwoFile()
     {
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
             ->array($list = $classCollection->getList())
             ->hasKey('afoo');
@@ -99,7 +98,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
             ->exists();
 
         //Silent mode (different files)
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $classCollection->setSilentDuplicatesInDifferentFiles(true);
         $this->assert
             ->array($classCollection->getList())
@@ -112,7 +111,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
         //other errors won't show up
 
         //Silent mode (same files)
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $classCollection->setSilentDuplicatesInSameFile(true);
         $this->assert
             ->array($list = $classCollection->getList())
@@ -125,7 +124,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
         //Two errors as the AFoo declared in the same file won't show up
 
         //Silent mode
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warning2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $classCollection->setSilentDuplicatesInSameFile(true)
             ->setSilentDuplicatesInDifferentFiles(true);
         $this->assert
@@ -135,7 +134,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
 
     public function testAutoloaderWarningTwoSameNamespaceClassesTwoFile()
     {
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warningnamespace2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warningnamespace2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $this->assert
             ->array($classCollection->getList())
             ->isNotEmpty();
@@ -144,7 +143,7 @@ class DirectoryIteratorAdaptatorForClassCollection extends atoum\test
             ->exists();
 
         //Silent won't raise warnings
-        $classCollection = new DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warningnamespace2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
+        $classCollection = new \Oktopus\ClassCollection\DirectoryClassCollection($this->getDirectoryIterator(__DIR__ . '/../../resources/warningnamespace2files'), new \Oktopus\Parser\ClassParserForPHP5_3());
         $classCollection->setSilentDuplicatesInSameFile(true)
             ->setSilentDuplicatesInDifferentFiles(true);
         $this->assert
