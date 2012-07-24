@@ -1,7 +1,7 @@
 <?php
 namespace Oktopus\ClassCollection;
 
-class ClassCollectionCollection implements ClassCollection
+class KnownClassCollectionCollection implements KnownClassCollection
 {
     private $collections;
 
@@ -10,7 +10,7 @@ class ClassCollectionCollection implements ClassCollection
         $this->collection = new \SplObjectStorage();
     }
 
-    public function add(ClassCollection $collection)
+    public function add(KnownClassCollection $collection)
     {
         $this->collection->attach($collection);
         return $this;
@@ -20,6 +20,15 @@ class ClassCollectionCollection implements ClassCollection
     {
         $this->collection->detach($collection);
         return $this;
+    }
+
+    public function getList()
+    {
+        $list = array();
+        foreach ($this->collection as $collection) {
+            $list += $collection->getList();
+        }
+        return $list;
     }
 
     public function getPath($className)
